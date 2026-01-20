@@ -58,18 +58,18 @@ Als `lsblk` na stap 2 of 3 geen logische volumes (zoals `root`) laat zien, plak 
 
 ---
 
-# 1. Maak de 'boot-sav' mounts los (om conflicten te voorkomen)
+# 1.1 Maak de 'boot-sav' mounts los (om conflicten te voorkomen)
 ```bash
 sudo umount /mnt/boot-sav/sda1
 sudo umount /mnt/boot-sav/sda2
 ```
 
-# 1. MOUNT DE ROOT (Het versleutelde systeem)
+# 1.2 MOUNT DE ROOT (Het versleutelde systeem)
 ```bash
 sudo mount /dev/mapper/vgmint-root /mnt
 ```
 
-# 1. Alles veilig ontkoppelen (Recursive unmount)
+# 1.3 Alles veilig ontkoppelen (Recursive unmount)
 Dit zorgt dat alle wijzigingen daadwerkelijk naar schijf geschreven worden.
 ```bash
 sudo umount -R /mnt
@@ -86,20 +86,20 @@ sudo cryptsetup open /dev/sdXY cryptdata
 ```
 ## (Voer je wachtwoord in als erom gevraagd wordt)
 
-# 2. Open de versleutelde container (sda3)
+# 2.1 Open de versleutelde container (sda3)
 ```bash
 sudo cryptsetup open /dev/sda3 cryptdata
 ```
 (Typ je wachtwoord blind in en druk op Enter)
 
 
-# 2. MOUNT DE BOOT PARTITIE (sda2 - 1.7G)
+# 2.2 MOUNT DE BOOT PARTITIE (sda2 - 1.7G)
 Deze bevat je kernels en initramfs images
 ```bash
 sudo mount /dev/sda2 /mnt/boot
 ```
 
-# 2. Sluit de LVM en Encryptie containers (Optioneel, maar netjes)
+# 2.3 Sluit de LVM en Encryptie containers (Optioneel, maar netjes)
 ```bash
 sudo vgchange -an vgmint
 sudo cryptsetup close cryptdata
@@ -112,25 +112,25 @@ sudo cryptsetup close cryptdata
 
 ---
 
-# 3. ACTIVEER LVM (CRUCIAAL BIJ MINT)
+# 3.1 ACTIVEER LVM (CRUCIAAL BIJ MINT)
 Mint gebruikt standaard LVM binnenin de encryptie.
 Dit commando scant en activeert de volumes (zoals 'root' en 'swap').
 ```bash
 sudo vgchange -ay
 ```
 
-# 3. Activeer de interne LVM volumes
+# 3.2 Activeer de interne LVM volumes
 ```bash
 sudo vgchange -ay
 ```
 
-# 3. MOUNT DE EFI PARTITIE (sda1 - 512M)
+# 3.3 MOUNT DE EFI PARTITIE (sda1 - 512M)
 Deze bevat de bootloader (GRUB/Shim) voor UEFI
 ```bash
 sudo mount /dev/sda1 /mnt/boot/efi
 ```
 
-# 3. Herstarten
+# 3.4 Herstarten
 ```bash
 sudo reboot
 ```
@@ -149,7 +149,7 @@ lsblk
 ```
 Je zoekt iets als: /dev/mapper/vgmint-root of /dev/mapper/mint--vg-root
 
-# 4. Toon de nieuwe situatie
+# 4.1 Toon de nieuwe situatie
 ```bash
 lsblk
 ```
@@ -225,7 +225,7 @@ mint@mint:~$
 ```
 
 
-# 4. START BOOT REPAIR
+# 4.1 START BOOT REPAIR
 Nu alles gemount is op /mnt, kan de tool (of terminal) erbij.
 ```bash
 boot-repair
@@ -257,7 +257,7 @@ sudo mount /dev/sdXZ /mnt/boot
 
 ---
 
-# NU KAN JE BOOT REPAIR STARTEN
+# 7. NU KAN JE BOOT REPAIR STARTEN
 
 ```
 
