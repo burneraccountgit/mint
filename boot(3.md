@@ -122,3 +122,11 @@ sudo reboot
 ---
 
 Zullen we, zodra je weer in je systeem kunt, kijken naar hoe we een backup van je `initramfs` kunnen maken voor de toekomst?
+
+---
+
+# ERROR >> KERNEL PANIC! 
+AGAIN
+```
+VFS: Unable to mount root fs on unknown-block(0,0)
+```
