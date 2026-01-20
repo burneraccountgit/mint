@@ -1,0 +1,222 @@
+boot-repair-4ppa2081                                              [20260120_0825]
+
+============================= Boot Repair Summary ==============================
+
+
+
+
+Default settings: ______________________________________________________________
+
+The default repair of the Boot-Repair utility would not act on the boot.
+
+Confirmation request before suggested repair: __________________________________
+
+You may want to retry after mounting your encrypted partitions so that the tool can verify their contents. (cryptsetup open)
+Are you sure you want to continue anyway?
+
+User settings: _________________________________________________________________
+
+You may want to retry after mounting your encrypted partitions so that the tool can verify their contents. (cryptsetup open)
+No OS to fix.
+
+=================== /boot detected. Please check the options.
+No OS to fix.
+Please backup your data before this operation.
+The settings chosen by the user will not act on the MBR.
+Additional repair will be performed:  repair-filesystems
+
+
+Force Unmount all blkid partitions (for fsck) except / /boot /cdrom /dev /etc /home /opt /pas /proc /rofs /sys /tmp /usr /var
+
+fsck -fyM /dev/sda1
+fsck from util-linux 2.39.3
+
+fsck -fyM /dev/sda2
+fsck from util-linux 2.39.3
+
+Boot successfully repaired.
+
+You can now reboot your computer.
+
+
+============================ Boot Info After Repair ============================
+
+ => No boot loader is installed in the MBR of /dev/sda.
+ => Syslinux MBR (5.00 and higher) is installed in the MBR of /dev/sdb.
+
+sda1: __________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  FAT32
+    Boot sector info:  No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        
+
+sda2: __________________________________________________________________________
+
+    File system:       ext4
+    Boot sector type:  -
+    Boot sector info: 
+    Operating System:  
+    Boot files:        
+
+sda3: __________________________________________________________________________
+
+    File system:       crypto_LUKS
+    Boot sector type:  Unknown
+    Boot sector info: 
+
+sdb1: __________________________________________________________________________
+
+    File system:       vfat
+    Boot sector type:  SYSLINUX 6.04
+    Boot sector info:  Syslinux looks at sector 16408 of /dev/sdb1 for its 
+                       second stage. The integrity check of Syslinux failed. 
+                       No errors found in the Boot Parameter Block.
+    Operating System:  
+    Boot files:        /boot/grub/grub.cfg /syslinux.cfg 
+                       /efi/boot/bootia32.efi /efi/boot/bootx64.efi 
+                       /efi/boot/grubx64.efi /ldlinux.sys
+
+
+================================ 0 OS detected =================================
+
+
+================================ Host/Hardware =================================
+
+CPU architecture: 64-bit
+Video: GP104 [GeForce GTX 1080] from NVIDIA Corporation
+Live-session OS is Linuxmint 64-bit (Linux Mint 22.3, zena, x86_64)
+
+===================================== UEFI =====================================
+
+BIOS/UEFI firmware: H.G0(5.11) from American Megatrends Inc.
+The firmware seems EFI-compatible, but this live-session is in Legacy/BIOS/CSM mode (not in EFI mode).
+
+
+39bc76ff6662f4fbe9aa116e4c997b41   sda1/BOOT/fbx64.efi
+4ba5a5aad43c197e9fb58b76b404d287   sda1/BOOT/mmx64.efi
+94c7467f956700d44c5b4dcd3967535c   sda1/ubuntu/grubx64.efi
+4ba5a5aad43c197e9fb58b76b404d287   sda1/ubuntu/mmx64.efi
+07e25dcaf57c776875f78fa36827c58e   sda1/ubuntu/shimx64.efi
+07e25dcaf57c776875f78fa36827c58e   sda1/BOOT/BOOTX64.efi
+39bc76ff6662f4fbe9aa116e4c997b41   sda2/BOOT/fbx64.efi
+4ba5a5aad43c197e9fb58b76b404d287   sda2/BOOT/mmx64.efi
+94c7467f956700d44c5b4dcd3967535c   sda2/ubuntu/grubx64.efi
+4ba5a5aad43c197e9fb58b76b404d287   sda2/ubuntu/mmx64.efi
+07e25dcaf57c776875f78fa36827c58e   sda2/ubuntu/shimx64.efi
+07e25dcaf57c776875f78fa36827c58e   sda2/BOOT/BOOTX64.efi
+
+============================= Drive/Partition Info =============================
+
+Disks info: ____________________________________________________________________
+
+sda	: is-GPT,	no-BIOSboot,	has---ESP, 	not-usb,	not-mmc, no-os,	no-wind,	2048 sectors * 512 bytes
+
+Partitions info (1/3): _________________________________________________________
+
+sda1	: no-os,	64, nopakmgr,	no-docgrub,	nogrub,	nogrubinstall,	no-grubenv,	noupdategrub,	not-far
+sda2	: no-os,	64, nopakmgr,	no-docgrub,	nogrub,	nogrubinstall,	grubenv-ng,	noupdategrub,	not-far
+
+Partitions info (2/3): _________________________________________________________
+
+sda1	: is---ESP,	part-has-no-fstab,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot, vfat
+sda2	: isnotESP,	part-has-no-fstab,	no-nt,	no-winload,	no-recov-nor-hid,	no-bmgr,	notwinboot, ext4
+
+Partitions info (3/3): _________________________________________________________
+
+sda1	: not--sepboot,	no---boot,	part-has-no-fstab,	not-sep-usr,	no---usr,	part-has-no-fstab,	no--grub.d,	sda
+sda2	: is---sepboot,	no---boot,	part-has-no-fstab,	not-sep-usr,	no---usr,	part-has-no-fstab,	no--grub.d,	sda
+
+fdisk -l (filtered): ___________________________________________________________
+
+Disk sda: 978.09 GiB, 1050214588416 bytes, 2051200368 sectors
+Disk identifier: 899E027A-3F7B-45E7-A0AB-5B8A501BB414
+       Start        End    Sectors   Size Type
+sda1     2048    1050623    1048576   512M EFI System
+sda2  1050624    4550655    3500032   1.7G Linux filesystem
+sda3  4550656 2051198975 2046648320 975.9G Linux filesystem
+Disk sdb: 3.84 GiB, 4126146560 bytes, 8058880 sectors
+Disk identifier: 0x14116ac5
+     Boot Start     End Sectors  Size Id Type
+sdb1  *     2048 8058863 8056816  3.8G  c W95 FAT32 (LBA)
+Disk mapper/cryptdata: 975.9 GiB, 1047867162624 bytes, 2046615552 sectors
+Disk mapper/vgmint-root: 929.41 GiB, 997950750720 bytes, 1949122560 sectors
+Disk mapper/vgmint-swap_1: 1.91 GiB, 2046820352 bytes, 3997696 sectors
+
+parted -lm (filtered): _________________________________________________________
+
+sda:1050GB:scsi:512:512:gpt:ATA Crucial_CT1050MX:;
+1:1049kB:538MB:537MB:fat32:EFI System Partition:boot, esp;
+2:538MB:2330MB:1792MB:ext4::;
+3:2330MB:1050GB:1048GB:::;
+sdb:4126MB:scsi:512:512:msdos:TOSHIBA TransMemory:;
+1:1049kB:4126MB:4125MB:fat32::boot, lba;
+
+blkid (filtered): ______________________________________________________________
+
+NAME                FSTYPE      UUID                                   PARTUUID                             LABEL      PARTLABEL
+sda                                                                                                                    
+├─sda1              vfat        C535-0B9E                              8d774841-fc96-4852-b522-da24f279e5c2            EFI System Partition
+├─sda2              ext4        4588079c-fc78-42a7-bf9a-86c700b12ca5   1995f603-98de-4570-a861-1ab098597c53            
+└─sda3              crypto_LUKS 279a2ae4-af1e-4985-8976-f2535b89b7e9   342c3cc3-d6c6-4b5c-a4c8-3d2953fa4947            
+  └─cryptdata       LVM2_member 0Akwdl-x8XW-iJi9-V20c-KQ2E-BtUO-l3POdh                                                 
+    ├─vgmint-root   ext4        350f1ad8-beac-4acf-9338-1090205ed51a                                                   
+    └─vgmint-swap_1 swap        de7a680d-1e88-4c5e-a72b-2a891da02514                                                   
+sdb                                                                                                                    
+└─sdb1              vfat        8C3F-9CA2                              14116ac5-01                          LINUX MINT 
+
+Mount points (filtered): _______________________________________________________
+
+                         Avail Use% Mounted on
+/dev/mapper/vgmint-root   704G  18% /mnt
+/dev/sda1               504.8M   1% /mnt/boot/efi
+/dev/sda2                 1.3G  13% /mnt/boot
+/dev/sdb1               974.3M  75% /cdrom
+
+Mount options (filtered): ______________________________________________________
+
+/dev/mapper/vgmint-root ext4            rw,relatime
+/dev/sda1               vfat            rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro
+/dev/sda2               ext4            rw,relatime
+/dev/sdb1               vfat            ro,noatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro
+
+============================== ls -R /dev/mapper/ ==============================
+
+/dev/mapper:
+control
+cryptdata
+vgmint-root
+vgmint-swap_1
+
+====================== sdb1/boot/grub/grub.cfg (filtered) ======================
+
+Start Linux Mint 22.3 Cinnamon 64-bit
+Start Linux Mint 22.3 Cinnamon 64-bit (compatibility mode)
+OEM install (for manufacturers)
+Boot from next volume
+UEFI Firmware Settings
+Memory test
+
+========================= sdb1/syslinux.cfg (filtered) =========================
+
+DEFAULT loadconfig
+
+LABEL loadconfig
+  CONFIG /isolinux/isolinux.cfg
+  APPEND /isolinux/
+
+==================== sdb1: Location of files loaded by Grub ====================
+
+           GiB - GB             File                                 Fragment(s)
+            ?? = ??             boot/grub/grub.cfg                             1
+
+================== sdb1: Location of files loaded by Syslinux ==================
+
+           GiB - GB             File                                 Fragment(s)
+            ?? = ??             syslinux.cfg                                   1
+            ?? = ??             ldlinux.sys                                    1
+
+======================== Unknown MBRs/Boot Sectors/etc =========================
+
+Unknown BootLoader on sda3
