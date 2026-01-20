@@ -216,13 +216,20 @@ You can now reboot your computer.
 ```
 
 
-
-
 # 4. START BOOT REPAIR
 Nu alles gemount is op /mnt, kan de tool (of terminal) erbij.
 ```bash
 boot-repair
 ```
+
+```bash
+mint@mint:~$ sudo umount -R /mnt
+mint@mint:~$ sudo vgchange -an vgmint
+sudo cryptsetup close cryptdata
+  0 logical volume(s) in volume group "vgmint" now active
+mint@mint:~$ 
+```
+
 
 
 
