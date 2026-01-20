@@ -132,6 +132,46 @@ sudo: unable to allocate pty: No such device
 mint@mint:~$ 
 ```
 
+### resultaat
+```
+mint@mint:~$ # 1. Veiligheidshalve alles ontkoppelen (negeer fouten als het al los is)
+sudo umount -R /mnt
+sudo vgchange -an vgmint
+sudo cryptsetup close cryptdata
+
+# 2. Open Versleuteling
+sudo cryptsetup open /dev/sda3 cryptdata
+sudo vgchange -ay
+
+# 3. Mount Systeempartities (Volgorde is cruciaal)
+sudo mount /dev/mapper/vgmint-root /mnt
+sudo mount /dev/sda2 /mnt/boot
+sudo mount /dev/sda1 /mnt/boot/efi
+
+# 4. Bind Systeemprocessen (Expliciet, geen loops)
+sudo mount --bind /dev /mnt/dev
+sudo mount --bind /dev/pts /mnt/dev/pts
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+sudo mount --bind /run /mnt/run
+
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+mint@mint:~$ 
+```
+
+
 ---
 
 ## Module 3: Chroot Binnengaan 💻
