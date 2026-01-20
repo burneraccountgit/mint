@@ -216,12 +216,6 @@ You can now reboot your computer.
 ```
 
 
-# 4. START BOOT REPAIR
-Nu alles gemount is op /mnt, kan de tool (of terminal) erbij.
-```bash
-boot-repair
-```
-
 ```bash
 mint@mint:~$ sudo umount -R /mnt
 mint@mint:~$ sudo vgchange -an vgmint
@@ -231,7 +225,16 @@ mint@mint:~$
 ```
 
 
+# 4. START BOOT REPAIR
+Nu alles gemount is op /mnt, kan de tool (of terminal) erbij.
+```bash
+boot-repair
+```
 
+# KERNEL PANIC!
+```bash
+VFS: Unable to mount root fs on unknown-block(0,0)
+```
 
 
 ---
