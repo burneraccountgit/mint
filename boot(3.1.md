@@ -367,6 +367,20 @@ update-initramfs: Generating /boot/initrd.img-6.8.0-90-generic
 root@mint:/# 
 ```
 
+```
+exit
+umount -R /mnt
+vgchange -an vgmint
+cryptsetup close cryptdata
+reboot
+```
+
+
+# ERROR >> KERNEL PANIC! 
+AGAIN
+```
+VFS: Unable to mount root fs on unknown-block(0,0)
+```
 
 
 
