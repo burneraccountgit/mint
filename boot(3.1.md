@@ -254,6 +254,118 @@ mint@mint:~$
 ```
 
 
+
+
+### resultaat
+
+```
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+mint@mint:~$ sudo -i
+root@mint:~# cryptsetup open /dev/sda3 cryptdata
+Enter passphrase for /dev/sda3: 
+root@mint:~# vgchange -ay
+  2 logical volume(s) in volume group "vgmint" now active
+root@mint:~# mkdir -p /mnt
+root@mint:~# mount /dev/mapper/vgmint-root /mnt
+root@mint:~# mount /dev/sda2 /mnt/boot
+root@mint:~# mount /dev/sda1 /mnt/boot/efi
+root@mint:~# for i in /dev /dev/pts /proc /sys /run; do mount -B $i /mnt$i; done
+root@mint:~# chroot /mnt
+root@mint:/# df -h /boot
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2       1.7G  214M  1.3G  14% /boot
+root@mint:/# apt-get clean
+root@mint:/# apt-get autoremove -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+root@mint:/# dpkg --configure -a
+root@mint:/# apt-get install --reinstall linux-image-generic linux-headers-generic
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+0 upgraded, 0 newly installed, 2 reinstalled, 0 to remove and 0 not upgraded.
+Need to get 22.0 kB of archives.
+After this operation, 0 B of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-headers-generic amd64 6.8.0-90.91 [10.9 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 linux-image-generic amd64 6.8.0-90.91 [11.1 kB]
+Fetched 22.0 kB in 0s (170 kB/s)              
+(Reading database ... 830878 files and directories currently installed.)
+Preparing to unpack .../linux-headers-generic_6.8.0-90.91_amd64.deb ...
+Unpacking linux-headers-generic (6.8.0-90.91) over (6.8.0-90.91) ...
+Preparing to unpack .../linux-image-generic_6.8.0-90.91_amd64.deb ...
+Unpacking linux-image-generic (6.8.0-90.91) over (6.8.0-90.91) ...
+Setting up linux-image-generic (6.8.0-90.91) ...
+Setting up linux-headers-generic (6.8.0-90.91) ...
+Scanning processes...                                                                                                                                                                                                                         
+Scanning processor microcode...                                                                                                                                                                                                               
+Scanning linux images...                                                                                                                                                                                                                      
+
+Running kernel seems to be up-to-date.
+
+The processor microcode seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@mint:/# update-initramfs -u -k all
+update-initramfs: Generating /boot/initrd.img-6.14.0-37-generic
+cryptsetup: WARNING: target 'cryptdata' not found in /etc/crypttab
+update-initramfs: Generating /boot/initrd.img-6.8.0-90-generic
+cryptsetup: WARNING: target 'cryptdata' not found in /etc/crypttab
+root@mint:/# update-grub
+Sourcing file `/etc/default/grub'
+Sourcing file `/etc/default/grub.d/50_linuxmint.cfg'
+Generating grub configuration file ...
+Found linux image: /boot/vmlinuz-6.14.0-37-generic-signed
+Found linux image: /boot/vmlinuz-6.14.0-37-generic
+Found initrd image: /boot/initrd.img-6.14.0-37-generic
+Found linux image: /boot/vmlinuz-6.8.0-90-generic
+Found initrd image: /boot/initrd.img-6.8.0-90-generic
+Warning: os-prober will be executed to detect other bootable partitions.
+Its output will be used to detect bootable binaries on them and create new boot entries.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+root@mint:/# ls -lh /boot/initrd.img*
+  0 lrwxrwxrwx 1 root root  27 Jan 18 01:34 /boot/initrd.img -> initrd.img-6.8.0-90-generic
+79M -rw-r--r-- 1 root root 79M Jan 20 23:59 /boot/initrd.img-6.14.0-37-generic
+77M -rw-r--r-- 1 root root 77M Jan 21 00:00 /boot/initrd.img-6.8.0-90-generic
+  0 lrwxrwxrwx 1 root root  28 Dec 17 08:37 /boot/initrd.img.old -> initrd.img-6.14.0-37-generic
+root@mint:/# 
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 ## Module 3: Chroot Binnengaan 💻
