@@ -41,6 +41,14 @@ sudo umount /mnt/boot-sav/sda1
 sudo umount /mnt/boot-sav/sda2
 ```
 
+# 1. MOUNT DE ROOT (Het versleutelde systeem)
+```bash
+sudo mount /dev/mapper/vgmint-root /mnt
+```
+
+
+
+
 ---
 
 # 2. OPEN DE CONTAINER (DECRYPTIE)
@@ -58,6 +66,18 @@ sudo cryptsetup open /dev/sda3 cryptdata
 (Typ je wachtwoord blind in en druk op Enter)
 
 
+# 2. MOUNT DE BOOT PARTITIE (sda2 - 1.7G)
+Deze bevat je kernels en initramfs images
+```bash
+sudo mount /dev/sda2 /mnt/boot
+```
+
+
+
+
+
+
+
 ---
 
 # 3. ACTIVEER LVM (CRUCIAAL BIJ MINT)
@@ -71,6 +91,19 @@ sudo vgchange -ay
 ```bash
 sudo vgchange -ay
 ```
+
+# 3. MOUNT DE EFI PARTITIE (sda1 - 512M)
+Deze bevat de bootloader (GRUB/Shim) voor UEFI
+```bash
+sudo mount /dev/sda1 /mnt/boot/efi
+```
+
+
+
+
+
+
+
 
 ---
 
@@ -122,6 +155,15 @@ sdb                   8:16   1   3.8G  0 disk
 └─sdb1                8:17   1   3.8G  0 part  /cdrom
 mint@mint:~$ 
 ```
+
+
+# 4. START BOOT REPAIR
+Nu alles gemount is op /mnt, kan de tool (of terminal) erbij.
+```bash
+boot-repair
+```
+
+
 
 
 ---
