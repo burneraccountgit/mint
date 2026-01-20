@@ -130,10 +130,7 @@ Deze bevat de bootloader (GRUB/Shim) voor UEFI
 sudo mount /dev/sda1 /mnt/boot/efi
 ```
 
-# 3.4 Herstarten
-```bash
-sudo reboot
-```
+
 
 
 
@@ -258,7 +255,9 @@ sudo mount /dev/sdXZ /mnt/boot
 ---
 
 # 7. NU KAN JE BOOT REPAIR STARTEN
-
+```bash
+sudo reboot
 ```
+
 
 
