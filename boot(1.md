@@ -156,6 +156,19 @@ sdb                   8:16   1   3.8G  0 disk
 mint@mint:~$ 
 ```
 
+```bash
+
+<pre><font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ sudo mount /dev/mapper/vgmint-root /mnt
+<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ sudo mount /dev/sda2 /mnt/boot
+<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ sudo mount /dev/sda1 /mnt/boot/efi
+<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ 
+
+</pre>
+```
+
+
+
+
 
 # 4. START BOOT REPAIR
 Nu alles gemount is op /mnt, kan de tool (of terminal) erbij.
