@@ -1,3 +1,4 @@
+```
 mint@mint:~$ cryptsetup open /dev/sda3 cryptdata
 vgchange -ay
 mount /dev/mapper/vgmint-root /mnt
@@ -24,4 +25,4 @@ mount: /mnt/sys: mount point does not exist.
 mount: /mnt/run: mount point does not exist.
        dmesg(1) may have more information after failed mount system call.
 mint@mint:~$ 
-
+```
