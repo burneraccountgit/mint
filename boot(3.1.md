@@ -44,6 +44,17 @@ sudo mount /dev/sda1 /mnt/boot/efi
 
 ### resultaat
 ```
+mint@mint:~$ # Bind mounts aanmaken voor systeemprocessen
+for i in /dev /dev/pts /proc /sys /run; do sudo mount -B $i /mnt$i; done
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+mint@mint:~$ 
+```
+
+### resultaat
+```
 mint@mint:~$ # 1. Open de versleutelde partitie met root-rechten
 sudo cryptsetup open /dev/sda3 cryptdata
 
