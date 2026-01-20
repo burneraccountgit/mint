@@ -19,6 +19,20 @@ Hier is je herstelplan in Obsidian MD formaat.
 
 ---
 
+
+## Module 1: Schijven Koppelen 🔓
+
+### resultaat
+```
+mint@mint:~$ sudo -i
+sudo: unable to allocate pty: No such device
+mint@mint:~$ whoami
+mint
+mint@mint:~$ 
+```
+
+---
+
 ## Module 1: Schijven Koppelen 🔓
 
 *Dit blok opent de versleuteling en koppelt de partities op de juiste plek.*
