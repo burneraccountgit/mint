@@ -352,6 +352,22 @@ root@mint:/#
 ```
 
 
+```
+root@mint:/# cat /etc/crypttab
+luks-279a2ae4-af1e-4985-8976-f2535b89b7e9 UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard
+root@mint:/# blkid /dev/sda3
+/dev/sda3: UUID="279a2ae4-af1e-4985-8976-f2535b89b7e9" TYPE="crypto_LUKS" PARTUUID="342c3cc3-d6c6-4b5c-a4c8-3d2953fa4947"
+root@mint:/# cp /etc/crypttab /etc/crypttab.bak
+root@mint:/# echo "cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard" > /etc/crypttab
+root@mint:/# cat /etc/crypttab
+cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard
+root@mint:/# update-initramfs -u -k all
+update-initramfs: Generating /boot/initrd.img-6.14.0-37-generic
+update-initramfs: Generating /boot/initrd.img-6.8.0-90-generic
+root@mint:/# 
+```
+
+
 
 
 
