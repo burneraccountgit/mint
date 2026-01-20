@@ -9,6 +9,27 @@ Voer deze regels regel voor regel uit in de terminal.
 # Zoek de grootste partitie, waarschijnlijk sda3 of nvme0n1p3.
 lsblk
 
+---
+
+<pre>To run a command as administrator (user &quot;root&quot;), use &quot;sudo &lt;command&gt;&quot;.
+See &quot;man sudo_root&quot; for details.
+
+<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0   2.5G  1 loop /rofs
+sda      8:0    0 978.1G  0 disk 
+├─sda1   8:1    0   512M  0 part /mnt/boot-sav/sda1
+├─sda2   8:2    0   1.7G  0 part /mnt/boot-sav/sda2
+└─sda3   8:3    0 975.9G  0 part 
+sdb      8:16   1   3.8G  0 disk 
+└─sdb1   8:17   1   3.8G  0 part /cdrom
+<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ 
+</pre>
+
+---
+
+
+
 # 2. OPEN DE CONTAINER (DECRYPTIE)
 # Vervang /dev/sdXY door jouw encrypted partitie (bv. /dev/sda3)
 # 'cryptdata' is de naam die we het tijdelijk geven.
