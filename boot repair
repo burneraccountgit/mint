@@ -1,0 +1,9 @@
+A new file (/var/log/boot-repair/20260120_082434/Boot-Info_20260120_0824.txt) will open in your text viewer.
+
+
+If you are experiencing boot issues, indicate the content of this file to people who help you. For example on forums or via email.
+
+
+
+
+You may want to retry after mounting your encrypted partitions so that the tool can verify their contents. (cryptsetup open)
