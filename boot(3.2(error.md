@@ -21,7 +21,7 @@ Enter passphrase for /dev/sda3:
 
 
 
-# MODULE 1
+# MODULE 2
 ```
 mint@mint:~$ # Bind mounts aanmaken voor systeemprocessen
 for i in /dev /dev/pts /proc /sys /run; do sudo mount -B $i /mnt$i; done
