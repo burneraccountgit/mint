@@ -20,7 +20,15 @@ Hier is je herstelplan in Obsidian MD formaat.
 ---
 
 
-## Module 1: Schijven Koppelen 🔓
+## Module 0: Root Toegang 🛡️
+
+```bash
+# Word root (de prompt verandert van $ naar #)
+sudo -i
+
+# Controleer of je root bent (antwoord moet 'root' zijn)
+whoami
+```
 
 ### resultaat
 ```
