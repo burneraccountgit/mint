@@ -117,6 +117,21 @@ mount: /mnt/run: mount point does not exist.
 mint@mint:~$ 
 ```
 
+### resultaat
+```
+mint@mint:~$ sudo mount --bind /dev /mnt/dev
+sudo mount --bind /dev/pts /mnt/dev/pts
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+sudo mount --bind /run /mnt/run
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+sudo: unable to allocate pty: No such device
+mint@mint:~$ 
+```
+
 ---
 
 ## Module 3: Chroot Binnengaan 💻
