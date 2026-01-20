@@ -99,6 +99,9 @@ update-grub
 *Alles netjes afsluiten om dataverlies te voorkomen.*
 
 ```bash
+# 0. Kijk in de tabel die verschijnt naar de kolom Avail (of Beschikbaar). Hoeveel ruimte is daar nog vrij?
+df -h /mnt/boot
+
 # 1. Verlaat de chroot omgeving
 exit
 
