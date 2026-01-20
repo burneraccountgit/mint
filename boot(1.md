@@ -167,6 +167,19 @@ mint@mint:~$
 ```
 
 
+# boot repair
+```
+Boot successfully repaired.
+
+A new file (/var/log/boot-repair/20260120_082535/Boot-Info_20260120_0825.txt) will open in your text viewer.
+
+
+In case you still experience boot problem, indicate its content to:
+boot.repair@gmail.com or to your favorite support forum.
+
+You can now reboot your computer.
+```
+
 
 
 
