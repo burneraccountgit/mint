@@ -343,6 +343,14 @@ root@mint:/#
 ```
 
 
+```
+root@mint:/# cat /etc/crypttab
+luks-279a2ae4-af1e-4985-8976-f2535b89b7e9 UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard
+root@mint:/# blkid /dev/sda3
+/dev/sda3: UUID="279a2ae4-af1e-4985-8976-f2535b89b7e9" TYPE="crypto_LUKS" PARTUUID="342c3cc3-d6c6-4b5c-a4c8-3d2953fa4947"
+root@mint:/# 
+```
+
 
 
 
