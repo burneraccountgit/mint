@@ -32,7 +32,7 @@ Als `lsblk` na stap 2 of 3 geen logische volumes (zoals `root`) laat zien, plak 
 
 ---
 
-# Maak de 'boot-sav' mounts los (om conflicten te voorkomen)
+# 1. Maak de 'boot-sav' mounts los (om conflicten te voorkomen)
 sudo umount /mnt/boot-sav/sda1
 sudo umount /mnt/boot-sav/sda2
 
@@ -45,6 +45,10 @@ sudo umount /mnt/boot-sav/sda2
 sudo cryptsetup open /dev/sdXY cryptdata
 # (Voer je wachtwoord in als erom gevraagd wordt)
 
+# 2. Open de versleutelde container (sda3)
+sudo cryptsetup open /dev/sda3 cryptdata
+# (Typ je wachtwoord blind in en druk op Enter)
+
 
 ---
 
@@ -53,12 +57,18 @@ sudo cryptsetup open /dev/sdXY cryptdata
 # Dit commando scant en activeert de volumes (zoals 'root' en 'swap').
 sudo vgchange -ay
 
+# 3. Activeer de interne LVM volumes
+sudo vgchange -ay
+
 ---
 
 # 4. CONTROLEER DE MAPPER PADEN
 # Kijk nu hoe de volumes heten onder de 'cryptdata' tak.
 lsblk
 # Je zoekt iets als: /dev/mapper/vgmint-root of /dev/mapper/mint--vg-root
+
+# 4. Toon de nieuwe situatie
+lsblk
 
 ---
 
