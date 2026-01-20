@@ -5,7 +5,7 @@ Om Boot Repair toegang te geven tot je versleutelde bestanden, moet je de contai
 Voer deze regels regel voor regel uit in de terminal.
 
 # 1. ZOEK JE VERSLEUTELDE PARTITIE
-# Zoek de grootste partitie, waarschijnlijk sda3 of nvme0n1p3.
+## Zoek de grootste partitie, waarschijnlijk sda3 of nvme0n1p3.
 ```bash
 lsblk
 ```
@@ -44,25 +44,25 @@ sudo umount /mnt/boot-sav/sda2
 ---
 
 # 2. OPEN DE CONTAINER (DECRYPTIE)
-# Vervang /dev/sdXY door jouw encrypted partitie (bv. /dev/sda3)
-# 'cryptdata' is de naam die we het tijdelijk geven.
+## Vervang /dev/sdXY door jouw encrypted partitie (bv. /dev/sda3)
+## 'cryptdata' is de naam die we het tijdelijk geven.
 ```bash
 sudo cryptsetup open /dev/sdXY cryptdata
 ```
-# (Voer je wachtwoord in als erom gevraagd wordt)
+## (Voer je wachtwoord in als erom gevraagd wordt)
 
 # 2. Open de versleutelde container (sda3)
 ```bash
 sudo cryptsetup open /dev/sda3 cryptdata
 ```
-# (Typ je wachtwoord blind in en druk op Enter)
+## (Typ je wachtwoord blind in en druk op Enter)
 
 
 ---
 
 # 3. ACTIVEER LVM (CRUCIAAL BIJ MINT)
-# Mint gebruikt standaard LVM binnenin de encryptie.
-# Dit commando scant en activeert de volumes (zoals 'root' en 'swap').
+## Mint gebruikt standaard LVM binnenin de encryptie.
+## Dit commando scant en activeert de volumes (zoals 'root' en 'swap').
 ```bash
 sudo vgchange -ay
 ```
@@ -75,21 +75,22 @@ sudo vgchange -ay
 ---
 
 # 4. CONTROLEER DE MAPPER PADEN
-# Kijk nu hoe de volumes heten onder de 'cryptdata' tak.
+## Kijk nu hoe de volumes heten onder de 'cryptdata' tak.
 ```bash
 lsblk
 ```
-# Je zoekt iets als: /dev/mapper/vgmint-root of /dev/mapper/mint--vg-root
+## Je zoekt iets als: /dev/mapper/vgmint-root of /dev/mapper/mint--vg-root
 
 # 4. Toon de nieuwe situatie
 ```bash
 lsblk
 ```
 
+
+```bash
 To run a command as administrator (user "root"), use "sudo <command>".
 See "man sudo_root" for details.
 
-```bash
 mint@mint:~$ lsblk
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0    7:0    0   2.5G  1 loop /rofs
@@ -126,7 +127,7 @@ mint@mint:~$
 ---
 
 # 5. MOUNT DE ROOT PARTITIE
-# Vervang het pad hieronder met wat je bij stap 4 vond.
+## Vervang het pad hieronder met wat je bij stap 4 vond.
 ```bash
 sudo mount /dev/mapper/vgmint-root /mnt
 ```
@@ -135,8 +136,8 @@ sudo mount /dev/mapper/vgmint-root /mnt
 ---
 
 # 6. MOUNT DE BOOT PARTITIE (Indien apart)
-# Boot Repair heeft vaak ook de /boot partitie nodig.
-# Dit is vaak de partitie direct boven je encrypted partitie (bv sda2).
+## Boot Repair heeft vaak ook de /boot partitie nodig.
+## Dit is vaak de partitie direct boven je encrypted partitie (bv sda2).
 ```bash
 sudo mount /dev/sdXZ /mnt/boot
 ```
