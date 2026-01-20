@@ -1,9 +1,8 @@
-# lsblk
-
+*To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.*
+---
+# 1 
 ```
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-
 mint@mint:~$ lsblk
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
 loop0    7:0    0   2.5G  1 loop /rofs
@@ -15,7 +14,16 @@ sdb      8:16   1   3.8G  0 disk
 └─sdb1   8:17   1   3.8G  0 part /cdrom
 mint@mint:~$ 
 
+```
+# 2
+```
+mint@mint:~$ sudo umount /mnt/boot-sav/sda1
+sudo umount /mnt/boot-sav/sda2
+umount: /mnt/boot-sav/sda1: no mount point specified.
+umount: /mnt/boot-sav/sda2: no mount point specified.
+mint@mint:~$ 
+
 
 ```
-
-# 
+# 3
+```
