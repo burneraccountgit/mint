@@ -4,49 +4,15 @@ Om Boot Repair toegang te geven tot je versleutelde bestanden, moet je de contai
 
 Voer deze regels regel voor regel uit in de terminal.
 
-# 1. ZOEK JE VERSLEUTELDE PARTITIE
-Zoek de grootste partitie, waarschijnlijk sda3 of nvme0n1p3.
-```bash
-lsblk
-```
+# 1. 
+
 
 ---
 
-```bash
-<pre>To run a command as administrator (user &quot;root&quot;), use &quot;sudo &lt;command&gt;&quot;.
-See &quot;man sudo_root&quot; for details.
-
-<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ lsblk
-NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
-loop0    7:0    0   2.5G  1 loop /rofs
-sda      8:0    0 978.1G  0 disk 
-├─sda1   8:1    0   512M  0 part /mnt/boot-sav/sda1
-├─sda2   8:2    0   1.7G  0 part /mnt/boot-sav/sda2
-└─sda3   8:3    0 975.9G  0 part 
-sdb      8:16   1   3.8G  0 disk 
-└─sdb1   8:17   1   3.8G  0 part /cdrom
-<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ 
-</pre>
-```
 
 
-```bash
-<pre><font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ lsblk
-NAME                MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
-loop0                 7:0    0   2.5G  1 loop  /rofs
-sda                   8:0    0 978.1G  0 disk  
-├─sda1                8:1    0   512M  0 part  /mnt/boot/efi
-├─sda2                8:2    0   1.7G  0 part  /mnt/boot
-└─sda3                8:3    0 975.9G  0 part  
-  └─cryptdata       252:0    0 975.9G  0 crypt 
-    ├─vgmint-root   252:1    0 929.4G  0 lvm   /mnt
-    └─vgmint-swap_1 252:2    0   1.9G  0 lvm   
-sdb                   8:16   1   3.8G  0 disk  
-└─sdb1                8:17   1   3.8G  0 part  /cdrom
-<font color="#8AE234"><b>mint@mint</b></font>:<font color="#729FCF"><b>~</b></font>$ 
 
 
-</pre>
 ```
 
 
@@ -86,11 +52,7 @@ sudo cryptsetup open /dev/sdXY cryptdata
 ```
 ## (Voer je wachtwoord in als erom gevraagd wordt)
 
-# 2.1 Open de versleutelde container (sda3)
-```bash
-sudo cryptsetup open /dev/sda3 cryptdata
-```
-(Typ je wachtwoord blind in en druk op Enter)
+
 
 
 # 2.2 MOUNT DE BOOT PARTITIE (sda2 - 1.7G)
@@ -112,17 +74,9 @@ sudo cryptsetup close cryptdata
 
 ---
 
-# 3.1 ACTIVEER LVM (CRUCIAAL BIJ MINT)
-Mint gebruikt standaard LVM binnenin de encryptie.
-Dit commando scant en activeert de volumes (zoals 'root' en 'swap').
-```bash
-sudo vgchange -ay
-```
 
-# 3.2 Activeer de interne LVM volumes
-```bash
-sudo vgchange -ay
-```
+
+
 
 # 3.3 MOUNT DE EFI PARTITIE (sda1 - 512M)
 Deze bevat de bootloader (GRUB/Shim) voor UEFI
@@ -139,22 +93,12 @@ sudo mount /dev/sda1 /mnt/boot/efi
 
 ---
 
-# 4. CONTROLEER DE MAPPER PADEN
-Kijk nu hoe de volumes heten onder de 'cryptdata' tak.
-```bash
-lsblk
-```
-Je zoekt iets als: /dev/mapper/vgmint-root of /dev/mapper/mint--vg-root
 
-# 4.1 Toon de nieuwe situatie
-```bash
-lsblk
-```
+
+
 
 
 ```bash
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
 
 mint@mint:~$ lsblk
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
@@ -165,14 +109,16 @@ sda      8:0    0 978.1G  0 disk
 └─sda3   8:3    0 975.9G  0 part 
 sdb      8:16   1   3.8G  0 disk 
 └─sdb1   8:17   1   3.8G  0 part /cdrom
+
 mint@mint:~$ sudo umount /mnt/boot-sav/sda1
 mint@mint:~$ sudo umount /mnt/boot-sav/sda2
 mint@mint:~$ sudo cryptsetup open /dev/sda3 cryptdata
 Enter passphrase for /dev/sda3: 
+
 mint@mint:~$ sudo vgchange -ay
   2 logical volume(s) in volume group "vgmint" now active
-mint@mint:~$ sudo vgchange -ay
-  2 logical volume(s) in volume group "vgmint" now active
+
+
 mint@mint:~$ lsblk
 NAME                MAJ:MIN RM   SIZE RO TYPE  MOUNTPOINTS
 loop0                 7:0    0   2.5G  1 loop  /rofs
@@ -185,7 +131,9 @@ sda                   8:0    0 978.1G  0 disk
     └─vgmint-swap_1 252:2    0   1.9G  0 lvm   
 sdb                   8:16   1   3.8G  0 disk  
 └─sdb1                8:17   1   3.8G  0 part  /cdrom
+
 mint@mint:~$ 
+
 ```
 
 ```bash
