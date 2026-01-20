@@ -1,3 +1,10 @@
+Om Boot Repair toegang te geven tot je versleutelde bestanden, moet je de container 'mappen' (openen) en de logische volumes activeren.
+
+### PAYLOAD: UNLOCK & MOUNT LUKS
+
+Voer deze regels regel voor regel uit in de terminal.
+
+```bash
 # 1. ZOEK JE VERSLEUTELDE PARTITIE
 # Zoek de grootste partitie, waarschijnlijk sda3 of nvme0n1p3.
 lsblk
@@ -28,3 +35,8 @@ sudo mount /dev/mapper/vgmint-root /mnt
 sudo mount /dev/sdXZ /mnt/boot
 
 # NU KAN JE BOOT REPAIR STARTEN
+
+```
+
+**Next Step:**
+Als `lsblk` na stap 2 of 3 geen logische volumes (zoals `root`) laat zien, plak dan hier de output van `lsblk`, dan is de structuur anders (geen LVM).
