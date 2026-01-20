@@ -69,7 +69,11 @@ sudo umount /mnt/boot-sav/sda2
 sudo mount /dev/mapper/vgmint-root /mnt
 ```
 
-
+# 1. Alles veilig ontkoppelen (Recursive unmount)
+Dit zorgt dat alle wijzigingen daadwerkelijk naar schijf geschreven worden.
+```bash
+sudo umount -R /mnt
+```
 
 
 ---
@@ -95,6 +99,11 @@ Deze bevat je kernels en initramfs images
 sudo mount /dev/sda2 /mnt/boot
 ```
 
+# 2. Sluit de LVM en Encryptie containers (Optioneel, maar netjes)
+```bash
+sudo vgchange -an vgmint
+sudo cryptsetup close cryptdata
+```
 
 
 
@@ -121,7 +130,10 @@ Deze bevat de bootloader (GRUB/Shim) voor UEFI
 sudo mount /dev/sda1 /mnt/boot/efi
 ```
 
-
+# 3. Herstarten
+```bash
+sudo reboot
+```
 
 
 
