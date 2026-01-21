@@ -618,6 +618,24 @@ sudo fsck.exfat -n /dev/sdc1
 
 **Zodra je de output van deze checks hebt, kunnen we de exacte reden vaststellen waarom de mountpoints "niet bestaan" en of de SSD veilig is voor het wegschrijven van de herstelde initramfs.**
 
+---
+
+```
+root@mint:~# ls -d /mnt/dev /mnt/proc /mnt/sys /mnt/run 2>&1
+ls: cannot access '/mnt/dev': No such file or directory
+ls: cannot access '/mnt/proc': No such file or directory
+ls: cannot access '/mnt/sys': No such file or directory
+ls: cannot access '/mnt/run': No such file or directory
+root@mint:~# mount | grep -E "sda|sdc|vgmint"
+/dev/sdc1 on /media/mint/USB-STAAFJE type exfat (rw,nosuid,nodev,relatime,uid=1000,gid=1000,fmask=0022,dmask=0022,iocharset=utf8,errors=remount-ro,uhelper=udisks2)
+root@mint:~# sudo fsck.exfat -n /dev/sdc1
+exfatprogs version : 1.2.2
+/dev/sdc1: clean. directories 2083, files 14629
+root@mint:~# 
+```
+
+---
+
 
 
 
