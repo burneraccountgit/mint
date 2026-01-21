@@ -39,14 +39,14 @@
 ## 🟦 FASE 2: DE BUNKER (INFRASTRUCTUUR)
 *Herstel van de digitale soevereiniteit.*
 
-- [ ] **[1h]** **Clean Install:** Linux Mint Cinnamon.
+- [x] **[1h]** **Clean Install:** Linux Mint Cinnamon.
 	- **CRIT:** Secure Boot AAN, Fast Boot UIT.
 	- **CRIT:** Disk Encryption (LVM + LUKS) AAN.
 	- **CRIT:** Offline installatie (Kabel eruit).
-- [ ] **[10m]** **Hardening Script:**
+- [x] **[10m]** **Hardening Script:**
 	- Maak `bunker_setup.sh` (zie [[Chat_History#Script 1]]).
 	- Voer uit: `sudo ./bunker_setup.sh` (Firewall dicht).
-- [ ] **[30m]** **Package Restore:**
+- [x] **[30m]** **Package Restore:**
 	- Maak `restore_list.txt` op Desktop.
 	- Maak `deploy_packages.sh` (zie [[Chat_History#Script 2]]).
 	- Voer uit: `sudo ./deploy_packages.sh`.
@@ -54,7 +54,7 @@
 ## 🟧 FASE 3: THE GRINDER (DATA PROCESSING)
 *Van PDF-spaghetti naar [[Source_Code]].*
 
-- [ ] **[05m]** **Staging:** Maak map `_RAID_DUMP`.
+- [x] **[05m]** **Staging:** Maak map `_RAID_DUMP`.
 - [ ] **[05m]** **DUMP:** Gooi *alle* juridische PDF's in deze map.
 - [ ] **[15m]** **GRIND:** - Maak `grind_evidence.sh` (zie [[Chat_History#Script 3]]).
 	- Voer uit.
