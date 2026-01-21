@@ -552,6 +552,16 @@ Zodra ik de groottes zie, gaan we over naar de QEMU-fase om je huidige systeem "
 
 ---
 
+# ANTWOORD
+
+
+BELANGRIJK == ***WE HADDEN DIT MOETEN DOEN***
+```
+sudo tar -cvpzf /pad/naar/backup.tar.gz /mnt/etc | tee /media/mint/USB-STAAFJE/MINT_BACKUP/backup.log
+```
+
+IK HEB NU MAAR GEWOON DIT :: ..
+
 ```
 mint@mint:~$ sudo vgscan && sudo vgchange -ay
   Found volume group "vgmint" using metadata type lvm2
@@ -590,7 +600,5 @@ DAN DUIZEND PAGINA'S LATER..
 root@mint:~# 
 ```
 
-
-
-
+---
 
