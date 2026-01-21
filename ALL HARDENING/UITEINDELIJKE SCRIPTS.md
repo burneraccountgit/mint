@@ -72,7 +72,85 @@ echo "   REBOOT SYSTEM MANUALLY TO FINALIZE."
 
 ```
 
-# deploy_packages.sh
+# deploy_packages.sh // 
+
+**SITREP: PATHING ERROR DETECTED (ROOT ENVIRONMENT)**
+
+**OORZAAK:**
+Wanneer je `sudo` gebruikt, word je tijdelijk de gebruiker **ROOT**.
+Het script zoekt via `$HOME/Desktop`.
+
+* Jouw `$HOME` is `/home/jouwnaam`.
+* Root's `$HOME` is `/root`.
+* Root heeft geen bestand `restore_list.txt` op `/root/Desktop` staan. Daarom faalt het.
+
+**DE OPLOSSING (RELATIVE PATHING):**
+We dwingen het script om **niet** naar de Desktop te zoeken, maar gewoon in de **huidige map** waar jij staat.
+
+### OPERATIONAL ORDER:
+
+1. **MOVE ASSET:**
+Zorg dat `restore_list.txt` en `deploy_packages.sh` in **EXACT DEZELFDE MAP** staan (bijvoorbeeld allebei op je Bureaublad, of allebei in een map).
+2. **UPDATE SCRIPT (V2):**
+Open `deploy_packages.sh`, verwijder alles, en plak deze **gecorrigeerde versie** erin. Deze versie kijkt in de map zelf (`.`) in plaats van te gokken waar je Desktop is.
+
+```bash
+#!/bin/bash
+# KEYWORD: DEPLOY_PACKAGES_V2
+# DOEL: LEEST 'restore_list.txt' UIT HUIDIGE MAP (FIXED ROOT PATHING)
+
+# We bepalen de map waar dit script zich bevindt
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+INPUT_FILE="$SCRIPT_DIR/restore_list.txt"
+LOG_FILE="$SCRIPT_DIR/install_log.txt"
+
+# Check Root
+if [[ $EUID -ne 0 ]]; then
+   echo "Run as root: sudo ./deploy_packages.sh"
+   exit 1
+fi
+
+# Check Input File
+if [ ! -f "$INPUT_FILE" ]; then
+    echo "[!] ERROR: BESTAND NIET GEVONDEN."
+    echo "    Gezocht naar: $INPUT_FILE"
+    echo "    ACTIE: Zet 'restore_list.txt' in dezelfde map als dit script!"
+    exit 1
+fi
+
+echo "[*] TARGET ACQUIRED: $INPUT_FILE"
+echo "[*] STARTING MASS INSTALL..."
+
+# Update Repo's
+apt-get update -y
+
+# INSTALLATIE LOOP (Filtert op 'install' en negeert 'deinstall')
+# We gebruiken -r om carriage returns te strippen voor de zekerheid
+awk '$2 == "install" {print $1}' "$INPUT_FILE" | xargs apt-get install -y --ignore-missing
+
+# SCHOONMAAK LOOP ('deinstall' items verwijderen)
+awk '$2 == "deinstall" {print $1}' "$INPUT_FILE" | xargs apt-get remove -y --purge
+
+echo "[V] DEPLOYMENT COMPLETE."
+echo "[V] LOGFILES SAVED IN $SCRIPT_DIR"
+
+```
+
+3. **EXECUTE (TERMINAL):**
+Zorg dat je terminal in de map staat waar de bestanden zijn (via `cd`).
+```bash
+sudo ./deploy_packages.sh
+
+```
+
+
+
+**DIT ZAL WERKEN. VOER UIT.**
+
+
+
+
+# deploy_packages.sh // DEZE WERK NIET
 
 ```
 
