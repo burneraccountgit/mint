@@ -559,6 +559,15 @@ BELANGRIJK == ***WE HADDEN DIT MOETEN DOEN***
 ```
 sudo tar -cvpzf /pad/naar/backup.tar.gz /mnt/etc | tee /media/mint/USB-STAAFJE/MINT_BACKUP/backup.log
 ```
+en
+
+    script /home/mint/Desktop/terminal_log.txt
+
+en
+
+    script /media/mint/USB-STAAFJE/terminal_log.txt
+
+```
 
 IK HEB NU MAAR GEWOON DIT :: ..
 
