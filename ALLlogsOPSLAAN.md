@@ -1,4 +1,9 @@
-sudo tar -cvpzf /pad/naar/backup.tar.gz /mnt/etc | tee /media/mint/USB-STAAFJE/MINT_BACKUP/backup.log
+
+
+    sudo tar -cvpzf /pad/naar/backup.tar.gz /mnt/etc | tee /media/mint/USB-STAAFJE/MINT_BACKUP/backup.log
+
+    script /home/mint/Desktop/terminal_log.txt
+
 
 ---
 
