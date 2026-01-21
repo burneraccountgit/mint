@@ -45,3 +45,26 @@ commando | nc termbin.com 9999
 
 ---
 
+# hoe zet ik in liveboot cinnamon in de terminal aan dat alle commando's en output in txt op bureaublad worden opgeslagen
+
+---
+
+Om in een Live-sessie van Linux Mint Cinnamon automatisch alle terminalactiviteit (commando's en output) op te slaan in een tekstbestand op het bureaublad, kun je het commando
+script gebruiken.
+Volg deze stappen:
+
+    Open de terminal (Ctrl+Alt+T).
+    Typ het volgende commando en druk op Enter:
+    script ~/Desktop/terminal_log.txt
+    Vanaf dit moment wordt alles wat je typt en alles wat de terminal antwoordt opgeslagen in het bestand terminal_log.txt op je bureaublad.
+    Wil je stoppen met loggen? Typ dan exit of druk op Ctrl+D.
+
+Belangrijke opmerkingen:
+
+    Directe weergave: Je ziet de tekst pas in het bestand verschijnen nadat je de sessie afsluit met exit of wanneer de buffer vol is.
+    Liveboot: Omdat je in een Live-sessie werkt, verdwijnt dit bestand zodra je de computer opnieuw opstart. Sla het bestand op een USB-stick of in de cloud op als je het wilt bewaren.
+    Bestandsnaam: Je kunt terminal_log.txt vervangen door elke gewenste naam.
+
+---
+
+    
