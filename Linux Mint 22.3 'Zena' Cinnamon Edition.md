@@ -473,3 +473,82 @@ tar -tvf /media/mint/USB-STAAFJE/MINT_BACKUP/system_config.tar.gz | head -n 10
 
 ---
 
+# ANTWOORD
+ZOALS WE EEN TEXT LIJSTJE MET PROGRAMMA'S HEBBEN
+WIL IK OOK EEN TEXT LIJSTJE MET AL MIJN BESTANDEN
+EN IK WIL OOK EEN TEXT LIJSTJE MET AL MIJN OPSEC REGELS *EN IK BEDOEL ECHT ALLE OPSEC REGELS DIE CUSTOM ZIJN
+
+---
+
+Dat is een uitstekende toevoeging. Een tekstuele index van je bestanden en een extractie van je custom regels is de ultieme "sanity check" na de herinstallatie. Hiermee kun je met `diff` of `grep` direct zien of er iets ontbreekt.
+
+We doen dit **nu**, terwijl de grote `tar` backup op de achtergrond afrondt.
+
+### 1. Volledige Bestandsindex (Het "Waar-is-wat" lijstje)
+
+Dit commando maakt een recursieve lijst van elk bestand op je systeem (behalve virtuele mappen zoals `/proc`) en slaat dit op als een leesbaar tekstbestand op je SSD.
+
+```bash
+sudo find /mnt -xdev -not -path '*/.*' > /media/mint/USB-STAAFJE/MINT_BACKUP/volledige_bestandslijst.txt
+
+```
+
+*(Ik heb verborgen bestanden in dit specifieke lijstje even overgeslagen voor de leesbaarheid, maar ze zitten wel in je `.tar` backup).*
+
+### 2. Custom OPSEC & Configuratie Extractie
+
+We gaan nu specifiek op zoek naar alles wat jij hebt aangepast. We kijken naar bestanden die afwijken van de standaard of die vaak gebruikt worden voor hardening.
+
+Voer dit blok uit om de belangrijkste OPSEC-configuraties in één overzichtelijk bestand te dumpen:
+
+```bash
+{
+  echo "=== CUSTOM FIREWALL RULES (UFW) ==="
+  sudo cat /mnt/etc/ufw/user.rules
+  echo -e "\n=== KERNEL HARDENING (SYSCTL) ==="
+  sudo cat /mnt/etc/sysctl.conf /mnt/etc/sysctl.d/*.conf
+  echo -e "\n=== HOSTS & NETWERK ==="
+  sudo cat /mnt/etc/hosts
+  echo -e "\n=== CRON JOBS (CUSTOM SCRIPTS) ==="
+  sudo ls -R /mnt/etc/cron.* echo -e "\n=== SSH CONFIG ==="
+  sudo cat /mnt/etc/ssh/sshd_config
+  echo -e "\n=== LOGS & AUDITD (IF INSTALLED) ==="
+  sudo ls -l /mnt/etc/audit/rules.d/
+} > /media/mint/USB-STAAFJE/MINT_BACKUP/custom_opsec_rules_index.txt
+
+```
+
+### 3. De "Diff" Lijst (Wat is er veranderd in /etc?)
+
+Dit is de meest krachtige tool voor jouw "mistakes to remember". We zoeken naar bestanden in `/etc` die handmatig zijn aangepast (gebaseerd op timestamps of specifieke keywords).
+
+```bash
+sudo find /mnt/etc -type f -mtime -30 > /media/mint/USB-STAAFJE/MINT_BACKUP/laatste_wijzigingen_etc.txt
+
+```
+
+*Dit lijstje laat je precies zien aan welke knoppen je de laatste 30 dagen hebt gedraaid voordat de kernel panic optrad.*
+
+---
+
+### Status Check
+
+Zodra deze commando's klaar zijn en de grote `tar` backup is voltooid, hebben we:
+
+1. **Pakketlijst** (Programma's)
+2. **Systeem Backup** (Tar van /etc)
+3. **User Backup** (Tar van /home)
+4. **Bestandsindex** (TXT lijst)
+5. **OPSEC Overzicht** (TXT extract)
+
+**Zijn de tar-bestanden al klaar op de SSD?** Controleer dit met:
+
+```bash
+ls -lh /media/mint/USB-STAAFJE/MINT_BACKUP/
+
+```
+
+Zodra ik de groottes zie, gaan we over naar de QEMU-fase om je huidige systeem "veilig" virtueel op te starten voordat we de schijf definitief wissen.
+
+---
+
