@@ -348,6 +348,17 @@ echo "[*] OPERATIE VOLTOOID. ALLE DATA IS NU SOURCE CODE."
 
       sudo chown -R $USER:$USER ./00_GRIND_OUTPUT
 
+ys@msi:~$   sudo chown -R $USER:$USER ./00_GRIND_OUTPUT
+[sudo] password for ys:       
+chown: cannot access './00_GRIND_OUTPUT': No such file or directory
+
+      ys@msi:~$ cd Desktop
+      ys@msi:~/Desktop$   sudo chown -R $USER:$USER ./00_GRIND_OUTPUT
+
+---
+
+      
+
 **SITREP: PERMISSION LOCKOUT DETECTED (ROOT ARTIFACT)**
 
 **OORZAAK:**
