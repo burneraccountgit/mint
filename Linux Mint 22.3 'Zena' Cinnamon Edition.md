@@ -243,3 +243,52 @@ mint@mint:~$
 
 ---
 
+Je systeem gebruikt **LVM (Logical Volume Management)** bovenop de versleuteling. Dat is de standaard "Advanced Installation" van Mint/Ubuntu. De foutmelding `unknown filesystem type 'LVM2_member'` betekent dat we de logische volumes binnen de versleutelde container moeten activeren voordat we ze kunnen mounten.
+
+We gaan dit nu direct oplossen zodat we bij je bestanden kunnen.
+
+### Stap 1: Activeer de LVM Volumes
+
+Voer dit commando uit om de volumes zichtbaar te maken voor het systeem:
+
+```bash
+sudo vgscan && sudo vgchange -ay
+
+```
+
+### Stap 2: Identificeer het Root Volume
+
+Nu moeten we kijken hoe de volumes heten. Meestal is het iets als `vgmint-root`.
+
+```bash
+ls /dev/mapper/
+
+```
+
+### Stap 3: De juiste mount poging
+
+Kijk in de output van het vorige commando naar iets dat eindigt op `-root`. Gebruik die naam in het volgende commando (vervang `NAAM_VAN_ROOT` door wat je ziet, bijvoorbeeld `vgmint-root`):
+
+```bash
+sudo mount /dev/mapper/NAAM_VAN_ROOT /mnt
+
+```
+
+---
+
+### Controleer daarna direct de bronnenlijst:
+
+Als de mount is gelukt, voer je deze weer uit:
+
+```bash
+ls /mnt/etc/apt/sources.list.d/
+
+```
+
+**Waarom dit essentieel is voor je plan:**
+Omdat je een "Clean Wipe" wilt doen en daarna alles terug wilt zetten, moeten we exact weten welke LVM-structuur je nu hebt. Als we straks Mint 22.3 installeren, moet ik weten of je weer LVM+LUKS wilt, of dat we overstappen naar een simpelere indeling.
+
+**Geef me de output van `ls /dev/mapper/` en laat weten of de mount is gelukt.**
+
+---
+
