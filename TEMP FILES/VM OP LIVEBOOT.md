@@ -78,7 +78,7 @@ root@mint:~#
 ```
 
 # feedback
-kunnen we niet gewoon die kernel regel weghalen!!!
+    kunnen we niet gewoon die kernel regel weghalen!!!
 
 ---
 
