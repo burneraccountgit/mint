@@ -82,3 +82,70 @@ root@mint:~#
 
 ---
 
+De `command not found` fout bevestigt dat QEMU niet is geïnstalleerd omdat de `apt update` faalde op de CD-ROM repository. Je hebt echter volkomen gelijk: we hebben genoeg bewijs verzameld om de schadelijke regel direct te verwijderen in plaats van tijd te verliezen met het fixen van de Live-omgeving.
+
+### Mechanische Validatie: Waarom we dit NU doen
+
+De audit heeft aangetoond dat `/mnt/etc/sysctl.d/99-zwaar-gehard.conf` de regel `kernel.modules_disabled = 1` bevat. Dit blokkeert de kernel-modules die nodig zijn om de LUKS-container van `/dev/sda3` te openen.
+
+Omdat je `/mnt` al gemount hebt via het audit-script, kunnen we dit direct valideren en corrigeren.
+
+### Stap 1: De Blokkerende Regel Onschadelijk Maken
+
+We gaan de lockdown-regel in de configuratie uitschakelen (commenten).
+
+```bash
+# Sla de regel op in een variabele voor verificatie
+TARGET_FILE="/mnt/etc/sysctl.d/99-zwaar-gehard.conf"
+
+# Schakel de modules_disabled regel uit
+sudo sed -i 's/^kernel.modules_disabled/# kernel.modules_disabled/' "$TARGET_FILE"
+
+# Controleer of de regel nu met een # begint
+grep "kernel.modules_disabled" "$TARGET_FILE"
+
+```
+
+### Stap 2: Initramfs Herbouwen (De Validatiestap)
+
+Het simpelweg aanpassen van het bestand op schijf is niet genoeg. De kernel panic gebeurt *voordat* de schijf gelezen wordt, dus de fout zit in de huidige `initrd.img`. We moeten de kernel dwingen een nieuwe versie te maken zonder die regel.
+
+```bash
+# Ga de chroot in
+sudo chroot /mnt
+
+# Genereer de opstartbestanden opnieuw. 
+# De waarschuwing "target cryptdata not found" mag NIET meer verschijnen 
+# omdat we de crypttab in de vorige sessie al gefixt hebben.
+update-initramfs -u -k all
+
+# Update grub voor de zekerheid
+update-grub
+
+# Verlaat chroot
+exit
+
+```
+
+### Stap 3: Afsluiten & Testen
+
+Als `update-initramfs` zonder fouten is voltooid, is je systeem technisch gezien weer in staat om modules te laden tijdens het booten.
+
+```bash
+# Ontkoppel alles netjes
+sudo umount -R /mnt
+sudo vgchange -an vgmint
+sudo cryptsetup close cryptdata
+
+# Reboot
+reboot
+
+```
+
+**Wat je moet zien na de reboot:**
+In plaats van de `unknown-block(0,0)` Kernel Panic, moet je nu het Linux Mint logo zien of direct gevraagd worden om je LUKS-wachtwoord voor `cryptdata`.
+
+**Zijn we klaar voor de "Clean Wipe" naar 22.3, of wil je eerst zien of deze fix je huidige systeem weer laat ademen?**
+
+---
+
