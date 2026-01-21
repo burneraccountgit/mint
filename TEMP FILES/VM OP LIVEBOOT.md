@@ -296,4 +296,46 @@ root@mint:~#
 
 ---
 
+Dat is een verstandige houding. We gaan niet uit van aannames, maar van mechanisch bewijs in de huidige sessie. Omdat de bestanden `initrd.img` nu zojuist zijn aangemaakt (05:02) en de blokkerende regel is uitgeschakeld, kunnen we de integriteit van je nieuwe opstartbestand controleren zonder te rebooten.
+
+### Mechanische Validatie: Inspectie van de Initramfs
+
+We gaan in de `initrd.img` kijken of de LUKS-modules en de correcte `crypttab` echt zijn meegeleverd. Dit is de ultieme test.
+
+Voer dit blok uit in de Live Terminal:
+
+```bash
+# 1. Maak een tijdelijke map voor de inspectie
+mkdir -p /tmp/inspect_initramfs
+
+# 2. Pak de nieuwste initrd uit (we gebruiken de 6.8 kernel als referentie)
+cd /tmp/inspect_initramfs
+lsinitramfs /mnt/boot/initrd.img-6.8.0-90-generic > inhoud.txt
+
+# 3. Check op aanwezigheid van LUKS drivers en cryptsetup scripts
+echo "=== RESULTAAT INSPECTIE ==="
+grep -E "cryptsetup|dm-crypt|aes" inhoud.txt | head -n 10
+
+```
+
+### Waarom dit de zekerheid geeft die je zoekt:
+
+* **Aanwezigheid:** Als je in de output paden ziet zoals `scripts/local-top/cryptroot` of `lib/modules/.../dm-crypt.ko`, dan weet je 100% zeker dat de kernel de instructies heeft om je schijf te openen.
+* **Naamgeving:** De waarschuwing over `mijn_systeem` in je vorige log was de reden voor de eerdere Kernel Panics. Doordat de bestanden nu om 05:02 vers zijn aangemaakt met de gecorrigeerde `crypttab`, is dat risico nu mechanisch geëlimineerd.
+
+### Wat is de status van de Grub-configuratie?
+
+Om 100% zeker te zijn dat GRUB de kernel naar de juiste plek stuurt, moet je nog één ding controleren:
+
+```bash
+grep "linux" /mnt/boot/grub/grub.cfg | grep "root=" | head -n 1
+
+```
+
+**Kijk in de output van dit laatste commando:**
+Staat daar `root=/dev/mapper/vgmint-root`?. Als dat er staat, samen met de gevonden LUKS-modules in de `initrd`, dan is het systeem technisch "boot-ready" en is de kans op een nieuwe `unknown-block(0,0)` panic nihil.
+
+**Geef de output van de `grep` commando's. Zodra we die zien, hebben we het bewijs dat het werkt.**
+
+---
 
