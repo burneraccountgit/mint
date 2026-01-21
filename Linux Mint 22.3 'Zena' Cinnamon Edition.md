@@ -26,3 +26,51 @@ KAN JE DAT JA OF NEE? IK WIL MODULAR WERKEN DUS IK WIL NIET DAT JE BEGINT MET 10
 
 ---
 
+```bash
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+mint@mint:~$ lsblk -f
+NAME   FSTYPE      FSVER LABEL      UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+loop0  squashfs    4.0                                                         0   100% /rofs
+sda                                                                                     
+├─sda1 vfat        FAT32            C535-0B9E                                           
+├─sda2 ext4        1.0              4588079c-fc78-42a7-bf9a-86c700b12ca5                
+└─sda3 crypto_LUKS 2                279a2ae4-af1e-4985-8976-f2535b89b7e9                
+sdb                                                                                     
+└─sdb1 vfat        FAT32 LINUX MINT 8C3F-9CA2                             974.3M    75% /cdrom
+mint@mint:~$ sudo fdisk -l
+Disk /dev/loop0: 2.45 GiB, 2633056256 bytes, 5142688 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+Disk /dev/sda: 978.09 GiB, 1050214588416 bytes, 2051200368 sectors
+Disk model: Crucial_CT1050MX
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 899E027A-3F7B-45E7-A0AB-5B8A501BB414
+
+Device       Start        End    Sectors   Size Type
+/dev/sda1     2048    1050623    1048576   512M EFI System
+/dev/sda2  1050624    4550655    3500032   1.7G Linux filesystem
+/dev/sda3  4550656 2051198975 2046648320 975.9G Linux filesystem
+
+
+Disk /dev/sdb: 3.84 GiB, 4126146560 bytes, 8058880 sectors
+Disk model: TransMemory     
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x14116ac5
+
+Device     Boot Start     End Sectors  Size Id Type
+/dev/sdb1  *     2048 8058863 8056816  3.8G  c W95 FAT32 (LBA)
+mint@mint:~$ 
+
+```
