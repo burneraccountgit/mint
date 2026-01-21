@@ -264,3 +264,36 @@ grep "cryptdata" /mnt/etc/crypttab
 
 ---
 
+# ANTWOORD
+
+```
+mint@mint:~$ sudo -i
+root@mint:~# for i in /dev /dev/pts /proc /sys /run; do mount -B $i /mnt$i; done
+root@mint:~# echo "cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard" > /mnt/etc/crypttab
+root@mint:~# chroot /mnt /bin/bash << 'EOF'
+> chroot /mnt /bin/bash << 'EOF'
+  sed -i 's/^kernel.modules_disabled = 1/# kernel.modules_disabled = 1/' /etc/sysctl.d/99-zwaar-gehard.conf
+> update-initramfs -u -k all
+> exit
+> ^C
+root@mint:~# update-initramfs -u -k all
+update-initramfs is disabled since running on read-only media
+root@mint:~# update-grub
+/usr/sbin/grub-probe: error: failed to get canonical path of `/cow'.
+root@mint:~# EOF
+EOF: command not found
+root@mint:~# echo "=== VALIDATIE CHECK ==="
+ls -lh /mnt/boot/initrd.img*
+grep "cryptdata" /mnt/etc/crypttab
+=== VALIDATIE CHECK ===
+lrwxrwxrwx 1 root root  27 Jan 18 00:34 /mnt/boot/initrd.img -> initrd.img-6.8.0-90-generic
+-rw-r--r-- 1 root root 79M Jan 21 05:02 /mnt/boot/initrd.img-6.14.0-37-generic
+-rw-r--r-- 1 root root 77M Jan 21 05:02 /mnt/boot/initrd.img-6.8.0-90-generic
+lrwxrwxrwx 1 root root  28 Dec 17 07:37 /mnt/boot/initrd.img.old -> initrd.img-6.14.0-37-generic
+cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard
+root@mint:~# 
+```
+
+---
+
+
