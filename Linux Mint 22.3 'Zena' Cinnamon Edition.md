@@ -4402,3 +4402,165 @@ Gezien je gebruik van `block-usb-storage.conf` in `/etc/modprobe.d/` en `kernel.
 
 ---
 
+# ANTWOORD
+
+```
+root@mint:~#   echo "=== SSH CONFIG CHECK ==="
+  ls -l /mnt/etc/ssh/sshd_config || echo "SSHD niet aanwezig."
+=== SSH CONFIG CHECK ===
+ls: cannot access '/mnt/etc/ssh/sshd_config': No such file or directory
+SSHD niet aanwezig.
+root@mint:~#   echo -e "\n=== CRON JOBS & ALLOW LISTS ==="
+  ls -R /mnt/etc/cron.*
+  cat /mnt/etc/cron.allow /mnt/etc/at.allow 2>/dev/null
+
+=== CRON JOBS & ALLOW LISTS ===
+/mnt/etc/cron.allow
+
+/mnt/etc/cron.d:
+anacron  e2scrub_all  timeshift-boot  timeshift-hourly
+
+/mnt/etc/cron.daily:
+0anacron  acct  apt-compat  aptitude  chkrootkit  dailyaidecheck  debsums  dpkg  google-chrome  logrotate  man-db  plocate  rkhunter
+
+/mnt/etc/cron.hourly:
+
+/mnt/etc/cron.monthly:
+0anacron  acct  debsums
+
+/mnt/etc/cron.weekly:
+0anacron  debsums  man-db  rkhunter
+
+/mnt/etc/cron.yearly:
+root
+root
+root@mint:~#   echo -e "\n=== APPARMOR LOCAL OVERRIDES ==="
+  cat /mnt/etc/apparmor.d/local/* 2>/dev/null
+
+=== APPARMOR LOCAL OVERRIDES ===
+# This directory is intended to contain profile additions and overrides for
+# inclusion by distributed profiles to aid in packaging AppArmor for
+# distributions.
+#
+# The shipped profiles in /etc/apparmor.d can still be modified by an
+# administrator and people should modify the shipped profile when making
+# large policy changes, rather than trying to make those adjustments here.
+#
+# For simple access additions or the occasional deny override, adjusting them
+# here can prevent the package manager of the distribution from interfering
+# with local modifications. As always, new policy should be reviewed to ensure
+# it is appropriate for your site.
+#
+# For example, if the shipped /etc/apparmor.d/usr.sbin.smbd profile has:
+#   include <local/usr.sbin.smbd>
+# or
+#   include if exists <local/usr.sbin.smbd>
+#
+# then an administrator can adjust /etc/apparmor.d/local/usr.sbin.smbd
+# (create the file if it doesn't exist yet) to contain any additional paths
+# to be allowed, such as:
+#
+#   /var/exports/** lrwk,
+#
+# Keep in mind that 'deny' rules are evaluated after allow rules, so you won't
+# be able to allow access to files that are explicitly denied by the shipped
+# profile using this mechanism.
+root@mint:~#   echo -e "\n=== SYSTEMD SERVICE HARDENING EXAMPLES ==="
+  # Inspecteer één specifiek voorbeeld van je overrides
+  cat /mnt/etc/systemd/system/fail2ban.service.d/hardening.conf 2>/dev/null
+} > /media/mint/USB-STAAFJE/MINT_BACKUP/extra_security_inspectie.txt
+
+=== SYSTEMD SERVICE HARDENING EXAMPLES ===
+[Service]
+ProtectHome=yes
+ProtectSystem=strict
+NoNewPrivileges=yes
+-bash: syntax error near unexpected token `}'
+root@mint:~# 
+```
+
+# ANTWOORD
+
+```
+=== SSH CONFIG CHECK ===
+SSHD niet aanwezig.
+
+=== CRON JOBS & ALLOW LISTS ===
+/mnt/etc/cron.allow
+
+/mnt/etc/cron.d:
+anacron
+e2scrub_all
+timeshift-boot
+timeshift-hourly
+
+/mnt/etc/cron.daily:
+0anacron
+acct
+apt-compat
+aptitude
+chkrootkit
+dailyaidecheck
+debsums
+dpkg
+google-chrome
+logrotate
+man-db
+plocate
+rkhunter
+
+/mnt/etc/cron.hourly:
+
+/mnt/etc/cron.monthly:
+0anacron
+acct
+debsums
+
+/mnt/etc/cron.weekly:
+0anacron
+debsums
+man-db
+rkhunter
+
+/mnt/etc/cron.yearly:
+root
+root
+
+=== APPARMOR LOCAL OVERRIDES ===
+# This directory is intended to contain profile additions and overrides for
+# inclusion by distributed profiles to aid in packaging AppArmor for
+# distributions.
+#
+# The shipped profiles in /etc/apparmor.d can still be modified by an
+# administrator and people should modify the shipped profile when making
+# large policy changes, rather than trying to make those adjustments here.
+#
+# For simple access additions or the occasional deny override, adjusting them
+# here can prevent the package manager of the distribution from interfering
+# with local modifications. As always, new policy should be reviewed to ensure
+# it is appropriate for your site.
+#
+# For example, if the shipped /etc/apparmor.d/usr.sbin.smbd profile has:
+#   include <local/usr.sbin.smbd>
+# or
+#   include if exists <local/usr.sbin.smbd>
+#
+# then an administrator can adjust /etc/apparmor.d/local/usr.sbin.smbd
+# (create the file if it doesn't exist yet) to contain any additional paths
+# to be allowed, such as:
+#
+#   /var/exports/** lrwk,
+#
+# Keep in mind that 'deny' rules are evaluated after allow rules, so you won't
+# be able to allow access to files that are explicitly denied by the shipped
+# profile using this mechanism.
+
+=== SYSTEMD SERVICE HARDENING EXAMPLES ===
+[Service]
+ProtectHome=yes
+ProtectSystem=strict
+NoNewPrivileges=yes
+```
+
+---
+
