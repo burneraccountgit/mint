@@ -123,3 +123,58 @@ Bestanden en instellingen (widgets, wallpaper, browser-data) zijn makkelijk. **P
 Geef me de output van de bovenstaande `lsblk` en `parted -l` commando's. Zodra ik die heb, bepaal ik de exacte mount-commando's voor je backup.
 
 Wil je dat ik eerst een script voor je maak dat de inventarisatie van je geïnstalleerde programma's automatiseert naar een tekstbestand op je SSD?
+
+---
+
+```
+mint@mint:~$ lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+NAME   FSTYPE        SIZE MOUNTPOINT              LABEL
+loop0  squashfs      2.5G /rofs                   
+sda                978.1G                         
+├─sda1 vfat          512M                         
+├─sda2 ext4          1.7G                         
+└─sda3 crypto_LUKS 975.9G                         
+sdb                  3.8G                         
+└─sdb1 vfat          3.8G /cdrom                  LINUX MINT
+sdc                931.5G                         
+└─sdc1 exfat       931.5G /media/mint/USB-STAAFJE USB-STAAFJE
+mint@mint:~$ sudo parted -l
+Model: ATA Crucial_CT1050MX (scsi)
+Disk /dev/sda: 1050GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags: 
+
+Number  Start   End     Size    File system  Name                  Flags
+ 1      1049kB  538MB   537MB   fat32        EFI System Partition  boot, esp
+ 2      538MB   2330MB  1792MB  ext4
+ 3      2330MB  1050GB  1048GB
+
+
+Model: TOSHIBA TransMemory (scsi)
+Disk /dev/sdb: 4126MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags: 
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1049kB  4126MB  4125MB  primary  fat32        boot, lba
+
+
+Model: Samsung Portable SSD T5 (scsi)
+Disk /dev/sdc: 1000GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags: 
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      1000kB  1000GB  1000GB  primary
+
+
+mint@mint:~$ ls /mnt/etc/apt/sources.list.d/
+ls: cannot access '/mnt/etc/apt/sources.list.d/': No such file or directory
+mint@mint:~$ 
+```
+
+---
+
