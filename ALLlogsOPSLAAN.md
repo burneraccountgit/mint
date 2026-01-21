@@ -18,3 +18,30 @@ strings core.<PID> > /media/mint/USB-STAAFJE/MINT_BACKUP/terminal_dump.txt
 
 ---
 
+Met
+"jouw-commando" bedoel ik de actie die jij op dit moment uitvoert in de terminal waarvan je de tekst wilt opslaan.
+In een terminal typ je altijd een opdracht (zoals ls, grep, ip a, of een installatie-script). Alles wat je achter de > zet, wordt opgeslagen in een bestand.
+Voorbeelden:
+
+    Wil je een lijst van alle bestanden opslaan?
+    ls -la > lijst.txt
+    Wil je alle systeeminformatie opslaan?
+    uname -a > systeem.txt
+    Wil je je netwerkinstellingen opslaan?
+    ip addr > netwerk.txt
+    Wil je de inhoud van een bestaand bestand (bijv. een logboek) kopiëren naar een nieuw bestand?
+    cat /var/log/syslog > mijn_kopie.txt
+
+Hoe vind je dit bestand daarna terug?
+Omdat je in een live-boot zit, staat dit bestand standaard in het geheugen (RAM). Als je de computer uitzet, is het weg.
+
+    Typ pwd om te zien in welke map je bent.
+    Typ ls -l export.txt om te controleren of je bestand is aangemaakt.
+
+Wil je de tekst echt ergens anders kunnen openen?
+Gebruik dan de tip van de vorige post:
+commando | nc termbin.com 9999
+(Vervang commando door wat je op dit moment aan het doen bent, bijvoorbeeld dmesg | nc termbin.com 9999 om je systeemlogs online te zetten).
+
+---
+
