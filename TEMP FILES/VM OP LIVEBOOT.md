@@ -187,5 +187,26 @@ root@mint:~#
 
 ---
 
+# ANTWOORD
+
+```
+root@mint:~# sudo cryptsetup luksOpen /dev/sda3 mijn_systeem
+Device mijn_systeem already exists.
+root@mint:~# sudo mount /dev/mapper/mijn_systeem /mnt
+mount: /mnt: unknown filesystem type 'LVM2_member'.
+       dmesg(1) may have more information after failed mount system call.
+root@mint:~# # Bind mounts aanmaken voor systeemprocessen
+for i in /dev /dev/pts /proc /sys /run; do sudo mount -B $i /mnt$i; done
+root@mint:~# sudo chroot /mnt
+root@mint:/# update-initramfs -u -k all
+update-initramfs: Generating /boot/initrd.img-6.14.0-37-generic
+cryptsetup: WARNING: target 'mijn_systeem' not found in /etc/crypttab
+update-initramfs: Generating /boot/initrd.img-6.8.0-90-generic
+cryptsetup: WARNING: target 'mijn_systeem' not found in /etc/crypttab
+root@mint:/# 
+```
+
+---
+
 
 
