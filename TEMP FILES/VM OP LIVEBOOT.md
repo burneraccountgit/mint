@@ -149,3 +149,43 @@ In plaats van de `unknown-block(0,0)` Kernel Panic, moet je nu het Linux Mint lo
 
 ---
 
+# FEEDBACK
+
+```
+root@mint:~# TARGET_FILE="/mnt/etc/sysctl.d/99-zwaar-gehard.conf"
+root@mint:~# sudo sed -i 's/^kernel.modules_disabled/# kernel.modules_disabled/' "$TARGET_FILE"
+root@mint:~# grep "kernel.modules_disabled" "$TARGET_FILE"
+# kernel.modules_disabled = 1
+root@mint:~# sudo chroot /mnt
+root@mint:/# update-initramfs -u -k all
+update-initramfs: Generating /boot/initrd.img-6.14.0-37-generic
+/usr/share/initramfs-tools/hooks/cryptroot: 614: cannot open /proc/mounts: No such file
+cryptsetup: WARNING: Couldn't determine root device
+sed: can't read /proc/cmdline: No such file or directory
+grep: /proc/swaps: No such file or directory
+/usr/share/initramfs-tools/hooks/cryptroot: 614: cannot open /proc/mounts: No such file
+grep: /proc/cpuinfo: No such file or directory
+W: Couldn't identify type of root file system for fsck hook
+W: mkconf: MD subsystem is not loaded, thus I cannot scan for arrays.
+W: mdadm: failed to auto-generate temporary mdadm.conf file.
+update-initramfs: Generating /boot/initrd.img-6.8.0-90-generic
+/usr/share/initramfs-tools/hooks/cryptroot: 614: cannot open /proc/mounts: No such file
+cryptsetup: WARNING: Couldn't determine root device
+sed: can't read /proc/cmdline: No such file or directory
+grep: /proc/swaps: No such file or directory
+/usr/share/initramfs-tools/hooks/cryptroot: 614: cannot open /proc/mounts: No such file
+grep: /proc/cpuinfo: No such file or directory
+W: Couldn't identify type of root file system for fsck hook
+W: mkconf: MD subsystem is not loaded, thus I cannot scan for arrays.
+W: mdadm: failed to auto-generate temporary mdadm.conf file.
+root@mint:/# update-grub
+/usr/sbin/grub-probe: error: cannot find a device for / (is /dev mounted?).
+root@mint:/# exit
+exit
+root@mint:~# 
+```
+
+---
+
+
+
