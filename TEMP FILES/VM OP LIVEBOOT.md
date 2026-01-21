@@ -477,11 +477,47 @@ De `initramfs` tools hebben toegang nodig tot de hardware-informatie van de Live
 # Word root en herstel de vitale koppelingen
 sudo -i
 for i in /dev /dev/pts /proc /sys /run; do mount -B $i /mnt$i; done
+```
 
+```
+mint@mint:~$ sudo -i
+root@mint:~# for i in /dev /dev/pts /proc /sys /run; do mount -B $i /mnt$i; done
+mount: /mnt/dev: mount point does not exist.
+       dmesg(1) may have more information after failed mount system call.
+mount: /mnt/dev/pts: mount point does not exist.
+       dmesg(1) may have more information after failed mount system call.
+mount: /mnt/proc: mount point does not exist.
+       dmesg(1) may have more information after failed mount system call.
+mount: /mnt/sys: mount point does not exist.
+       dmesg(1) may have more information after failed mount system call.
+mount: /mnt/run: mount point does not exist.
+       dmesg(1) may have more information after failed mount system call.
+root@mint:~# 
+```
+
+
+
+
+
+```
 # Synchroniseer de crypttab configuratie (Naamgeving naar cryptdata)
 echo "cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard" > /mnt/etc/crypttab
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Stap 2: Reparatie (Inside Chroot)
 
