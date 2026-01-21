@@ -339,3 +339,52 @@ Staat daar `root=/dev/mapper/vgmint-root`?. Als dat er staat, samen met de gevon
 
 ---
 
+# NEE IK WIL GEEN TIJDELIJKE MAP IK WIL HET OPSLAAN NAAR EXTERNE SSD
+
+---
+
+
+Dat is correct. We slaan de verificatie direct op naar je Samsung SSD (`/media/mint/USB-STAAFJE`) zodat je het bewijs permanent hebt en niet verliest bij een crash of herstart.
+
+Voer dit blok uit om de integriteit van de nieuwe `initrd.img` en de `grub.cfg` mechanisch te valideren op je externe schijf:
+
+```bash
+# 1. Definieer de output locatie op de SSD
+VERIFY_LOG="/media/mint/USB-STAAFJE/MINT_BACKUP/final_boot_validation.txt"
+
+{
+  echo "=== MECHANISCHE BOOT-VALIDATIE ($(date)) ==="
+  
+  echo -e "\n[1] INSPECTIE INITRAMFS (Kernel 6.8):"
+  # We lijsten de inhoud op en zoeken naar de kritieke LUKS/LVM componenten
+  lsinitramfs /mnt/boot/initrd.img-6.8.0-90-generic | grep -E "cryptsetup|dm-crypt|aes|lvm"
+  
+  echo -e "\n[2] CRYPTTAB NAAM-CHECK:"
+  # Bevestig dat de naam 'cryptdata' is en niet 'mijn_systeem'
+  cat /mnt/etc/crypttab
+  
+  echo -e "\n[3] GRUB ROOT-MAPPING CHECK:"
+  # Controleer of GRUB naar de juiste LVM-root wijst
+  grep "linux" /mnt/boot/grub/grub.cfg | grep "root=" | head -n 1
+  
+  echo -e "\n[4] SYSCTL HARDENING BYPASS CHECK:"
+  # Bevestig dat de blokkerende regel nog steeds gedeactiveerd (#) is
+  grep "kernel.modules_disabled" /mnt/etc/sysctl.d/99-zwaar-gehard.conf
+  
+} | tee "$VERIFY_LOG"
+
+echo -e "\n--- Validatie voltooid. Rapport staat op je SSD: $VERIFY_LOG ---"
+
+```
+
+### Waar je op moet letten in de output:
+
+* **Bij [1]:** Je moet regels zien zoals `scripts/local-top/cryptroot`. Dit is het bewijs dat de kernel weet hoe hij om een wachtwoord moet vragen.
+* **Bij [2]:** Er moet staan: `cryptdata UUID=...`. Dit matcht nu met de ontsleutelde status van je schijf.
+* **Bij [3]:** Er moet staan: `root=/dev/mapper/vgmint-root`. Dit stuurt de kernel naar de juiste plek na ontsleuteling.
+* **Bij [4]:** Er moet staan: `# kernel.modules_disabled = 1`. De `#` bewijst dat de kernel weer modules mag laden om de schijf te openen.
+
+**Als deze vier punten kloppen in je logbestand, dan is het systeem mechanisch klaar om te booten.**
+
+---
+
