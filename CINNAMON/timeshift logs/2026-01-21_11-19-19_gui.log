@@ -1,0 +1,8 @@
+[11:19:19] Session log file: /var/log/timeshift/2026-01-21_11-19-19_gui.log
+[11:19:19] Distribution: LinuxMint 22.3 (zena)
+[11:19:19] DIST_ID: LinuxMint
+[11:19:19] Main: check_dependencies()
+[11:19:19] Checking btrfs-progs version and determining capabilities...
+[11:19:19] -- btrfs-progs version 6.6.x
+[11:19:19] -- btrfs subvolume recursive delete: not supported
+[11:19:19] Another instance of this application is running (PID=22284)

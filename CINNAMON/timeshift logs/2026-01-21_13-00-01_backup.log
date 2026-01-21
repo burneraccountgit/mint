@@ -1,0 +1,144 @@
+[13:00:01] Main: check_dependencies()
+[13:00:01] Checking btrfs-progs version and determining capabilities...
+[13:00:01] -- btrfs-progs version 6.6.x
+[13:00:01] -- btrfs subvolume recursive delete: not supported
+[13:00:01] Main: add_default_exclude_entries()
+[13:00:01] Main: add_default_exclude_entries(): exit
+[13:00:01] update_partitions()
+[13:00:01] Device: get_disk_space_using_df(): 3
+[13:00:01] Device: get_mounted_filesystems_using_mtab(): 3
+[13:00:01] Device: get_filesystems(): 7
+[13:00:01] partition list updated
+[13:00:01] detect_system_devices()
+[13:00:01] Searching subvolume for system at path: /
+[13:00:01] Users: root ys
+[13:00:01] Encrypted home users: ys
+[13:00:01] Encrypted home dirs:
+/home/ys
+
+[13:00:01] Encrypted private dirs:
+
+[13:00:01] Main: load_app_config()
+[13:00:01] IconManager: init()
+[13:00:01] found images directory: /usr/share/timeshift/images
+[13:00:01] Main(): ok
+[13:00:01] AppConsole: parse_arguments()
+[13:00:01] Main: initialize_repo()
+[13:00:01] backup_uuid=b19f9559-7eb3-45aa-9f17-eabcc2b48784
+[13:00:01] backup_parent_uuid=K01bs6-uS6O-3PZD-rroa-7K3C-8egq-fqlh6D
+[13:00:01] Setting snapshot device from config file
+[13:00:01] repo: creating from uuid
+[13:00:01] SnapshotRepo: from_uuid(): RSYNC
+[13:00:01] uuid=b19f9559-7eb3-45aa-9f17-eabcc2b48784
+[13:00:01] SnapshotRepo: init_from_device()
+[13:00:01] 
+[13:00:01] SnapshotRepo: unlock_and_mount_devices()
+[13:00:01] device=/dev/dm-1
+[13:00:01] SnapshotRepo: unlock_and_mount_device()
+[13:00:01] device=/dev/dm-1
+[13:00:01] Device: get_mounted_filesystems_using_mtab(): 3
+[13:00:01] ------------------
+[13:00:01] arg=b19f9559-7eb3-45aa-9f17-eabcc2b48784, device=/dev/dm-1
+[13:00:01] /
+[13:00:01] ------------------
+[13:00:01] Device: get_mounted_filesystems_using_mtab(): 3
+[13:00:01] mount command: mount "/dev/dm-1" "/run/timeshift/30941/backup"
+[13:00:01] Mounted '/dev/dm-1' at '/run/timeshift/30941/backup'
+[13:00:01] SnapshotRepo: load_snapshots()
+[13:00:01] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 1 found
+[13:00:01] SnapshotRepo: unlock_and_mount_device(): exit
+[13:00:01] Selected snapshot device: /dev/dm-1
+[13:00:01] Free space: 853.0 GB
+[13:00:01] SnapshotRepo: check_status()
+[13:00:01] SnapshotRepo: available()
+[13:00:01] is_available: ok
+[13:00:01] SnapshotRepo: has_snapshots()
+[13:00:01] SnapshotRepo: has_space() - 0 required (0 B)
+[13:00:01] Device: get_disk_space_using_df(): 1
+[13:00:01] SnapshotRepo: check_status(): exit
+[13:00:01] SnapshotRepo: init_from_device(): exit
+[13:00:01] SnapshotRepo: from_uuid(): exit
+[13:00:01] Main: initialize_repo(): exit
+[13:00:01] AppConsole: start_application()
+[13:00:01] Main: create_snapshot()
+[13:00:01] SnapshotRepo: has_space() - 0 required (0 B)
+[13:00:01] Device: get_disk_space_using_df(): 1
+[13:00:01] Hourly snapshots are enabled
+[13:00:01] Last hourly snapshot is more than 1 hour old
+[13:00:01] Main: backup_and_rotate()
+[13:00:01] SnapshotRepo: available()
+[13:00:01] is_available: ok
+[13:00:01] ------------------------------------------------------------------------------
+[13:00:01] Estimating system size...
+[13:00:01] estimate_system_size()
+[13:00:01] Main: save_exclude_list_for_backup()
+[13:00:01] Main: create_exclude_list_for_backup()
+[13:00:01] Main: create_exclude_list_for_backup(): exit
+[13:00:01] AsyncTask:execute()
+[13:00:01] export LC_ALL=C.UTF-8
+rsync -aii --recursive --verbose --delete --force --stats --sparse --delete-excluded --dry-run --exclude-from='/tmp/timeshift-SbKTuzmp/exclude.list' --delete-excluded '/' '/tmp/timeshift-SbKTuzmp/empty/'
+[13:00:01] AsyncTask:prepare(): saved: /tmp/timeshift-SbKTuzmp/2026-01-21_13-00-01/script.sh
+[13:00:01] AsyncTask: child_pid: 30953
+[13:00:18] AsyncTask: finish(): enter
+[13:00:18] exit_code: 0
+[13:00:18] Main: save_app_config()
+[13:00:18] SnapshotRepo: available()
+[13:00:18] is_available: ok
+[13:00:18] SnapshotRepo: available()
+[13:00:18] is_available: ok
+[13:00:18] SnapshotRepo: has_snapshots()
+[13:00:18] estimate_system_size(): ok
+[13:00:18] Creating new snapshot...(RSYNC)
+[13:00:18] Saving to device: /dev/dm-1, mounted at path: /run/timeshift/30941/backup
+[13:00:18] Linking from snapshot: 2026-01-21_11-22-35
+[13:00:18] Main: save_exclude_list_for_backup()
+[13:00:18] Main: create_exclude_list_for_backup()
+[13:00:18] Main: create_exclude_list_for_backup(): exit
+[13:00:18] Syncing files with rsync...
+[13:00:18] AsyncTask:execute()
+[13:00:18] export LC_ALL=C.UTF-8
+rsync -aii --recursive --verbose --delete --force --stats --sparse --delete-excluded --link-dest='/run/timeshift/30941/backup/timeshift/snapshots/2026-01-21_11-22-35/localhost/' --log-file='/run/timeshift/30941/backup/timeshift/snapshots/2026-01-21_13-00-01/rsync-log' --exclude-from='/run/timeshift/30941/backup/timeshift/snapshots/2026-01-21_13-00-01/exclude.list' --delete-excluded '/' '/run/timeshift/30941/backup/timeshift/snapshots/2026-01-21_13-00-01/localhost/'
+[13:00:18] AsyncTask:prepare(): saved: /tmp/timeshift-SbKTuzmp/2026-01-21_13-00-18/script.sh
+[13:00:18] AsyncTask: child_pid: 31076
+[13:01:06] AsyncTask: finish(): enter
+[13:01:06] exit_code: 0
+[13:01:14] Created control file: /run/timeshift/30941/backup/timeshift/snapshots/2026-01-21_13-00-01/info.json
+[13:01:14] Backup hooks skipped, because /etc/timeshift/backup-hooks.d does not exist
+[13:01:14] RSYNC Snapshot saved successfully (73s)
+[13:01:14] notify-send -t 10000 -u low -i gtk-dialog-info "TimeShift" "RSYNC Snapshot saved successfully (73s)" -h string:desktop-entry:timeshift-gtk
+[13:01:14] Tagged snapshot '2026-01-21_13-00-01': hourly
+[13:01:14] SnapshotRepo: load_snapshots()
+[13:01:14] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 2 found
+[13:01:14] Daily snapshots are enabled
+[13:01:14] Last daily snapshot is 1 hours old
+[13:01:14] ------------------------------------------------------------------------------
+[13:01:14] SnapshotRepo: load_snapshots()
+[13:01:14] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 2 found
+[13:01:14] SnapshotRepo: auto_remove()
+[13:01:14] Maximum backups exceeded for backup level 'hourly'
+[13:01:14] Snapshot '2026-01-21_11-22-35' un-tagged 'hourly'
+[13:01:14] SnapshotRepo: remove_untagged()
+[13:01:14] SnapshotRepo: load_snapshots()
+[13:01:14] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 2 found
+[13:01:14] SnapshotRepo: load_snapshots()
+[13:01:14] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 2 found
+[13:01:14] SnapshotRepo: load_snapshots()
+[13:01:14] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 2 found
+[13:01:14] SnapshotRepo: load_snapshots()
+[13:01:14] loading snapshots from '/run/timeshift/30941/backup/timeshift/snapshots': 2 found
+[13:01:14] Symlinks updated
+[13:01:14] exit_app()
+[13:01:14] crontab -l
+[13:01:14] Failed to read cron tab
+[13:01:14] crontab -l
+[13:01:14] Failed to read cron tab
+[13:01:14] Cron task exists: /etc/cron.d/timeshift-hourly
+[13:01:14] unmount_target_device()
+[13:01:14] clean_logs()
+[13:01:14] cleanup_unmount_devices()
+[13:01:14] Device: get_disk_space_using_df(): 3
+[13:01:14] Device: get_mounted_filesystems_using_mtab(): 3
+[13:01:14] Device: get_filesystems(): 7
+[13:01:14] 
+Found stale mount for device '/dev/dm-1' at path '/run/timeshift/30941/backup'
+[13:01:14] Unmounted successfully

@@ -1,0 +1,204 @@
+[11:31:17] Session log file: /var/log/timeshift/2026-01-21_11-31-17_gui.log
+[11:31:17] Distribution: LinuxMint 22.3 (zena)
+[11:31:17] DIST_ID: LinuxMint
+[11:31:17] Main: check_dependencies()
+[11:31:17] Checking btrfs-progs version and determining capabilities...
+[11:31:17] -- btrfs-progs version 6.6.x
+[11:31:17] -- btrfs subvolume recursive delete: not supported
+[11:31:17] Main: add_default_exclude_entries()
+[11:31:17] Main: add_default_exclude_entries(): exit
+[11:31:17] update_partitions()
+[11:31:17] Device: get_disk_space_using_df(): 3
+[11:31:17] Device: get_mounted_filesystems_using_mtab(): 3
+[11:31:17] Device: get_filesystems(): 7
+[11:31:17] partition list updated
+[11:31:17] detect_system_devices()
+[11:31:17] /boot/efi is mapped to device: /dev/sda1, UUID=C535-0B9E
+[11:31:17] /boot is mapped to device: /dev/sda2, UUID=a95c5aa2-ff4d-4869-88d0-79a55146c509
+[11:31:17] / is mapped to device: /dev/dm-1, UUID=b19f9559-7eb3-45aa-9f17-eabcc2b48784
+[11:31:17] Searching subvolume for system at path: /
+[11:31:17] Users: root ys
+[11:31:17] Encrypted home users: ys
+[11:31:17] Encrypted home dirs:
+/home/ys
+
+[11:31:17] Encrypted private dirs:
+
+[11:31:17] Main: load_app_config()
+[11:31:17] App config loaded: /etc/timeshift/timeshift.json
+[11:31:17] IconManager: init()
+[11:31:17] found images directory: /usr/share/timeshift/images
+[11:31:17] Main(): ok
+[11:31:17] Main: initialize_repo()
+[11:31:17] backup_uuid=b19f9559-7eb3-45aa-9f17-eabcc2b48784
+[11:31:17] backup_parent_uuid=K01bs6-uS6O-3PZD-rroa-7K3C-8egq-fqlh6D
+[11:31:17] Setting snapshot device from config file
+[11:31:17] repo: creating from uuid
+[11:31:17] SnapshotRepo: from_uuid(): RSYNC
+[11:31:17] uuid=b19f9559-7eb3-45aa-9f17-eabcc2b48784
+[11:31:17] SnapshotRepo: init_from_device()
+[11:31:17] 
+[11:31:17] SnapshotRepo: unlock_and_mount_devices()
+[11:31:17] device=/dev/dm-1
+[11:31:17] SnapshotRepo: unlock_and_mount_device()
+[11:31:17] device=/dev/dm-1
+[11:31:17] Device: get_mounted_filesystems_using_mtab(): 3
+[11:31:17] ------------------
+[11:31:17] arg=b19f9559-7eb3-45aa-9f17-eabcc2b48784, device=/dev/dm-1
+[11:31:17] /
+[11:31:17] ------------------
+[11:31:17] Device: get_mounted_filesystems_using_mtab(): 3
+[11:31:17] mount command: mount "/dev/dm-1" "/run/timeshift/29544/backup"
+[11:31:17] Mounted '/dev/dm-1' at '/run/timeshift/29544/backup'
+[11:31:17] SnapshotRepo: load_snapshots()
+[11:31:17] loading snapshots from '/run/timeshift/29544/backup/timeshift/snapshots': 1 found
+[11:31:17] SnapshotRepo: unlock_and_mount_device(): exit
+[11:31:17] Selected snapshot device: /dev/dm-1
+[11:31:17] Free space: 856.0 GB
+[11:31:17] SnapshotRepo: check_status()
+[11:31:17] SnapshotRepo: available()
+[11:31:17] is_available: ok
+[11:31:17] SnapshotRepo: has_snapshots()
+[11:31:17] SnapshotRepo: has_space() - 0 required (0 B)
+[11:31:17] Device: get_disk_space_using_df(): 1
+[11:31:17] Snapshot device: '/dev/dm-1'
+[11:31:17] Snapshot location: /run/timeshift/29544/backup
+[11:31:17] OK
+[11:31:17] 1 snapshots, 856.0 GB free
+[11:31:17] Status: HAS_SNAPSHOTS_HAS_SPACE
+[11:31:17] 
+[11:31:17] SnapshotRepo: check_status(): exit
+[11:31:17] SnapshotRepo: init_from_device(): exit
+[11:31:17] SnapshotRepo: from_uuid(): exit
+[11:31:17] Main: initialize_repo(): exit
+[11:31:17] MainWindow: MainWindow()
+[11:31:17] SnapshotListBox: SnapshotListBox()
+[11:31:17] SnapshotListBox: SnapshotListBox(): exit
+[11:31:17] MainWindow: MainWindow(): exit
+[11:31:17] MainWindow(): init_delayed()
+[11:31:17] SnapshotRepo: available()
+[11:31:17] is_available: ok
+[11:31:17] SnapshotRepo: available()
+[11:31:17] is_available: ok
+[11:31:17] SnapshotRepo: load_snapshots()
+[11:31:17] loading snapshots from '/run/timeshift/29544/backup/timeshift/snapshots': 1 found
+[11:31:17] SnapshotRepo: check_status()
+[11:31:17] SnapshotRepo: available()
+[11:31:17] is_available: ok
+[11:31:17] SnapshotRepo: has_snapshots()
+[11:31:17] SnapshotRepo: has_space() - 0 required (0 B)
+[11:31:17] Device: get_disk_space_using_df(): 1
+[11:31:17] Snapshot device: '/dev/dm-1'
+[11:31:17] Snapshot location: /run/timeshift/29544/backup
+[11:31:17] OK
+[11:31:17] 1 snapshots, 856.0 GB free
+[11:31:17] Status: HAS_SNAPSHOTS_HAS_SPACE
+[11:31:17] 
+[11:31:17] SnapshotRepo: check_status(): exit
+[11:31:17] SnapshotRepo: has_snapshots()
+[11:31:17] SnapshotRepo: has_snapshots()
+[11:31:17] MainWindow(): init_delayed(): exit
+[11:31:39] MainWindow: btn_settings_clicked()
+[11:31:39] SettingsWindow: SettingsWindow()
+[11:31:39] SnapshotBackendBox: SnapshotBackendBox()
+[11:31:39] SnapshotBackendBox: SnapshotBackendBox(): exit
+[11:31:39] BackupDeviceBox: BackupDeviceBox()
+[11:31:39] BackupDeviceBox: BackupDeviceBox(): exit
+[11:31:39] ScheduleBox: ScheduleBox()
+[11:31:39] ScheduleBox: ScheduleBox(): exit
+[11:31:39] ExcludeBox: ExcludeBox()
+[11:31:39] treeview_add_item(): + /home/.ecryptfs/ys/***
+[11:31:39] ExcludeBox: ExcludeBox(): exit
+[11:31:39] UsersBox: UsersBox()
+[11:31:39] treeview_add_item(): + /home/.ecryptfs/ys/***
+[11:31:39] treeview_add_item(): /root/**
+[11:31:39] UsersBox: UsersBox(): exit
+[11:31:39] MiscBox: MiscBox()
+[11:31:39] MiscBox: init_date_format_option()
+[11:31:39] MiscBox: init_date_format_option(): exit
+[11:31:39] MiscBox: MiscBox(): exit
+[11:31:40] SettingsWindow: SettingsWindow(): exit
+[11:31:40] update_partitions()
+[11:31:40] Device: get_disk_space_using_df(): 3
+[11:31:40] Device: get_mounted_filesystems_using_mtab(): 3
+[11:31:40] Device: get_filesystems(): 7
+[11:31:40] partition list updated
+[11:31:40] SnapshotRepo: check_status()
+[11:31:40] SnapshotRepo: available()
+[11:31:40] is_available: ok
+[11:31:40] SnapshotRepo: has_snapshots()
+[11:31:40] SnapshotRepo: has_space() - 0 required (0 B)
+[11:31:40] Device: get_disk_space_using_df(): 1
+[11:31:40] Snapshot device: '/dev/dm-1'
+[11:31:40] Snapshot location: /run/timeshift/29544/backup
+[11:31:40] OK
+[11:31:40] 1 snapshots, 856.0 GB free
+[11:31:40] Status: HAS_SNAPSHOTS_HAS_SPACE
+[11:31:40] 
+[11:31:40] SnapshotRepo: check_status(): exit
+[11:31:40] treeview_add_item(): + /home/.ecryptfs/ys/***
+[11:31:40] treeview_add_item(): /root/**
+[11:31:44] save_changes(): exclude_list_user:
+[11:31:44] + /home/.ecryptfs/ys/***
+[11:31:44] 
+[11:31:44] treeview_add_item(): + /home/.ecryptfs/ys/***
+[11:31:44] treeview_add_item(): /root/**
+[11:31:44] crontab -l
+[11:31:44] Failed to read cron tab
+[11:31:44] crontab -l
+[11:31:44] Failed to read cron tab
+[11:31:44] Cron task exists: /etc/cron.d/timeshift-hourly
+[11:31:44] Main: save_app_config()
+[11:31:44] SnapshotRepo: available()
+[11:31:44] is_available: ok
+[11:31:44] SnapshotRepo: available()
+[11:31:44] is_available: ok
+[11:31:44] SnapshotRepo: has_snapshots()
+[11:31:44] App config saved: /etc/timeshift/timeshift.json
+[11:31:44] SnapshotRepo: load_snapshots()
+[11:31:44] loading snapshots from '/run/timeshift/29544/backup/timeshift/snapshots': 1 found
+[11:31:44] SnapshotRepo: available()
+[11:31:44] is_available: ok
+[11:31:44] SnapshotRepo: load_snapshots()
+[11:31:44] loading snapshots from '/run/timeshift/29544/backup/timeshift/snapshots': 1 found
+[11:31:44] SnapshotRepo: check_status()
+[11:31:44] SnapshotRepo: available()
+[11:31:44] is_available: ok
+[11:31:44] SnapshotRepo: has_snapshots()
+[11:31:44] SnapshotRepo: has_space() - 0 required (0 B)
+[11:31:44] Device: get_disk_space_using_df(): 1
+[11:31:44] Snapshot device: '/dev/dm-1'
+[11:31:44] Snapshot location: /run/timeshift/29544/backup
+[11:31:44] OK
+[11:31:44] 1 snapshots, 856.0 GB free
+[11:31:44] Status: HAS_SNAPSHOTS_HAS_SPACE
+[11:31:44] 
+[11:31:44] SnapshotRepo: check_status(): exit
+[11:31:44] SnapshotRepo: has_snapshots()
+[11:31:44] SnapshotRepo: has_snapshots()
+[11:31:46] SnapshotRepo: available()
+[11:31:46] is_available: ok
+[11:31:46] SnapshotRepo: has_space() - 0 required (0 B)
+[11:31:46] Device: get_disk_space_using_df(): 1
+[11:31:46] exit_app()
+[11:31:46] Main: save_app_config()
+[11:31:46] SnapshotRepo: available()
+[11:31:46] is_available: ok
+[11:31:46] SnapshotRepo: available()
+[11:31:46] is_available: ok
+[11:31:46] SnapshotRepo: has_snapshots()
+[11:31:46] App config saved: /etc/timeshift/timeshift.json
+[11:31:46] crontab -l
+[11:31:46] Failed to read cron tab
+[11:31:46] crontab -l
+[11:31:46] Failed to read cron tab
+[11:31:46] Cron task exists: /etc/cron.d/timeshift-hourly
+[11:31:46] unmount_target_device()
+[11:31:46] clean_logs()
+[11:31:46] cleanup_unmount_devices()
+[11:31:46] Device: get_disk_space_using_df(): 3
+[11:31:46] Device: get_mounted_filesystems_using_mtab(): 3
+[11:31:46] Device: get_filesystems(): 7
+[11:31:46] 
+Found stale mount for device '/dev/dm-1' at path '/run/timeshift/29544/backup'
+[11:31:46] Unmounted successfully
