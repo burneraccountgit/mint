@@ -178,3 +178,56 @@ mint@mint:~$
 
 ---
 
+Helder. De data is binnen. We hebben een kritiek punt gevonden: **`/dev/sda3` is versleuteld (LUKS).** Dit is de reden waarom `/mnt` leeg was; we moeten de "kluis" eerst openen voordat we bij je bestanden en instellingen kunnen voor de backup.
+
+Ik ga nu niet 100 commando's geven. We doen alleen de **Ontsluiting** en de **Data-Check**.
+
+### Stap 1: De versleutelde schijf openen
+
+Omdat je in een Live Boot zit, is de schijf nog vergrendeld. Voer dit uit om toegang te krijgen tot je eigenlijke systeem:
+
+```bash
+sudo cryptsetup luksOpen /dev/sda3 mijn_systeem
+
+```
+
+*(Er wordt nu om je wachtwoord gevraagd van je schijfversleuteling).*
+
+### Stap 2: Mounten en Locatie bepalen
+
+Nu de schijf open is, moeten we de partitie koppelen om te zien waar je `/home` en `/etc` staan.
+
+```bash
+sudo mount /dev/mapper/mijn_systeem /mnt
+
+```
+
+### Stap 3: De bronnenlijst checken (Opnieuw)
+
+Nu de schijf gemount is, kunnen we wel in de mappen kijken. Voer deze uit:
+
+```bash
+ls /mnt/etc/apt/sources.list.d/
+
+```
+
+### Waarom dit de enige manier is
+
+Omdat je de hele schijf wilt wissen en Mint 22.3 wilt installeren, maar je instellingen wilt behouden, moeten we nu we toegang hebben drie dingen veiligstellen op je **Samsung SSD (sdc1)**:
+
+1. De lijst met programma's die je nu hebt.
+2. De map `/mnt/home/[jouw-gebruikersnaam]` (hierin zitten je widgets, bureaublad, browserprofielen).
+3. De map `/mnt/etc/` (voor systeem-brede configuraties).
+
+---
+
+**De status op dit moment:**
+
+* Je hebt een GPT/EFI systeem (moderne standaard).
+* Je backup-schijf (`sdc1`) is `exfat`. Dit is prima voor bestanden, maar **slecht** voor Linux-rechten. We gaan de backup daarom in een `.tar` archief zetten zodat je instellingen (rechten) niet kapot gaan op die Samsung schijf.
+
+**Zodra je de output van de `ls /mnt/etc/apt/sources.list.d/` geeft, weet ik of je speciale software-bronnen hebt waar we rekening mee moeten houden. Lukt het openen van de schijf met het eerste commando?**
+
+---
+
+
