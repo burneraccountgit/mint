@@ -495,43 +495,57 @@ mount: /mnt/run: mount point does not exist.
 root@mint:~# 
 ```
 
+# BELANGRIJK
+
 ```
-root@mint:~# man 1 dmseg
-No manual entry for dmseg in section 1
-root@mint:~# dmseg
-Command 'dmseg' not found, did you mean:
-  command 'dmesg' from deb util-linux (2.39.3-9ubuntu6.4)
-  command 'mmseg' from deb sunpinyin-utils (3.0.0~rc2+ds1-5)
-Try: apt install <deb name>
-root@mint:~# exit
-logout
-mint@mint:~$ man 1 dmseg
-No manual entry for dmseg in section 1
-mint@mint:~$ apt install dmseg
-Reading package lists... Done
-Building dependency tree... Done
-Reading state information... Done
-E: Unable to locate package dmseg
-mint@mint:~$ sudo -i
-root@mint:~# suda apt install dmseg
-Command 'suda' not found, did you mean:
-  command 'sudo' from deb sudo (1.9.15p5-3ubuntu5.24.04.1)
-  command 'sudo' from deb sudo-ldap (1.9.15p5-3ubuntu5.24.04.1)
-  command 'sada' from deb plc-utils-extra (0.0.6+git20230504.1ba7d5a0-1)
-Try: apt install <deb name>
-root@mint:~# apt install dmseg
-Reading package lists... Done
-Building dependency tree... Done
-Reading state information... Done
-E: Unable to locate package dmseg
-root@mint:~# man 1 dmseg
-No manual entry for dmseg in section 1
-root@mint:~# dmseg | tail
-Command 'dmseg' not found, did you mean:
-  command 'mmseg' from deb sunpinyin-utils (3.0.0~rc2+ds1-5)
-  command 'dmesg' from deb util-linux (2.39.3-9ubuntu6.4)
-Try: apt install <deb name>
+
+root@mint:~# man 1 dmesg
+root@mint:~# dmesg | tail
+[  286.354986] sd 5:0:0:0: Attached scsi generic sg2 type 0
+[  286.357044] sd 5:0:0:0: [sdc] 1953525168 512-byte logical blocks: (1.00 TB/932 GiB)
+[  286.357165] sd 5:0:0:0: [sdc] Write Protect is off
+[  286.357171] sd 5:0:0:0: [sdc] Mode Sense: 43 00 00 00
+[  286.357327] sd 5:0:0:0: [sdc] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+[  286.380959] sd 5:0:0:0: [sdc] Preferred minimum I/O size 512 bytes
+[  286.380966] sd 5:0:0:0: [sdc] Optimal transfer size 33553920 bytes
+[  286.400188]  sdc: sdc1
+[  286.400281] sd 5:0:0:0: [sdc] Attached SCSI disk
+[  286.577762] exFAT-fs (sdc1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+root@mint:~# man 1 dmesg
+root@mint:~# dmesg | tail
+[  286.354986] sd 5:0:0:0: Attached scsi generic sg2 type 0
+[  286.357044] sd 5:0:0:0: [sdc] 1953525168 512-byte logical blocks: (1.00 TB/932 GiB)
+[  286.357165] sd 5:0:0:0: [sdc] Write Protect is off
+[  286.357171] sd 5:0:0:0: [sdc] Mode Sense: 43 00 00 00
+[  286.357327] sd 5:0:0:0: [sdc] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+[  286.380959] sd 5:0:0:0: [sdc] Preferred minimum I/O size 512 bytes
+[  286.380966] sd 5:0:0:0: [sdc] Optimal transfer size 33553920 bytes
+[  286.400188]  sdc: sdc1
+[  286.400281] sd 5:0:0:0: [sdc] Attached SCSI disk
+[  286.577762] exFAT-fs (sdc1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
+root@mint:~# dmesg | grep -i mount
+[    0.139020] Mount-cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    0.139041] Mountpoint-cache hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    1.639874] EXT4-fs (sda2): mounted filesystem 4588079c-fc78-42a7-bf9a-86c700b12ca5 ro with ordered data mode. Quota mode: none.
+[    1.640439] EXT4-fs (sda2): unmounting filesystem 4588079c-fc78-42a7-bf9a-86c700b12ca5.
+[   13.955360] systemd[1]: Set up automount proc-sys-fs-binfmt_misc.automount - Arbitrary Executable File Formats File System Automount Point.
+[   13.981422] systemd[1]: Mounting dev-hugepages.mount - Huge Pages File System...
+[   13.982299] systemd[1]: Mounting dev-mqueue.mount - POSIX Message Queue File System...
+[   13.983098] systemd[1]: Mounting sys-kernel-debug.mount - Kernel Debug File System...
+[   13.983712] systemd[1]: Mounting sys-kernel-tracing.mount - Kernel Trace File System...
+[   14.052118] systemd[1]: Starting systemd-remount-fs.service - Remount Root and Kernel File Systems...
+[   14.054108] systemd[1]: Mounted dev-hugepages.mount - Huge Pages File System.
+[   14.054198] systemd[1]: Mounted dev-mqueue.mount - POSIX Message Queue File System.
+[   14.054279] systemd[1]: Mounted sys-kernel-debug.mount - Kernel Debug File System.
+[   14.054373] systemd[1]: Mounted sys-kernel-tracing.mount - Kernel Trace File System.
+[   14.057164] systemd[1]: Mounting sys-fs-fuse-connections.mount - FUSE Control File System...
+[   14.057718] systemd[1]: Mounting sys-kernel-config.mount - Kernel Configuration File System...
+[   14.070321] systemd[1]: Mounted sys-fs-fuse-connections.mount - FUSE Control File System.
+[   14.070444] systemd[1]: Mounted sys-kernel-config.mount - Kernel Configuration File System.
+[   14.090484] systemd[1]: Finished systemd-remount-fs.service - Remount Root and Kernel File Systems.
+[  286.577762] exFAT-fs (sdc1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
 root@mint:~# 
+
 ```
 
 
