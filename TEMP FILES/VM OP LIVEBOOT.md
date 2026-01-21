@@ -556,6 +556,67 @@ echo "cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard" > /
 
 ```
 
+---
+
+OP GITHUB IMPORT ZIE ENKEL DEZE FILE
+"TEMP FILES/VM OP LIVEBOOT.md" 
+
+ZIE DE KOPPEN MET "# BELANGRIJK"
+
+IK WIL ABSOLUUT NIET DAT JIJ GAAT SPAMMEN MET "DOE XYZ BLA BLA"
+
+IK WIL WEL DAT JIJ MIJ DE INTERNE ERRORS VIA DE ERRORCODES LAAT OPVOLGEN VIA HET SYSTEEM ZELF
+
+ALS ER DUS STAAT "SEE ERROR ABC" DAN KOM JIJ NIET MET "XYZ" MAAR MOET JE MIJ LETTERLIJK DIE ERROR LATEN PARSEN EN DAT TERUGKOPPELEN!!!
+
+---
+
+De analyse van de interne errors in `TEMP FILES/VM OP LIVEBOOT.md` onder het kopje **# BELANGRIJK** levert de volgende mechanische feiten op:
+
+### 1. Error Parsing: `mount: /mnt/dev: mount point does not exist`
+
+* **Systeem-status:** De `mount -B` (bind mount) commando's falen omdat de doeldirectory's (`/mnt/dev`, `/mnt/proc`, etc.) niet bestaan in de huidige context van de Live USB.
+* **Conclusie:** De root-partitie (`vgmint-root`) is momenteel **niet** gemount op `/mnt`. Een eerdere actie of error heeft de mount-status ongedaan gemaakt of nooit tot stand gebracht.
+
+### 2. Error Parsing: `exFAT-fs (sdc1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.`
+
+* **Systeem-status:** De externe Samsung SSD (`sdc1`) is in een "dirty" staat.
+* **Impact:** Dit blokkeert betrouwbare schrijfoperaties naar je backup/log-locatie op de SSD.
+* **Actie-vereiste:** Het systeem vraagt expliciet om een `fsck` op `/dev/sdc1` voordat data-integriteit gegarandeerd kan worden.
+
+### 3. Error Parsing: `dmesg | grep -i mount` (Status Check)
+
+* **Systeem-status:** De kernel log laat zien dat `sda2` (de boot-partitie) succesvol is gemount en direct weer is ontkoppeld (`unmounting filesystem 4588079c...`).
+* **Huidige staat:** Er zijn op dit moment **geen** actieve mounts van je interne SSD op `/mnt`, `/mnt/boot` of `/mnt/boot/efi`.
+
+### 4. Error Parsing: `update-initramfs is disabled since running on read-only media`
+
+* **Systeem-status:** Dit commando is uitgevoerd op de Live USB zelf (het `cow` filesystem), niet binnen de `chroot`.
+* **Gevolg:** De wijzigingen die je probeerde door te voeren (het uitschakelen van de modules_disabled regel) zijn **niet** verwerkt in de `initrd.img` op je harde schijf.
+
+### 5. Error Parsing: `/usr/sbin/grub-probe: error: failed to get canonical path of /cow`
+
+* **Systeem-status:** `update-grub` faalt omdat het probeert de configuratie van de Live USB te updaten in plaats van die van de harde schijf.
+
+---
+
+### Mechanische Status-Validatie (Payload)
+
+Om de errors in de terminal te parsen en de paden te verifiëren zonder aannames, voer je dit uit:
+
+```bash
+# Controleer of de directory's überhaupt bestaan
+ls -d /mnt/dev /mnt/proc /mnt/sys /mnt/run 2>&1
+
+# Controleer wat er exact gemount is op dit moment
+mount | grep -E "sda|sdc|vgmint"
+
+# Controleer de staat van de externe SSD
+sudo fsck.exfat -n /dev/sdc1
+
+```
+
+**Zodra je de output van deze checks hebt, kunnen we de exacte reden vaststellen waarom de mountpoints "niet bestaan" en of de SSD veilig is voor het wegschrijven van de herstelde initramfs.**
 
 
 
@@ -568,6 +629,15 @@ echo "cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard" > /
 
 
 
+
+
+
+
+
+
+
+
+---
 
 
 ### Stap 2: Reparatie (Inside Chroot)
