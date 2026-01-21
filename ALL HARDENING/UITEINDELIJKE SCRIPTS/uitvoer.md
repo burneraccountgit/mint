@@ -341,3 +341,85 @@ ys@msi:~/Desktop$
 
 ```
 
+# 5
+
+```
+ys@msi:~$ cd Desktop
+ys@msi:~/Desktop$ chmod +x final_hardening.sh 
+ys@msi:~/Desktop$ sudo ./final_hardening.sh
+[sudo] password for ys:       
+[*] INITIATING FINAL SECURITY & PERFORMANCE LAYER (HEAVY DUTY)...
+[+] INSTALLING FAIL2BAN...
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  python3-setuptools whois
+Suggested packages:
+  mailx monit sqlite3 python-setuptools-doc
+The following NEW packages will be installed:
+  fail2ban python3-setuptools whois
+0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+Need to get 857 kB of archives.
+After this operation, 4,704 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-setuptools all 68.1.2-2ubuntu1.2 [397 kB]
+Get:2 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 fail2ban all 1.0.2-3ubuntu0.1 [409 kB]
+Get:3 http://archive.ubuntu.com/ubuntu noble/main amd64 whois amd64 5.5.22 [51.7 kB]
+Fetched 857 kB in 0s (3,058 kB/s)
+Selecting previously unselected package python3-setuptools.
+(Reading database ... 473565 files and directories currently installed.)
+Preparing to unpack .../python3-setuptools_68.1.2-2ubuntu1.2_all.deb ...
+Unpacking python3-setuptools (68.1.2-2ubuntu1.2) ...
+Selecting previously unselected package fail2ban.
+Preparing to unpack .../fail2ban_1.0.2-3ubuntu0.1_all.deb ...
+Unpacking fail2ban (1.0.2-3ubuntu0.1) ...
+Selecting previously unselected package whois.
+Preparing to unpack .../whois_5.5.22_amd64.deb ...
+Unpacking whois (5.5.22) ...
+Setting up python3-setuptools (68.1.2-2ubuntu1.2) ...
+Setting up whois (5.5.22) ...
+Setting up fail2ban (1.0.2-3ubuntu0.1) ...
+/usr/lib/python3/dist-packages/fail2ban/tests/fail2banregextestcase.py:224: SyntaxWarning: invalid escape sequence '\s'
+  "1490349000 test failed.dns.ch", "^\s*test <F-ID>\S+</F-ID>"
+/usr/lib/python3/dist-packages/fail2ban/tests/fail2banregextestcase.py:435: SyntaxWarning: invalid escape sequence '\S'
+  '^'+prefix+'<F-ID>User <F-USER>\S+</F-USER></F-ID> not allowed\n'
+/usr/lib/python3/dist-packages/fail2ban/tests/fail2banregextestcase.py:443: SyntaxWarning: invalid escape sequence '\S'
+  '^'+prefix+'User <F-USER>\S+</F-USER> not allowed\n'
+/usr/lib/python3/dist-packages/fail2ban/tests/fail2banregextestcase.py:444: SyntaxWarning: invalid escape sequence '\d'
+  '^'+prefix+'Received disconnect from <F-ID><ADDR> port \d+</F-ID>'
+/usr/lib/python3/dist-packages/fail2ban/tests/fail2banregextestcase.py:451: SyntaxWarning: invalid escape sequence '\s'
+  _test_variants('common', prefix="\s*\S+ sshd\[<F-MLFID>\d+</F-MLFID>\]:\s+")
+/usr/lib/python3/dist-packages/fail2ban/tests/fail2banregextestcase.py:537: SyntaxWarning: invalid escape sequence '\['
+  'common[prefregex="^svc\[<F-MLFID>\d+</F-MLFID>\] connect <F-CONTENT>.+</F-CONTENT>$"'
+/usr/lib/python3/dist-packages/fail2ban/tests/servertestcase.py:1375: SyntaxWarning: invalid escape sequence '\s'
+  "`{ nft -a list chain inet f2b-table f2b-chain | grep -oP '@addr-set-j-w-nft-mp\s+.*\s+\Khandle\s+(\d+)$'; } | while read -r hdl; do`",
+/usr/lib/python3/dist-packages/fail2ban/tests/servertestcase.py:1378: SyntaxWarning: invalid escape sequence '\s'
+  "`{ nft -a list chain inet f2b-table f2b-chain | grep -oP '@addr6-set-j-w-nft-mp\s+.*\s+\Khandle\s+(\d+)$'; } | while read -r hdl; do`",
+/usr/lib/python3/dist-packages/fail2ban/tests/servertestcase.py:1421: SyntaxWarning: invalid escape sequence '\s'
+  "`{ nft -a list chain inet f2b-table f2b-chain | grep -oP '@addr-set-j-w-nft-ap\s+.*\s+\Khandle\s+(\d+)$'; } | while read -r hdl; do`",
+/usr/lib/python3/dist-packages/fail2ban/tests/servertestcase.py:1424: SyntaxWarning: invalid escape sequence '\s'
+  "`{ nft -a list chain inet f2b-table f2b-chain | grep -oP '@addr6-set-j-w-nft-ap\s+.*\s+\Khandle\s+(\d+)$'; } | while read -r hdl; do`",
+Created symlink /etc/systemd/system/multi-user.target.wants/fail2ban.service → /usr/lib/systemd/system/fail2ban.service.
+Processing triggers for man-db (2.12.0-4build2) ...
+Synchronizing state of fail2ban.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable fail2ban
+[V] FAIL2BAN ACTIVE & MONITORING.
+[+] GENERATING 16G SWAPFILE (DIT DUURT EVEN)...
+Setting up swapspace version 1, size = 16 GiB (17179865088 bytes)
+no label, UUID=91e44aae-2605-4434-aeeb-e95eb015228b
+[V] SWAP ADDED TO FSTAB (PERSISTENT).
+[V] SWAP CAPACITY INCREASED TO +16GB.
+-----------------------------------------------------
+   FINAL STATUS CHECK:
+   FAIL2BAN:
+     Active: active (running) since Wed 2026-01-21 11:14:35 EST; 1s ago
+
+   MEMORY (SWAP):
+Swap:           17Gi       512Ki        17Gi
+-----------------------------------------------------
+   SYSTEM OPTIMIZED.
+ys@msi:~/Desktop$ 
+
+
+```
+
