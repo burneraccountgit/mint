@@ -74,3 +74,52 @@ Device     Boot Start     End Sectors  Size Id Type
 mint@mint:~$ 
 
 ```
+
+Dit is een complexe operatie omdat je een "Clean Wipe" wilt combineren met het behoud van een bestaande configuratie (bestanden, programma's en tweaks). In Linux zijn programma's en instellingen echter diep verweven met de systeembestanden en pakketbronnen.
+
+Om te voorkomen dat we halverwege vastlopen op aannames, gaan we dit in fasen doen. Ik begin niet met commando's. We beginnen met de **Inventarisatie**.
+
+### Fase 1: Systeem Inventarisatie (De Nulmeting)
+
+Voordat we iets back-uppen of wissen, moet ik exact weten hoe de data verdeeld is. Draai de volgende commando's in de terminal van je **Live Boot** en kopieer de output hierheen.
+
+```bash
+lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+
+```
+
+*Doel: Identificeren welke partitie je huidige Mint-installatie is en waar je SSD (voor backup) zich bevindt.*
+
+```bash
+sudo parted -l
+
+```
+
+*Doel: Vaststellen of we met GPT/EFI of MBR/Legacy te maken hebben. Dit is cruciaal voor het herstellen van de bootloader later.*
+
+```bash
+ls /mnt/etc/apt/sources.list.d/
+
+```
+
+*(Eerst de juiste partitie mounten naar /mnt). Doel: Zien welke PPA's en externe repo's je gebruikt, zodat je programma's later ook echt terugkomen.*
+
+---
+
+### Het Plan van Aanpak (Strategie)
+
+Om te bereiken wat jij wilt zonder "miljard reboots", is de meest stabiele methode:
+
+1. **De 'State' isoleren:** We trekken een lijst van alle geïnstalleerde pakketten (`dpkg --get-selections`) en we maken een rsync-kopie van je `/home` folder (instellingen + bestanden) naar de SSD.
+2. **Configuratie veiligstellen:** We kopiëren `/etc/` handmatig naar de SSD. Hierin staan je systeeminstellingen, wifi-wachtwoorden en fstab.
+3. **De Harde Reset:** We wissen de hele schijf en installeren Mint 22.3 'Zena' vers van de Live USB.
+4. **De Injectie:** We injecteren je pakketlijst en je `/home` folder terug in de nieuwe installatie. Omdat de kernel (onder de motorkap) losstaat van je home-configuratie (boven de motorkap), blijven je widgets en instellingen behouden op de nieuwe basis.
+
+### Waarschuwing over "Programma's"
+
+Bestanden en instellingen (widgets, wallpaper, browser-data) zijn makkelijk. **Programma's** zelf kunnen niet simpelweg "teruggezet" worden door een map te kopiëren; ze moeten via de package manager van 22.3 opnieuw worden geïnstalleerd op basis van je lijst om compatibiliteit met de nieuwe bibliotheken te garanderen.
+
+**Stap 1 voor jou:**
+Geef me de output van de bovenstaande `lsblk` en `parted -l` commando's. Zodra ik die heb, bepaal ik de exacte mount-commando's voor je backup.
+
+Wil je dat ik eerst een script voor je maak dat de inventarisatie van je geïnstalleerde programma's automatiseert naar een tekstbestand op je SSD?
