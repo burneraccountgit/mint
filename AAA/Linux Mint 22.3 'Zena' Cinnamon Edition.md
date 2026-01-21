@@ -4564,3 +4564,115 @@ NoNewPrivileges=yes
 
 ---
 
+# ANTWOORD
+
+```
+
+root@mint:~# cat << 'EOF' > /home/mint/audit.sh
+#!/bin/bash
+# =================================================================
+# SCRIPT: FORENSISCHE AUDIT & OPSEC VALIDATIE (LIVEBOOT)
+# =================================================================
+
+# 1. OMGEVING PREPAREREN (UNLOCK & MOUNT)
+sudo cryptsetup open /dev/sda3 cryptdata
+sudo vgchange -ay
+sudo mount /dev/mapper/vgmint-root /mnt
+sudo mount /dev/sda2 /mnt/boot
+sudo mount /dev/sda1 /mnt/boot/efi
+
+# 2. VALIDATIE-LOG INITIALISEREN
+LOG="/media/mint/USB-STAAFJE/MINT_BACKUP/audit_report_$(date +%Y%m%d_%H%M%S).txt"
+mkdir -p /media/mint/USB-STAAFJE/MINT_BACKUP/
+
+{
+  echo "=== BOOT CHAIN VALIDATIE ==="
+  echo "[1] UUID Check sda3:"
+  blkid /dev/sda3
+  
+  echo -e "\n[2] Crypttab Inhoud:"
+  cat /mnt/etc/crypttab
+  
+  echo -e "\n[3] Grub Configuration (Kernel Parameters):"
+  grep "GRUB_CMDLINE_LINUX" /mnt/etc/default/grub
+  
+  echo -e "\n=== OPSEC & HARDENING CONFLICT ANALYSIS ==="
+  echo "[4] Sysctl Lockdown Check:"
+  grep -r "kernel.modules_disabled" /mnt/etc/sysctl.conf /mnt/etc/sysctl.d/
+  
+  echo -e "\n[5] Boot Partition Overhead Check:"
+  df -h /mnt/boot
+  
+  echo -e "\n[6] AppArmor Profile Status:"
+  ls -l /mnt/etc/apparmor.d/ | head -n 20
+
+  echo -e "\n=== INITRAMFS INTEGRITY INSPECTION ==="
+  echo "[7] Initrd Bestand Groottes:"
+  ls -lh /mnt/boot/initrd.img*
+  
+} | tee "$LOG"
+
+echo -e "\n--- Audit voltooid. Rapport opgeslagen in: $LOG ---"
+EOF
+
+chmod +x /home/mint/audit.sh
+/home/mint/audit.sh
+Enter passphrase for /dev/sda3: 
+Cannot use device /dev/sda3 which is in use (already mapped or mounted).
+  2 logical volume(s) in volume group "vgmint" now active
+mount: /mnt: /dev/mapper/vgmint-root already mounted on /media/mint/350f1ad8-beac-4acf-9338-1090205ed51a.
+       dmesg(1) may have more information after failed mount system call.
+=== BOOT CHAIN VALIDATIE ===
+[1] UUID Check sda3:
+/dev/sda3: UUID="279a2ae4-af1e-4985-8976-f2535b89b7e9" TYPE="crypto_LUKS" PARTUUID="342c3cc3-d6c6-4b5c-a4c8-3d2953fa4947"
+
+[2] Crypttab Inhoud:
+cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard
+
+[3] Grub Configuration (Kernel Parameters):
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash intel_pstate=active"
+GRUB_CMDLINE_LINUX=""
+
+=== OPSEC & HARDENING CONFLICT ANALYSIS ===
+[4] Sysctl Lockdown Check:
+/mnt/etc/sysctl.d/99-zwaar-gehard.conf:kernel.modules_disabled = 1
+
+[5] Boot Partition Overhead Check:
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda2       1.7G  242M  1.3G  16% /mnt/boot
+
+[6] AppArmor Profile Status:
+total 476
+-rw-r--r-- 1 root root   354 Mar 19  2025 1password
+-rw-r--r-- 1 root root   352 Mar 19  2025 Discord
+-rw-r--r-- 1 root root   386 Mar 19  2025 MongoDB_Compass
+-rw-r--r-- 1 root root   404 Mar 19  2025 QtWebEngineProcess
+drwxr-xr-x 2 root root  4096 Dec 11 09:21 abi
+drwxr-xr-x 4 root root 12288 Jan 18 06:59 abstractions
+-rw-r--r-- 1 root root   374 Mar 19  2025 balena-etcher
+-rw-r--r-- 1 root root   348 Mar 19  2025 brave
+-rw-r--r-- 1 root root   342 Mar 19  2025 buildah
+-rw-r--r-- 1 root root   342 Mar 19  2025 busybox
+-rw-r--r-- 1 root root   330 Mar 19  2025 cam
+-rw-r--r-- 1 root root   351 Mar 19  2025 ch-checkns
+-rw-r--r-- 1 root root   339 Mar 19  2025 ch-run
+-rw-r--r-- 1 root root   349 Mar 19  2025 chrome
+-rw-r--r-- 1 root root   349 Mar 19  2025 code
+-rw-r--r-- 1 root root   333 Mar 19  2025 crun
+-rw-r--r-- 1 root root   342 Mar 19  2025 devhelp
+drwxr-xr-x 2 root root  4096 Aug 15 12:16 disable
+-rw-r--r-- 1 root root   368 Mar 19  2025 element-desktop
+
+=== INITRAMFS INTEGRITY INSPECTION ===
+[7] Initrd Bestand Groottes:
+lrwxrwxrwx 1 root root  27 Jan 18 00:34 /mnt/boot/initrd.img -> initrd.img-6.8.0-90-generic
+-rw-r--r-- 1 root root 79M Jan 20 23:09 /mnt/boot/initrd.img-6.14.0-37-generic
+-rw-r--r-- 1 root root 77M Jan 20 23:09 /mnt/boot/initrd.img-6.8.0-90-generic
+lrwxrwxrwx 1 root root  28 Dec 17 07:37 /mnt/boot/initrd.img.old -> initrd.img-6.14.0-37-generic
+
+--- Audit voltooid. Rapport opgeslagen in: /media/mint/USB-STAAFJE/MINT_BACKUP/audit_report_20260121_043431.txt ---
+root@mint:~# 
+
+```
+
+---
