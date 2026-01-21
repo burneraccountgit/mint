@@ -292,3 +292,17 @@ Omdat je een "Clean Wipe" wilt doen en daarna alles terug wilt zetten, moeten we
 
 ---
 
+```
+mint@mint:~$ sudo vgscan && sudo vgchange -ay
+  Found volume group "vgmint" using metadata type lvm2
+  2 logical volume(s) in volume group "vgmint" now active
+mint@mint:~$ ls /dev/mapper/
+control  mijn_systeem  vgmint-root  vgmint-swap_1
+mint@mint:~$ sudo mount /dev/mapper/vgmint-root /mnt
+mint@mint:~$ ls /mnt/etc/apt/sources.list.d/
+google-chrome.list  official-package-repositories.list  sunderme-texstudio-noble.list
+mint@mint:~$ 
+```
+
+---
+
