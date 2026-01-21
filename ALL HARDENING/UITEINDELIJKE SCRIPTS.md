@@ -187,6 +187,7 @@ echo "[*] OPERATIE VOLTOOID. ALLE DATA IS NU SOURCE CODE."
 
 # restore_list.txt
 
+```
 7zip						install
 accountsservice					install
 acct						install
