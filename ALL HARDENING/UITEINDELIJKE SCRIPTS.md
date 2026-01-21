@@ -358,7 +358,7 @@ diffutils					install
 dirmngr						install
 distro-info					install
 distro-info-data				install
-dkms						deinstall
+dkms						install
 dmeventd					install
 dmidecode					install
 dmraid						install
@@ -1257,7 +1257,7 @@ libgirepository-1.0-1:amd64			install
 libgjs0g:amd64					install
 libgl1:amd64					install
 libgl1-mesa-dri:amd64				install
-libgl1-mesa-dri:i386				deinstall
+libgl1-mesa-dri:i386				install
 libglapi-mesa:amd64				install
 libgles2:amd64					install
 libglew2.2:amd64				install
@@ -2998,8 +2998,8 @@ tipa						install
 tk						install
 tk8.6						install
 tk8.6-blt2.5					install
-tlp						deinstall
-tlp-rdw						deinstall
+tlp						install
+tlp-rdw						install
 tnftp						install
 touchegg					install
 tpm-udev					install
