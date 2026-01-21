@@ -4295,6 +4295,7 @@ total 8
 
 # CHECK
 
+```
 root@mint:~# ls -lh /media/mint/USB-STAAFJE/MINT_BACKUP/
 total 72G
 -rwxr-xr-x 1 mint mint  16K Jan 21 02:58 custom_opsec_rules_index.txt
@@ -4304,7 +4305,7 @@ total 72G
 -rwxr-xr-x 1 mint mint  72G Jan 21 01:44 user_home_backup.tar.gz
 -rwxr-xr-x 1 mint mint 619M Jan 21 02:36 volledige_bestandslijst.txt
 root@mint:~# 
+```
 
 ---
-
 
