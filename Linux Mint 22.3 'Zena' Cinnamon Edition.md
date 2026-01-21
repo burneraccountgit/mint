@@ -3726,3 +3726,9 @@ root@mint:~#
 
 ---
 
+# BESTANDSLIJST
+    sudo find /mnt -xdev -not -path '*/.*' > /media/mint/USB-STAAFJE/MINT_BACKUP/volledige_bestandslijst.txt
+
+GEEFT
+
+```
