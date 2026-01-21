@@ -3726,9 +3726,466 @@ root@mint:~#
 
 ---
 
-# BESTANDSLIJST
-    sudo find /mnt -xdev -not -path '*/.*' > /media/mint/USB-STAAFJE/MINT_BACKUP/volledige_bestandslijst.txt
-
-GEEFT
+# OPSEC
 
 ```
+root@mint:~# sudo find /mnt -xdev -not -path '*/.*' > /media/mint/USB-STAAFJE/MINT_BACKUP/volledige_bestandslijst.txt
+root@mint:~# {
+  echo "=== CUSTOM FIREWALL RULES (UFW) ==="
+  sudo cat /mnt/etc/ufw/user.rules
+  echo -e "\n=== KERNEL HARDENING (SYSCTL) ==="
+  sudo cat /mnt/etc/sysctl.conf /mnt/etc/sysctl.d/*.conf
+  echo -e "\n=== HOSTS & NETWERK ==="
+  sudo cat /mnt/etc/hosts
+  echo -e "\n=== CRON JOBS (CUSTOM SCRIPTS) ==="
+  sudo ls -R /mnt/etc/cron.* echo -e "\n=== SSH CONFIG ==="
+  sudo cat /mnt/etc/ssh/sshd_config
+  echo -e "\n=== LOGS & AUDITD (IF INSTALLED) ==="
+  sudo ls -l /mnt/etc/audit/rules.d/
+} > /media/mint/USB-STAAFJE/MINT_BACKUP/custom_opsec_rules_index.txt
+ls: invalid option -- 'e'
+Try 'ls --help' for more information.
+cat: /mnt/etc/ssh/sshd_config: No such file or directory
+root@mint:~# 
+```
+
+=== CUSTOM FIREWALL RULES (UFW) ===
+*filter
+:ufw-user-input - [0:0]
+:ufw-user-output - [0:0]
+:ufw-user-forward - [0:0]
+:ufw-before-logging-input - [0:0]
+:ufw-before-logging-output - [0:0]
+:ufw-before-logging-forward - [0:0]
+:ufw-user-logging-input - [0:0]
+:ufw-user-logging-output - [0:0]
+:ufw-user-logging-forward - [0:0]
+:ufw-after-logging-input - [0:0]
+:ufw-after-logging-output - [0:0]
+:ufw-after-logging-forward - [0:0]
+:ufw-logging-deny - [0:0]
+:ufw-logging-allow - [0:0]
+:ufw-user-limit - [0:0]
+:ufw-user-limit-accept - [0:0]
+### RULES ###
+
+### tuple ### allow any 53 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p tcp --dport 53 -j ACCEPT
+-A ufw-user-output -p udp --dport 53 -j ACCEPT
+
+### tuple ### allow tcp 80 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p tcp --dport 80 -j ACCEPT
+
+### tuple ### allow any 443 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p tcp --dport 443 -j ACCEPT
+-A ufw-user-output -p udp --dport 443 -j ACCEPT
+
+### tuple ### allow udp 67 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p udp --dport 67 -j ACCEPT
+
+### tuple ### allow udp 68 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p udp --dport 68 -j ACCEPT
+
+### tuple ### deny udp 5353 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p udp --dport 5353 -j DROP
+
+### tuple ### deny udp 5353 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p udp --dport 5353 -j DROP
+
+### tuple ### deny udp 1900 0.0.0.0/0 any 0.0.0.0/0 out
+-A ufw-user-output -p udp --dport 1900 -j DROP
+
+### tuple ### deny udp 1900 0.0.0.0/0 any 0.0.0.0/0 in
+-A ufw-user-input -p udp --dport 1900 -j DROP
+
+### END RULES ###
+
+### LOGGING ###
+-A ufw-after-logging-input -j LOG --log-prefix "[UFW BLOCK] " -m limit --limit 3/min --limit-burst 10
+-A ufw-after-logging-forward -j LOG --log-prefix "[UFW BLOCK] " -m limit --limit 3/min --limit-burst 10
+-I ufw-logging-deny -m conntrack --ctstate INVALID -j RETURN -m limit --limit 3/min --limit-burst 10
+-A ufw-logging-deny -j LOG --log-prefix "[UFW BLOCK] " -m limit --limit 3/min --limit-burst 10
+-A ufw-logging-allow -j LOG --log-prefix "[UFW ALLOW] " -m limit --limit 3/min --limit-burst 10
+### END LOGGING ###
+
+### RATE LIMITING ###
+-A ufw-user-limit -m limit --limit 3/minute -j LOG --log-prefix "[UFW LIMIT BLOCK] "
+-A ufw-user-limit -j REJECT
+-A ufw-user-limit-accept -j ACCEPT
+### END RATE LIMITING ###
+COMMIT
+
+=== KERNEL HARDENING (SYSCTL) ===
+#
+# /etc/sysctl.conf - Configuration file for setting system variables
+# See /etc/sysctl.d/ for additional system variables.
+# See sysctl.conf (5) for information.
+#
+
+#kernel.domainname = example.com
+
+# Uncomment the following to stop low-level messages on console
+#kernel.printk = 3 4 1 3
+
+###################################################################
+# Functions previously found in netbase
+#
+
+# Uncomment the next two lines to enable Spoof protection (reverse-path filter)
+# Turn on Source Address Verification in all interfaces to
+# prevent some spoofing attacks
+#net.ipv4.conf.default.rp_filter=1
+#net.ipv4.conf.all.rp_filter=1
+
+# Uncomment the next line to enable TCP/IP SYN cookies
+# See http://lwn.net/Articles/277146/
+# Note: This may impact IPv6 TCP sessions too
+#net.ipv4.tcp_syncookies=1
+
+# Uncomment the next line to enable packet forwarding for IPv4
+#net.ipv4.ip_forward=1
+
+# Uncomment the next line to enable packet forwarding for IPv6
+#  Enabling this option disables Stateless Address Autoconfiguration
+#  based on Router Advertisements for this host
+#net.ipv6.conf.all.forwarding=1
+
+
+###################################################################
+# Additional settings - these settings can improve the network
+# security of the host and prevent against some network attacks
+# including spoofing attacks and man in the middle attacks through
+# redirection. Some network environments, however, require that these
+# settings are disabled so review and enable them as needed.
+#
+# Do not accept ICMP redirects (prevent MITM attacks)
+#net.ipv4.conf.all.accept_redirects = 0
+#net.ipv4.conf.default.accept_redirects = 0
+# _or_
+# Accept ICMP redirects only for gateways listed in our default
+# gateway list (enabled by default)
+# net.ipv4.conf.all.secure_redirects = 1
+#
+# Do not send ICMP redirects (we are not a router)
+#net.ipv4.conf.all.send_redirects = 0
+#
+# Log Martian Packets
+#net.ipv4.conf.all.log_martians = 1
+#
+
+###################################################################
+# Magic system request Key
+# 0=disable, 1=enable all, >1 bitmask of sysrq functions
+# See https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
+# for what other values do
+#kernel.sysrq=438
+
+# The Fair Queue CoDel packet scheduler is an across the board improvement to
+# the default pfifo_fast qdisc. It reduces bottleneck delays, provides accurate
+# RTT estimates to elephant TCP flows, and still allows shorter (sparser) flows
+# like DNS, ARP, SYN, routing, etc packets priority access. For technical
+# details, refer to https://www.bufferbloat.net/projects/codel/wiki/
+#
+# To fight bufferbloat, set it as the default qdisc in Ubuntu.
+-net.core.default_qdisc = fq_codel
+
+# the following stops low-level messages on console
+kernel.printk = 4 4 1 7
+# IPv6 Privacy Extensions (RFC 4941)
+# ---
+# IPv6 typically uses a device's MAC address when choosing an IPv6 address
+# to use in autoconfiguration. Privacy extensions allow using a randomly
+# generated IPv6 address, which increases privacy.
+#
+# Acceptable values:
+#    0 - don’t use privacy extensions.
+#    1 - generate privacy addresses
+#    2 - prefer privacy addresses and use them over the normal addresses.
+net.ipv6.conf.all.use_tempaddr = 2
+net.ipv6.conf.default.use_tempaddr = 2
+# These settings are specific to hardening the kernel itself from attack
+# from userspace, rather than protecting userspace from other malicious
+# userspace things.
+#
+#
+# When an attacker is trying to exploit the local kernel, it is often
+# helpful to be able to examine where in memory the kernel, modules,
+# and data structures live. As such, kernel addresses should be treated
+# as sensitive information.
+#
+# Many files and interfaces contain these addresses (e.g. /proc/kallsyms,
+# /proc/modules, etc), and this setting can censor the addresses. A value
+# of "0" allows all users to see the kernel addresses. A value of "1"
+# limits visibility to the root user, and "2" blocks even the root user.
+kernel.kptr_restrict = 1
+
+# Access to the kernel log buffer can be especially useful for an attacker
+# attempting to exploit the local kernel, as kernel addresses and detailed
+# call traces are frequently found in kernel oops messages. Setting
+# dmesg_restrict to "0" allows all users to view the kernel log buffer,
+# and setting it to "1" restricts access to those with CAP_SYSLOG.
+#
+# dmesg_restrict defaults to 1 via CONFIG_SECURITY_DMESG_RESTRICT, only
+# uncomment the following line to disable.
+# kernel.dmesg_restrict = 0
+# The magic SysRq key enables certain keyboard combinations to be
+# interpreted by the kernel to help with debugging. The kernel will respond
+# to these keys regardless of the current running applications.
+#
+# In general, the magic SysRq key is not needed for the average Ubuntu
+# system, and having it enabled by default can lead to security issues on
+# the console such as being able to dump memory or to kill arbitrary
+# processes including the running screen lock.
+#
+# Here is the list of possible values:
+#   0 - disable sysrq completely
+#   1 - enable all functions of sysrq
+#  >1 - enable certain functions by adding up the following values:
+#          2 - enable control of console logging level
+#          4 - enable control of keyboard (SAK, unraw)
+#          8 - enable debugging dumps of processes etc.
+#         16 - enable sync command
+#         32 - enable remount read-only
+#         64 - enable signalling of processes (term, kill, oom-kill)
+#        128 - allow reboot/poweroff
+#        256 - allow nicing of all RT tasks
+#
+#   For example, to enable both control of console logging level and
+#   debugging dumps of processes: kernel.sysrq = 10
+#
+kernel.sysrq = 176
+# Increase the number of virtual memory areas that one process may request
+# https://bugs.launchpad.net/ubuntu/+source/procps/+bug/2057792
+vm.max_map_count=1048576
+
+# Turn on Source Address Verification in all interfaces to
+# prevent some spoofing attacks.
+net.ipv4.conf.default.rp_filter=2
+net.ipv4.conf.all.rp_filter=2
+
+# The PTRACE system is used for debugging.  With it, a single user process
+# can attach to any other dumpable process owned by the same user.  In the
+# case of malicious software, it is possible to use PTRACE to access
+# credentials that exist in memory (re-using existing SSH connections,
+# extracting GPG agent information, etc).
+#
+# A PTRACE scope of "0" is the more permissive mode.  A scope of "1" limits
+# PTRACE only to direct child processes (e.g. "gdb name-of-program" and
+# "strace -f name-of-program" work, but gdb's "attach" and "strace -fp $PID"
+# do not).  The PTRACE scope is ignored when a user has CAP_SYS_PTRACE, so
+# "sudo strace -fp $PID" will work as before.  For more details see:
+# https://wiki.ubuntu.com/SecurityTeam/Roadmap/KernelHardening#ptrace
+#
+# For applications launching crash handlers that need PTRACE, exceptions can
+# be registered by the debugee by declaring in the segfault handler
+# specifically which process will be using PTRACE on the debugee:
+#   prctl(PR_SET_PTRACER, debugger_pid, 0, 0, 0);
+#
+# In general, PTRACE is not needed for the average running Ubuntu system.
+# To that end, the default is to set the PTRACE scope to "1".  This value
+# may not be appropriate for developers or servers with only admin accounts.
+kernel.yama.ptrace_scope = 1
+# Protect the zero page of memory from userspace mmap to prevent kernel
+# NULL-dereference attacks against potential future kernel security
+# vulnerabilities.  (Added in kernel 2.6.23.)
+#
+# While this default is built into the Ubuntu kernel, there is no way to
+# restore the kernel default if the value is changed during runtime; for
+# example via package removal (e.g. wine, dosemu).  Therefore, this value
+# is reset to the secure default each time the sysctl values are loaded.
+vm.mmap_min_addr = 65536
+# Allow the use of unprivileged user namespaces
+# See https://github.com/linuxmint/mint22-beta/issues/82.
+kernel.apparmor_restrict_unprivileged_userns = 0
+
+
+# Voorkom informatielekken via dmesg
+kernel.dmesg_restrict = 1
+
+# Beperk toegang tot kernel symbols (voorkomt exploits)
+kernel.kptr_restrict = 2
+
+# Verhoog bescherming tegen 'buffer overflow' aanvallen
+kernel.randomize_va_space = 2
+
+# Bescherming tegen IP-spoofing (Source routing uitschakelen)
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+
+# Schakel redirects uit (voorkomt MITM aanvallen)
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+
+kernel.randomize_va_space=2
+kernel.yama.ptrace_scope=1
+kernel.kptr_restrict=2
+kernel.dmesg_restrict=1
+kernel.kptr_restrict=2
+kernel.dmesg_restrict=1
+#
+# /etc/sysctl.conf - Configuration file for setting system variables
+# See /etc/sysctl.d/ for additional system variables.
+# See sysctl.conf (5) for information.
+#
+
+#kernel.domainname = example.com
+
+# Uncomment the following to stop low-level messages on console
+#kernel.printk = 3 4 1 3
+
+###################################################################
+# Functions previously found in netbase
+#
+
+# Uncomment the next two lines to enable Spoof protection (reverse-path filter)
+# Turn on Source Address Verification in all interfaces to
+# prevent some spoofing attacks
+#net.ipv4.conf.default.rp_filter=1
+#net.ipv4.conf.all.rp_filter=1
+
+# Uncomment the next line to enable TCP/IP SYN cookies
+# See http://lwn.net/Articles/277146/
+# Note: This may impact IPv6 TCP sessions too
+#net.ipv4.tcp_syncookies=1
+
+# Uncomment the next line to enable packet forwarding for IPv4
+#net.ipv4.ip_forward=1
+
+# Uncomment the next line to enable packet forwarding for IPv6
+#  Enabling this option disables Stateless Address Autoconfiguration
+#  based on Router Advertisements for this host
+#net.ipv6.conf.all.forwarding=1
+
+
+###################################################################
+# Additional settings - these settings can improve the network
+# security of the host and prevent against some network attacks
+# including spoofing attacks and man in the middle attacks through
+# redirection. Some network environments, however, require that these
+# settings are disabled so review and enable them as needed.
+#
+# Do not accept ICMP redirects (prevent MITM attacks)
+#net.ipv4.conf.all.accept_redirects = 0
+#net.ipv4.conf.default.accept_redirects = 0
+# _or_
+# Accept ICMP redirects only for gateways listed in our default
+# gateway list (enabled by default)
+# net.ipv4.conf.all.secure_redirects = 1
+#
+# Do not send ICMP redirects (we are not a router)
+#net.ipv4.conf.all.send_redirects = 0
+#
+# Log Martian Packets
+#net.ipv4.conf.all.log_martians = 1
+#
+
+###################################################################
+# Magic system request Key
+# 0=disable, 1=enable all, >1 bitmask of sysrq functions
+# See https://www.kernel.org/doc/html/latest/admin-guide/sysrq.html
+# for what other values do
+#kernel.sysrq=438
+
+# --- NETWORK STACK HARDENING ---
+
+# IP Spoofing protection (Strict mode)
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+
+# Ignore ICMP Broadcasts (Anti-Smurf/Ping Flood)
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# Disable Source Packet Routing (Geen router spelen)
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv6.conf.default.accept_source_route = 0
+
+# Disable Redirects (Voorkomt Man-in-the-Middle hijacking)
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.default.secure_redirects = 0
+
+# TCP Hardening (SYN Flood protection & Time-Wait Assassination)
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_rfc1337 = 1
+
+# Log Martians (Detectie van spoofed packets)
+net.ipv4.conf.all.log_martians = 1
+
+# --- KERNEL SECURITY (ANTI-EXPLOIT) ---
+
+# PTRACE Scope: Blokkeer process spying. 
+# Voorkomt dat malware in browser processen kan injecteren of memory kan lezen.
+kernel.yama.ptrace_scope = 2
+
+# Dmesg Restrict: Verberg kernel adressen voor normale gebruikers.
+# Maakt het véél moeilijker om exploits te schrijven die afhankelijk zijn van memory layout.
+kernel.dmesg_restrict = 1
+
+# BPF Hardening: JIT compiler hardening voor eBPF (vaak misbruikt)
+net.core.bpf_jit_harden = 2
+kernel.unprivileged_bpf_disabled = 1
+
+# Kexec Disable: Voorkomt het laden van een nieuwe kernel tijdens runtime (Rootkit preventie)
+kernel.kexec_load_disabled = 1
+
+# ASLR (Address Space Layout Randomization) maximaliseren
+kernel.randomize_va_space = 2
+
+# Magic SysRq key uitschakelen (Fysieke access hardening)
+kernel.sysrq = 0
+
+kernel.kptr_restrict=2
+kernel.sysrq=0
+kernel.unprivileged_bpf_disabled=1
+net.core.bpf_jit_harden=2
+dev.tty.ldisc_autoload=0
+vm.unprivileged_userfaultfd=0
+kernel.perf_event_paranoid=3
+fs.suid_dumpable = 0
+fs.protected_fifos = 2
+fs.protected_regular = 2
+fs.protected_hardlinks = 1
+fs.protected_symlinks = 1
+dev.tty.ldisc_autoload = 0
+fs.inotify.max_user_watches = 524288
+fs.protected_fifos = 2
+fs.protected_regular = 2
+fs.protected_hardlinks = 1
+fs.protected_symlinks = 1
+dev.tty.ldisc_autoload = 0
+fs.inotify.max_user_watches = 524288
+kernel.io_delay_type = 3
+kernel.unprivileged_userns_clone=0
+kernel.modules_disabled = 1
+
+=== HOSTS & NETWERK ===
+127.0.0.1	localhost
+127.0.1.1	MSI-DESKTOP
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+=== CRON JOBS (CUSTOM SCRIPTS) ===
+
+=== LOGS & AUDITD (IF INSTALLED) ===
+total 8
+-rw------- 1 root root   5 Jan 16 02:58 99-finalize.rules
+-rw-r----- 1 root root 249 Jan 16 01:40 audit.rules
+
+---
+
+
+
+
+
+
+
