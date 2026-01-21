@@ -23,25 +23,47 @@ Met
 In een terminal typ je altijd een opdracht (zoals ls, grep, ip a, of een installatie-script). Alles wat je achter de > zet, wordt opgeslagen in een bestand.
 Voorbeelden:
 
-    Wil je een lijst van alle bestanden opslaan?
+Wil je een lijst van alle bestanden opslaan?
+
     ls -la > lijst.txt
-    Wil je alle systeeminformatie opslaan?
+
+Wil je alle systeeminformatie opslaan?
+
     uname -a > systeem.txt
-    Wil je je netwerkinstellingen opslaan?
+
+Wil je je netwerkinstellingen opslaan?
+
     ip addr > netwerk.txt
-    Wil je de inhoud van een bestaand bestand (bijv. een logboek) kopiëren naar een nieuw bestand?
+
+Wil je de inhoud van een bestaand bestand (bijv. een logboek) kopiëren naar een nieuw bestand?
+
     cat /var/log/syslog > mijn_kopie.txt
 
 Hoe vind je dit bestand daarna terug?
 Omdat je in een live-boot zit, staat dit bestand standaard in het geheugen (RAM). Als je de computer uitzet, is het weg.
 
-    Typ pwd om te zien in welke map je bent.
-    Typ ls -l export.txt om te controleren of je bestand is aangemaakt.
+Typ 
+
+    pwd 
+
+om te zien in welke map je bent.
+    
+Typ 
+
+    ls -l export.txt 
+
+om te controleren of je bestand is aangemaakt.
 
 Wil je de tekst echt ergens anders kunnen openen?
 Gebruik dan de tip van de vorige post:
-commando | nc termbin.com 9999
-(Vervang commando door wat je op dit moment aan het doen bent, bijvoorbeeld dmesg | nc termbin.com 9999 om je systeemlogs online te zetten).
+
+    commando | nc termbin.com 9999
+
+(Vervang commando door wat je op dit moment aan het doen bent, bijvoorbeeld 
+    
+    dmesg | nc termbin.com 9999 
+
+om je systeemlogs online te zetten).
 
 ---
 
@@ -53,11 +75,17 @@ Om in een Live-sessie van Linux Mint Cinnamon automatisch alle terminalactivitei
 script gebruiken.
 Volg deze stappen:
 
-    Open de terminal (Ctrl+Alt+T).
+Open de terminal (Ctrl+Alt+T).
     Typ het volgende commando en druk op Enter:
-    script ~/Desktop/terminal_log.txt
-    Vanaf dit moment wordt alles wat je typt en alles wat de terminal antwoordt opgeslagen in het bestand terminal_log.txt op je bureaublad.
-    Wil je stoppen met loggen? Typ dan exit of druk op Ctrl+D.
+```
+script ~/Desktop/terminal_log.txt
+```
+Vanaf dit moment wordt alles wat je typt en alles wat de terminal antwoordt opgeslagen in het bestand terminal_log.txt op je bureaublad.
+    Wil je stoppen met loggen? Typ dan 
+```
+exit
+``` 
+of druk op Ctrl+D.
 
 Belangrijke opmerkingen:
 
