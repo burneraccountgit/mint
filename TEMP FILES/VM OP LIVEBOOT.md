@@ -40,3 +40,45 @@ sudo qemu-system-x86_64 -m 2048 -drive file=/dev/sda,format=raw,readonly=on -ena
 3. **Bootstrap 22.3:** We gaan de installatie van 22.3 voorbereiden via de terminal, waarbij we de `99-zwaar-gehard.conf` pas *na* de eerste succesvolle boot terugzetten, zodat we niet opnieuw in een panic belanden.
 
 **Geef de output van de QEMU actie. Krijg je daar ook de `unknown-block(0,0)` fout te zien?**
+
+---
+
+# antwoord
+
+```
+root@mint:~# sudo apt update && sudo apt install qemu-system-x86 qemu-utils -y
+Ign:1 cdrom://Linux Mint 22.3 _Zena_ - Release amd64 20260108 noble InRelease
+Err:2 cdrom://Linux Mint 22.3 _Zena_ - Release amd64 20260108 noble Release
+  Please use apt-cdrom to make this CD-ROM recognized by APT. apt-get update cannot be used to add new CD-ROMs
+Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Hit:4 http://archive.ubuntu.com/ubuntu noble InRelease                                                       
+Get:5 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]                                      
+Ign:6 http://packages.linuxmint.com zena InRelease                                                                      
+Get:7 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:8 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]
+Hit:9 http://packages.linuxmint.com zena Release                             
+Get:10 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [208 B]
+Get:11 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]
+Get:12 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]
+Get:13 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]
+Get:14 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+Get:15 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [386 kB]
+Get:16 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:17 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7284 B]
+Get:18 http://archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [216 B]
+Get:19 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+Get:20 http://archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+Reading package lists... Done                           
+E: The repository 'cdrom://Linux Mint 22.3 _Zena_ - Release amd64 20260108 noble Release' does not have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+root@mint:~# sudo qemu-system-x86_64 -m 2048 -drive file=/dev/sda,format=raw,readonly=on -enable-kvm
+sudo: qemu-system-x86_64: command not found
+root@mint:~# 
+```
+
+# feedback
+kunnen we niet gewoon die kernel regel weghalen!!!
+
+---
+
