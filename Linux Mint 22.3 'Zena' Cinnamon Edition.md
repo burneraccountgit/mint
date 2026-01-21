@@ -230,6 +230,7 @@ Omdat je de hele schijf wilt wissen en Mint 22.3 wilt installeren, maar je inste
 
 ---
 
+```
 mint@mint:~$ sudo cryptsetup luksOpen /dev/sda3 mijn_systeem
 Enter passphrase for /dev/sda3: 
 mint@mint:~$ sudo mount /dev/mapper/mijn_systeem /mnt
@@ -238,6 +239,7 @@ mount: /mnt: unknown filesystem type 'LVM2_member'.
 mint@mint:~$ ls /mnt/etc/apt/sources.list.d/
 ls: cannot access '/mnt/etc/apt/sources.list.d/': No such file or directory
 mint@mint:~$ 
+```
 
 ---
 
