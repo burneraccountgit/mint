@@ -388,3 +388,68 @@ echo -e "\n--- Validatie voltooid. Rapport staat op je SSD: $VERIFY_LOG ---"
 
 ---
 
+# ANTWOORD
+
+```
+mint@mint:~$ # 1. Definieer de output locatie op de SSD
+VERIFY_LOG="/media/mint/USB-STAAFJE/MINT_BACKUP/final_boot_validation.txt"
+
+{
+  echo "=== MECHANISCHE BOOT-VALIDATIE ($(date)) ==="
+  
+  echo -e "\n[1] INSPECTIE INITRAMFS (Kernel 6.8):"
+  # We lijsten de inhoud op en zoeken naar de kritieke LUKS/LVM componenten
+  lsinitramfs /mnt/boot/initrd.img-6.8.0-90-generic | grep -E "cryptsetup|dm-crypt|aes|lvm"
+  
+  echo -e "\n[2] CRYPTTAB NAAM-CHECK:"
+  # Bevestig dat de naam 'cryptdata' is en niet 'mijn_systeem'
+  cat /mnt/etc/crypttab
+  
+  echo -e "\n[3] GRUB ROOT-MAPPING CHECK:"
+  # Controleer of GRUB naar de juiste LVM-root wijst
+  grep "linux" /mnt/boot/grub/grub.cfg | grep "root=" | head -n 1
+  
+  echo -e "\n[4] SYSCTL HARDENING BYPASS CHECK:"
+  # Bevestig dat de blokkerende regel nog steeds gedeactiveerd (#) is
+  grep "kernel.modules_disabled" /mnt/etc/sysctl.d/99-zwaar-gehard.conf
+  
+} | tee "$VERIFY_LOG"
+
+echo -e "\n--- Validatie voltooid. Rapport staat op je SSD: $VERIFY_LOG ---"
+=== MECHANISCHE BOOT-VALIDATIE (Wed Jan 21 05:24:46 UTC 2026) ===
+
+[1] INSPECTIE INITRAMFS (Kernel 6.8):
+/usr/bin/unmkinitramfs: 64: cannot open /mnt/boot/initrd.img-6.8.0-90-generic: No such file
+/usr/bin/unmkinitramfs: 57: cannot open /mnt/boot/initrd.img-6.8.0-90-generic: No such file
+/usr/bin/unmkinitramfs: 38: cannot open /mnt/boot/initrd.img-6.8.0-90-generic: No such file
+cpio: premature end of archive
+
+[2] CRYPTTAB NAAM-CHECK:
+cat: /mnt/etc/crypttab: No such file or directory
+
+[3] GRUB ROOT-MAPPING CHECK:
+grep: /mnt/boot/grub/grub.cfg: No such file or directory
+
+[4] SYSCTL HARDENING BYPASS CHECK:
+grep: /mnt/etc/sysctl.d/99-zwaar-gehard.conf: No such file or directory
+
+--- Validatie voltooid. Rapport staat op je SSD: /media/mint/USB-STAAFJE/MINT_BACKUP/final_boot_validation.txt ---
+mint@mint:~$ 
+```
+
+# FROM FILE
+
+```
+=== MECHANISCHE BOOT-VALIDATIE (Wed Jan 21 05:24:46 UTC 2026) ===
+
+[1] INSPECTIE INITRAMFS (Kernel 6.8):
+
+[2] CRYPTTAB NAAM-CHECK:
+
+[3] GRUB ROOT-MAPPING CHECK:
+
+[4] SYSCTL HARDENING BYPASS CHECK:
+```
+
+---
+
