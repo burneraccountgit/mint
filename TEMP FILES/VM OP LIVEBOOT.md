@@ -636,7 +636,46 @@ root@mint:~#
 
 ---
 
+De resultaten van de mechanische checks bevestigen de exacte blokkade:
 
+### 1. Error Analyse: "Mount point does not exist"
+
+De `ls` output bewijst dat de mappen `/mnt/dev`, `/mnt/proc`, etc. niet gevonden worden. Dit komt doordat je momenteel **niet** gemount bent op `/mnt`. De enige actieve mount is je externe SSD op `/media/mint/USB-STAAFJE`. Omdat de mappen op je harde schijf staan (die niet gekoppeld is), ziet de Live USB ze niet.
+
+### 2. Validatie SSD: "Clean"
+
+De `fsck.exfat` geeft aan dat `/dev/sdc1` (USB-STAAFJE) **clean** is. Je kunt hier dus veilig logs en backups naar wegschrijven zonder risico op data-corruptie door het bestandssysteem.
+
+---
+
+### PAYLOAD: De Mechanische Herkoppeling
+
+Om de errors op te lossen, moeten we de hiërarchie van de "onderkant" (de schijf) naar de "bovenkant" (de Live USB) herstellen. Voer dit blok uit om de omgeving weer correct op te bouwen:
+
+```bash
+# 1. Open de container als deze dicht is (negeer error als al open)
+sudo cryptsetup open /dev/sda3 cryptdata
+
+# 2. Activeer LVM volumes
+sudo vgchange -ay vgmint
+
+# 3. Forceer de mounts op de juiste volgorde
+sudo mount /dev/mapper/vgmint-root /mnt
+sudo mount /dev/sda2 /mnt/boot
+sudo mount /dev/sda1 /mnt/boot/efi
+
+# 4. Bind de systeem-interfaces (Zonder deze mappen faalt update-initramfs)
+for i in /dev /dev/pts /proc /sys /run; do sudo mount -B $i /mnt$i; done
+
+# 5. CONTROLE (Deze MOET nu mappen laten zien)
+ls -d /mnt/dev /mnt/proc /mnt/sys /mnt/run
+
+```
+
+**Waarom dit de oplossing is:**
+Door stap 1 t/m 4 herstel je de toegang tot de mappen die zojuist "niet bestonden". Zodra stap 5 succesvol mappen weergeeft, heeft de `chroot` omgeving weer de vitale hardware-informatie die nodig is om de `initrd.img` te genereren zonder de `cow` of `read-only` errors.
+
+---
 
 
 
