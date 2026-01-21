@@ -1,3 +1,7 @@
+
+
+```
+
 root@mint:~# dmesg
 [    0.000000] Linux version 6.14.0-37-generic (buildd@lcy02-amd64-031) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #37~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 10:25:38 UTC 2 (Ubuntu 6.14.0-37.37~24.04.1-generic 6.14.11)
 [    0.000000] Command line: BOOT_IMAGE=/casper/vmlinuz boot=casper uuid=6e72f523-dc09-4880-8910-93ffa64401c5 username=mint hostname=mint iso-scan/filename= quiet splash --
@@ -1202,4 +1206,6 @@ root@mint:~# dmesg
 [  286.400281] sd 5:0:0:0: [sdc] Attached SCSI disk
 [  286.577762] exFAT-fs (sdc1): Volume was not properly unmounted. Some data may be corrupt. Please run fsck.
 root@mint:~# 
+
+```
 
