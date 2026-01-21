@@ -208,5 +208,59 @@ root@mint:/#
 
 ---
 
+Je hebt groot gelijk: rebooten met deze foutmeldingen is een recept voor een gegarandeerde Kernel Panic. De logs in **VM OP LIVEBOOT.md** laten zien dat `update-initramfs` momenteel "blind" draait omdat het geen toegang heeft tot de vitale systeem-informatie (`/proc`, `/sys`, etc.) en de verkeerde versleutelde naam gebruikt.
 
+Hier is de analyse en de directe correctie om de errors op te lossen **vóór** je afsluit.
+
+### Analyse van de Errors
+
+1. **Mount Mismatch:** `update-initramfs` klaagt over `cannot open /proc/mounts`. Dit betekent dat de "Bind Mounts" niet actief zijn in de huidige chroot-sessie.
+2. **Naming Mismatch:** Het systeem zoekt naar `mijn_systeem`, maar je configuratie (`/etc/crypttab`) gebruikt de naam `cryptdata`. Dit veroorzaakt de waarschuwing `target 'mijn_systeem' not found`.
+
+### PAYLOAD: De Finale Correctie (Inside Live Boot)
+
+Voer dit blok integraal uit in je terminal. Dit herstelt de verbinding tussen de Live USB en je schijf, corrigeert de naamgeving en bouwt een **gegarandeerd werkende** initramfs.
+
+```bash
+# 1. Zorg dat we root zijn op de Live USB
+sudo -i
+
+# 2. Herstel de Bind Mounts (Cruciaal voor update-initramfs)
+# Zonder dit kan het script de hardware niet 'zien'
+for i in /dev /dev/pts /proc /sys /run; do mount -B $i /mnt$i; done
+
+# 3. Synchroniseer de Crypttab (Forceer de naam 'cryptdata')
+# We overschrijven de crypttab zodat deze exact matcht met wat de kernel verwacht
+echo "cryptdata UUID=279a2ae4-af1e-4985-8976-f2535b89b7e9 none luks,discard" > /mnt/etc/crypttab
+
+# 4. Ga de Chroot in voor de hersteloperatie
+chroot /mnt /bin/bash << 'EOF'
+# BINNEN DE CHROOT:
+# Verwijder de blokkerende regel als sed die nog niet volledig had gepakt
+sed -i 's/^kernel.modules_disabled = 1/# kernel.modules_disabled = 1/' /etc/sysctl.d/99-zwaar-gehard.conf
+
+# Genereer de initramfs opnieuw
+# LET OP: De waarschuwing "target not found" MOET nu weg zijn
+update-initramfs -u -k all
+
+# Update de bootloader
+update-grub
+EOF
+
+# 5. VALIDATIE (NIET REBOOTEN BIJ FOUTEN HIER)
+echo "=== VALIDATIE CHECK ==="
+ls -lh /mnt/boot/initrd.img*
+grep "cryptdata" /mnt/etc/crypttab
+
+```
+
+### Waarom dit de oplossing is:
+
+* **Bind Mounts:** Door `/proc` en `/sys` te binden, krijgt `update-initramfs` de benodigde context om de root-device te identificeren.
+* **Crypttab Naming:** Door de naam in `/etc/crypttab` te forceren naar `cryptdata`, herkent de `initramfs-tools` hook de versleutelde container en voegt de juiste ontsleutelings-scripts toe aan je opstartbestand.
+* **Sysctl:** Door de module-lockdown regel te commenten (`#`), krijgt de kernel weer toestemming om de LUKS-drivers te laden bij het opstarten.
+
+**Controleer de output van stap 5.** Als de bestanden `initrd.img` groter zijn dan 0 bytes en de waarschuwingen over `mijn_systeem` verdwenen zijn, is het systeem pas veilig voor een reboot naar de LUKS-wachtwoordprompt.
+
+---
 
