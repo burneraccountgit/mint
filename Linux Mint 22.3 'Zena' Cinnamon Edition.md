@@ -3749,6 +3749,9 @@ cat: /mnt/etc/ssh/sshd_config: No such file or directory
 root@mint:~# 
 ```
 
+# OPSEC
+
+```
 === CUSTOM FIREWALL RULES (UFW) ===
 *filter
 :ufw-user-input - [0:0]
@@ -4183,7 +4186,7 @@ total 8
 
 ---
 
-
+```
 
 
 
