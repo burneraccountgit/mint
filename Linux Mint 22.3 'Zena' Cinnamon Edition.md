@@ -3575,3 +3575,154 @@ zstd						install
 ---
 
 
+# GEDAAN
+    sudo apt update && sudo apt install qemu-system-x86 qemu-utils -y
+
+```
+root@mint:~# script /media/mint/USB-STAAFJE/terminal_log.txt
+Script started, output log file is '/media/mint/USB-STAAFJE/terminal_log.txt'.
+root@mint:~# ls -lh /media/mint/USB-STAAFJE/MINT_BACKUP/
+total 72G
+-rwxr-xr-x 1 mint mint  86K Jan 21 01:11 pakketlijst.txt
+-rwxr-xr-x 1 mint mint 2.2M Jan 21 01:11 system_config.tar.gz
+-rwxr-xr-x 1 mint mint  72G Jan 21 01:44 user_home_backup.tar.gz
+root@mint:~# sudo apt update && sudo apt install qemu-system-x86 qemu-utils -y
+Ign:1 cdrom://Linux Mint 22.3 _Zena_ - Release amd64 20260108 noble InRelease
+Err:2 cdrom://Linux Mint 22.3 _Zena_ - Release amd64 20260108 noble Release
+  Please use apt-cdrom to make this CD-ROM recognized by APT. apt-get update cannot be used to add new CD-ROMs
+Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Hit:4 http://archive.ubuntu.com/ubuntu noble InRelease                                                       
+Get:5 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]                                      
+Get:6 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]                                               
+Ign:7 http://packages.linuxmint.com zena InRelease     
+Get:8 http://packages.linuxmint.com zena Release [27.6 kB]
+Get:9 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1408 kB]
+Get:10 http://packages.linuxmint.com zena Release.gpg [833 B]
+Get:11 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1697 kB]       
+Get:12 http://security.ubuntu.com/ubuntu noble-security/main i386 Packages [370 kB]
+Get:13 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [229 kB]       
+Get:14 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [21.5 kB]         
+Get:15 http://security.ubuntu.com/ubuntu noble-security/main amd64 c-n-f Metadata [9772 B]         
+Get:16 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [2302 kB]      
+Get:17 http://security.ubuntu.com/ubuntu noble-security/restricted Translation-en [527 kB] 
+Get:18 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Components [208 B]       
+Get:19 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [924 kB]
+Get:20 http://security.ubuntu.com/ubuntu noble-security/universe i386 Packages [572 kB]
+Get:21 http://archive.ubuntu.com/ubuntu noble-updates/main i386 Packages [572 kB]
+Get:22 http://archive.ubuntu.com/ubuntu noble-updates/main Translation-en [314 kB]         
+Get:23 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [209 kB]                    
+Get:24 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [74.2 kB]                                  
+Get:25 http://security.ubuntu.com/ubuntu noble-security/universe amd64 c-n-f Metadata [19.7 kB]                                 
+Get:26 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Components [208 B]                                    
+Get:27 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [175 kB]                        
+Get:28 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 c-n-f Metadata [16.0 kB]
+Get:29 http://archive.ubuntu.com/ubuntu noble-updates/restricted i386 Packages [24.2 kB]
+Get:30 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [2426 kB]
+Get:31 http://archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [554 kB]
+Get:32 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Components [212 B]
+Get:33 http://archive.ubuntu.com/ubuntu noble-updates/universe i386 Packages [997 kB]
+Get:34 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1519 kB]
+Get:35 http://archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [310 kB]  
+Get:36 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [380 kB]     
+Get:37 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 c-n-f Metadata [31.6 kB]   
+Get:38 http://archive.ubuntu.com/ubuntu noble-updates/multiverse i386 Packages [7256 B]
+Get:39 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [30.4 kB]
+Get:40 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Get:41 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [7300 B]        
+Get:42 http://archive.ubuntu.com/ubuntu noble-backports/restricted amd64 Components [212 B]
+Get:43 http://packages.linuxmint.com zena/main i386 Packages [17.9 kB]         
+Get:44 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [10.5 kB]
+Get:45 http://archive.ubuntu.com/ubuntu noble-backports/multiverse amd64 Components [212 B]
+Get:46 http://packages.linuxmint.com zena/main amd64 Packages [18.5 kB]
+Get:47 http://packages.linuxmint.com zena/upstream amd64 Packages [50.3 kB]
+Get:48 http://packages.linuxmint.com zena/upstream i386 Packages [19.5 kB]
+Get:49 http://packages.linuxmint.com zena/backport i386 Packages [6404 B]
+Get:50 http://packages.linuxmint.com zena/backport amd64 Packages [28.0 kB]
+Reading package lists... Done                                
+E: The repository 'cdrom://Linux Mint 22.3 _Zena_ - Release amd64 20260108 noble Release' does not have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+root@mint:~# exit
+exit
+Script done.
+root@mint:~# 
+```
+
+# NOG NIET GEDAAN DUS
+    sudo qemu-system-x86_64 -m 2048 -drive file=/dev/sda,format=raw,readonly=on -enable-kvm
+
+---
+
+# CONTROLE GEEFT
+    tar -tvf /media/mint/USB-STAAFJE/MINT_BACKUP/system_config.tar.gz | head -n 10
+
+```
+
+root@mint:~# tar -tvf /media/mint/USB-STAAFJE/MINT_BACKUP/system_config.tar.gz | head -n 10
+drwxr-xr-x root/root         0 2026-01-20 23:08 mnt/etc/
+-rw-r--r-- root/root       119 2022-01-11 00:08 mnt/etc/catdocrc
+drwxr-xr-x root/root         0 2026-01-10 00:10 mnt/etc/NetworkManager/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dnsmasq.d/
+-rw-r--r-- root/root        98 2022-08-01 12:02 mnt/etc/NetworkManager/NetworkManager.conf
+drwxr-xr-x root/root         0 2025-08-28 08:52 mnt/etc/NetworkManager/dispatcher.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dispatcher.d/pre-down.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dispatcher.d/no-wait.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dispatcher.d/pre-up.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/VPN/
+root@mint:~# tar -tvf /media/mint/USB-STAAFJE/MINT_BACKUP/system_config.tar.gz | head -n 50
+drwxr-xr-x root/root         0 2026-01-20 23:08 mnt/etc/
+-rw-r--r-- root/root       119 2022-01-11 00:08 mnt/etc/catdocrc
+drwxr-xr-x root/root         0 2026-01-10 00:10 mnt/etc/NetworkManager/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dnsmasq.d/
+-rw-r--r-- root/root        98 2022-08-01 12:02 mnt/etc/NetworkManager/NetworkManager.conf
+drwxr-xr-x root/root         0 2025-08-28 08:52 mnt/etc/NetworkManager/dispatcher.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dispatcher.d/pre-down.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dispatcher.d/no-wait.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dispatcher.d/pre-up.d/
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/VPN/
+drwxr-xr-x root/root         0 2025-12-16 20:11 mnt/etc/NetworkManager/system-connections/
+drwxr-xr-x root/root         0 2026-01-13 20:25 mnt/etc/NetworkManager/conf.d/
+-rw-r--r-- root/root        32 2022-08-01 12:02 mnt/etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+-rw-r--r-- root/root        31 2025-12-11 15:33 mnt/etc/NetworkManager/conf.d/20-connectivity-disable.conf
+-rw-r--r-- root/root        33 2024-07-27 12:57 mnt/etc/NetworkManager/conf.d/ubuntu-system-adjustments.conf
+drwxr-xr-x root/root         0 2024-10-23 11:04 mnt/etc/NetworkManager/dnsmasq-shared.d/
+drwxr-xr-x root/root         0 2026-01-18 00:17 mnt/etc/dpkg/
+-rw-r--r-- root/root       260 2024-09-26 19:14 mnt/etc/dpkg/shlibs.default
+-rw-r--r-- root/root       253 2024-09-26 19:14 mnt/etc/dpkg/shlibs.override
+drwxr-xr-x root/root         0 2026-01-12 12:54 mnt/etc/dpkg/origins/
+lrwxrwxrwx root/root         0 2025-11-23 20:24 mnt/etc/dpkg/origins/default -> ubuntu
+-rw-r--r-- root/root       114 2024-04-22 13:04 mnt/etc/dpkg/origins/ubuntu
+-rw-r--r-- root/root        83 2024-04-22 13:04 mnt/etc/dpkg/origins/debian
+drwxr-xr-x root/root         0 2026-01-16 01:09 mnt/etc/dpkg/dpkg.cfg.d/
+-rw-r--r-- root/root       274 2024-12-05 11:53 mnt/etc/dpkg/dpkg.cfg.d/needrestart
+-rw-r--r-- root/root       446 2023-02-14 22:56 mnt/etc/dpkg/dpkg.cfg
+-rw-r--r-- root/root       411 2025-08-28 08:52 mnt/etc/hosts.allow
+-rwxr-xr-x root/root     16593 2026-01-13 20:21 mnt/etc/nftables.conf
+drwxr-xr-x root/dip          0 2025-08-28 08:52 mnt/etc/ppp/
+-rwxr-xr-x root/root       834 2022-08-18 12:54 mnt/etc/ppp/ipv6-down
+drwxr-xr-x root/root         0 2024-04-03 17:56 mnt/etc/ppp/ipv6-up.d/
+-rw------- root/root        80 2025-08-28 08:52 mnt/etc/ppp/chap-secrets
+-rwxr-xr-x root/root      1898 2022-08-18 12:54 mnt/etc/ppp/ip-up
+drwxr-xr-x root/root         0 2024-04-03 17:56 mnt/etc/ppp/ip-pre-up.d/
+drwxr-xr-x root/root         0 2026-01-15 11:09 mnt/etc/ppp/ip-down.d/
+-rwxr-xr-x root/root       718 2022-08-18 12:54 mnt/etc/ppp/ip-down.d/0000usepeerdns
+-rwxr-xr-x root/root       802 2024-04-08 14:48 mnt/etc/ppp/ip-down.d/postfix
+-rwxr-xr-x root/root      2608 2025-06-13 08:02 mnt/etc/ppp/ip-down.d/clamav-freshclam-ifupdown
+-rwxr-xr-x root/root       974 2022-08-18 12:54 mnt/etc/ppp/ipv6-up
+drwxr-xr-x root/root         0 2026-01-15 11:09 mnt/etc/ppp/ip-up.d/
+-rwxr-xr-x root/root      1176 2022-08-18 13:06 mnt/etc/ppp/ip-up.d/0000usepeerdns
+-rwxr-xr-x root/root      1185 2024-04-08 14:48 mnt/etc/ppp/ip-up.d/postfix
+-rwxr-xr-x root/root      2608 2025-06-13 08:02 mnt/etc/ppp/ip-up.d/clamav-freshclam-ifupdown
+-rw------- root/root      1628 2025-08-28 08:52 mnt/etc/ppp/pap-secrets
+-rwxr-xr-x root/root      1757 2022-08-18 12:54 mnt/etc/ppp/ip-down
+-rw-r--r-- root/root      2151 2024-04-08 16:16 mnt/etc/ppp/options.pptp
+drwxr-s--- root/dip          0 2025-08-28 08:52 mnt/etc/ppp/peers/
+-rw-r----- root/dip       1093 2025-08-28 08:52 mnt/etc/ppp/peers/provider
+drwxr-xr-x root/root         0 2024-04-03 17:56 mnt/etc/ppp/ipv6-down.d/
+-rw-r--r-- root/root     13209 2022-08-18 12:54 mnt/etc/ppp/options
+root@mint:~# 
+
+```
+
+---
+
