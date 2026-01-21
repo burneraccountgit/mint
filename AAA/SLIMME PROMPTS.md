@@ -31,3 +31,10 @@ AAA/Linux Mint 22.3 'Zena' Cinnamon Edition.md
 ```
 
 # PROMPT(4
+
+    ZIE TEMP FILES/VM OP LIVEBOOT.md
+
+    CLEARLY GA IK NIET REBOOTEN TOTDAT WE DE ERRORS OPGELOST HEBBEN
+
+---
+
