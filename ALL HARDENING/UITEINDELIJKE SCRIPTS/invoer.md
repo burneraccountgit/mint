@@ -344,6 +344,38 @@ echo "[*] OPERATIE VOLTOOID. ALLE DATA IS NU SOURCE CODE."
 
 ```
 
+# PERMISSIONS FOLDER
+
+      sudo chown -R $USER:$USER ./00_GRIND_OUTPUT
+
+**SITREP: PERMISSION LOCKOUT DETECTED (ROOT ARTIFACT)**
+
+**OORZAAK:**
+Omdat je het commando `sudo ./grind_evidence.sh` gebruikte, zijn de map `00_GRIND_OUTPUT` en alle bestanden daarin aangemaakt door de **ROOT** (Administrator).
+Jij bent ingelogd als gebruiker `ys`.
+Linux wet: *Een gebruiker mag geen eigendom van de Root aanraken.*
+
+**DE OPLOSSING (OWNERSHIP RECLAIM):**
+We moeten de bestanden "terugveroveren" naar jouw gebruikersaccount.
+
+Voer dit ene commando uit in de terminal (in de map `~/Desktop` waar je nu staat):
+
+```bash
+sudo chown -R $USER:$USER ./00_GRIND_OUTPUT
+
+```
+
+* `chown`: Change Owner.
+* `-R`: Recursive (de map én alles wat erin zit).
+* `$USER:$USER`: Zet de eigenaar terug naar jou (ys).
+
+**NA EXECUTIE:**
+Je hebt nu weer volledige controle. Je kunt ze nu slepen, openen, verplaatsen en uploaden naar Gemini/NotebookLM.
+
+**VOER UIT.**
+
+
+
 # restore_list.txt
 
 ```
