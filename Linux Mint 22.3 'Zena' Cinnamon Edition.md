@@ -611,6 +611,7 @@ root@mint:~#
 
 # PAKKETLIJST
 
+```
 7zip						install
 accountsservice					install
 acct						install
@@ -3572,6 +3573,9 @@ zlib1g:amd64					install
 zlib1g:i386					install
 zstd						install
 
+```
+
+
 ---
 
 
@@ -3750,6 +3754,25 @@ root@mint:~#
 ```
 
 # OPSEC
+## 2. Custom OPSEC & Configuratie Extractie
+
+```bash
+{
+  echo "=== CUSTOM FIREWALL RULES (UFW) ==="
+  sudo cat /mnt/etc/ufw/user.rules
+  echo -e "\n=== KERNEL HARDENING (SYSCTL) ==="
+  sudo cat /mnt/etc/sysctl.conf /mnt/etc/sysctl.d/*.conf
+  echo -e "\n=== HOSTS & NETWERK ==="
+  sudo cat /mnt/etc/hosts
+  echo -e "\n=== CRON JOBS (CUSTOM SCRIPTS) ==="
+  sudo ls -R /mnt/etc/cron.* echo -e "\n=== SSH CONFIG ==="
+  sudo cat /mnt/etc/ssh/sshd_config
+  echo -e "\n=== LOGS & AUDITD (IF INSTALLED) ==="
+  sudo ls -l /mnt/etc/audit/rules.d/
+} > /media/mint/USB-STAAFJE/MINT_BACKUP/custom_opsec_rules_index.txt
+
+```
+
 
 ```
 === CUSTOM FIREWALL RULES (UFW) ===
@@ -4187,6 +4210,18 @@ total 8
 ---
 
 ```
+
+### 3. De "Diff" Lijst (Wat is er veranderd in /etc?)
+
+Dit is de meest krachtige tool voor jouw "mistakes to remember". We zoeken naar bestanden in `/etc` die handmatig zijn aangepast (gebaseerd op timestamps of specifieke keywords).
+
+```bash
+sudo find /mnt/etc -type f -mtime -30 > /media/mint/USB-STAAFJE/MINT_BACKUP/laatste_wijzigingen_etc.txt
+
+```
+
+*Dit lijstje laat je precies zien aan welke knoppen je de laatste 30 dagen hebt gedraaid voordat de kernel panic optrad.*
+
 
 # OPSEC
     root@mint:~# sudo find /mnt/etc -type f -mtime -30 > /media/mint/USB-STAAFJE/MINT_BACKUP/laatste_wijzigingen_etc.txt
