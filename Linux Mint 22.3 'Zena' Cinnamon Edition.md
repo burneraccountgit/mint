@@ -567,8 +567,6 @@ en
 
     script /media/mint/USB-STAAFJE/terminal_log.txt
 
-```
-
 IK HEB NU MAAR GEWOON DIT :: ..
 
 ```
