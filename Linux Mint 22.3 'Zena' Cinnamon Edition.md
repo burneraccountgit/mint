@@ -552,3 +552,45 @@ Zodra ik de groottes zie, gaan we over naar de QEMU-fase om je huidige systeem "
 
 ---
 
+```
+mint@mint:~$ sudo vgscan && sudo vgchange -ay
+  Found volume group "vgmint" using metadata type lvm2
+  2 logical volume(s) in volume group "vgmint" now active
+mint@mint:~$ ls /dev/mapper/
+control  mijn_systeem  vgmint-root  vgmint-swap_1
+mint@mint:~$ sudo mount /dev/mapper/vgmint-root /mnt
+mint@mint:~$ ls /mnt/etc/apt/sources.list.d/
+google-chrome.list  official-package-repositories.list  sunderme-texstudio-noble.list
+mint@mint:~$ ls /dev/mapper/
+control  mijn_systeem  vgmint-root  vgmint-swap_1
+mint@mint:~$ mkdir -p /media/mint/USB-STAAFJE/MINT_BACKUP
+mint@mint:~$ chroot /mnt dpkg --get-selections > /media/mint/USB-STAAFJE/MINT_BACKUP/pakketlijst.txt
+chroot: cannot change root directory to '/mnt': Operation not permitted
+mint@mint:~$ sudo -i
+root@mint:~# chroot /mnt dpkg --get-selections > /media/mint/USB-STAAFJE/MINT_BACKUP/pakketlijst.txt
+root@mint:~# sudo tar -cvpzf /media/mint/USB-STAAFJE/MINT_BACKUP/system_config.tar.gz /mnt/etc
+tar: Removing leading `/' from member names
+/mnt/etc/
+/mnt/etc/catdocrc
+/mnt/etc/NetworkManager/
+```
+DAN DUIZEND PAGINA'S LATER..
+..
+```
+./.ecryptfs/ys/.Private/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.p446w94pjs2TcNqQEoyt2qU--
+./.ecryptfs/ys/.Private/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.pggiZVlGG1ndv0prEPjpIPU--
+./.ecryptfs/ys/.Private/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.pEv85rISAz4ML1mu4df-YFU--/
+./.ecryptfs/ys/.Private/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.pEv85rISAz4ML1mu4df-YFU--/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.pz376yk8iykemm6wFlUgzD---
+./.ecryptfs/ys/.Private/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.pEv85rISAz4ML1mu4df-YFU--/ECRYPTFS_FNEK_ENCRYPTED.FWbaNwgCGxG1LUQok9m9jA9XXJ7rfW4N3u.pmKi8bekUevecTUekp0s-VU--
+./ys/
+./ys/.ecryptfs
+./ys/.Private
+./ys/Access-Your-Private-Data.desktop
+./ys/README.txt
+root@mint:~# 
+```
+
+
+
+
+
