@@ -306,3 +306,41 @@ mint@mint:~$
 
 ---
 
+De kluis is open en we hebben toegang tot de data. We zien nu dat je Google Chrome en TeXstudio (Noble/Ubuntu 24.04 basis) als extra bronnen hebt.
+
+Omdat je een **volledige schijfwipe** wilt en daarna **álle** instellingen en programma's terug wilt zonder compatibiliteitsproblemen, gaan we nu de backup-fase in. We gebruiken je Samsung SSD (`/media/mint/USB-STAAFJE`) als kluis voor je huidige systeem.
+
+Voer de volgende module uit om alle noodzakelijke gegevens en bestanden te verzamelen.
+
+### Module: Full State Export
+
+Dit script doet drie dingen: het maakt een lijst van je programma's, back-upt je systeemconfiguratie (`/etc`) en verpakt je volledige gebruikersomgeving inclusief widgets en verborgen instellingen in één groot archief op je SSD.
+
+```bash
+# 1. Maak een backup-map aan op de Samsung SSD
+mkdir -p /media/mint/USB-STAAFJE/MINT_BACKUP
+
+# 2. Exporteer de lijst met geïnstalleerde programma's
+chroot /mnt dpkg --get-selections > /media/mint/USB-STAAFJE/MINT_BACKUP/pakketlijst.txt
+
+# 3. Backup de systeemconfiguratie (APT bronnen, fstab, etc.)
+sudo tar -cvpzf /media/mint/USB-STAAFJE/MINT_BACKUP/system_config.tar.gz /mnt/etc
+
+# 4. Backup je volledige Home-folder (Bestanden + Instellingen + Widgets)
+# LET OP: Dit kan even duren afhankelijk van de hoeveelheid data.
+sudo tar -cvpzf /media/mint/USB-STAAFJE/MINT_BACKUP/user_home_backup.tar.gz -C /mnt/home .
+
+```
+
+### Waarom we dit zo doen:
+
+* **`.tar.gz`:** Je Samsung SSD is `exfat`. Als we bestanden los zouden kopiëren, verlies je alle Linux-permissies (wie mag welk bestand lezen). In een tar-archief blijven deze permissies **binnen** het pakketje bewaard. Dit is de enige manier om je widgets en instellingen werkend terug te krijgen.
+* **`dpkg --get-selections`:** Dit is je boodschappenlijstje. Straks vertellen we Mint 22.3: "Installeer alles wat op deze lijst staat".
+
+**Actie:** Voer deze blokken uit. Laat me weten als de terminal weer beschikbaar is (als de `tar` commando's klaar zijn).
+
+**Vraag ter controle voordat we de schijf wissen in de volgende stap:**
+Staan er op `/dev/sda2` (je huidige `/boot` partitie) nog specifieke bestanden die je handmatig hebt aangepast, of mag die ook integraal gewist worden bij de herinstallatie?
+
+---
+
