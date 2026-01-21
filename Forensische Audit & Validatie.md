@@ -64,3 +64,82 @@ fi
 * **Grub Parameters:** Er wordt gezocht naar de `root=/dev/mapper/...` parameter om te bevestigen dat de kernel naar de juiste plek kijkt na ontsleuteling.
 
 **Instructie:** Sla de code hierboven op als `audit.sh` op je bureaublad in de Liveboot, maak het uitvoerbaar met `chmod +x audit.sh` en draai het met `./audit.sh`. Kopieer de output van het rapport hiernaartoe voor de finale conclusie over de schuldige OPSEC-regel.
+
+---
+
+# can ik niet gewoon dit hele ding plakken in de terminal? 
+
+---
+
+Nee, je kunt dit script niet in één keer als tekst in de terminal plakken zonder risico op fouten. Omdat het script een `read`-commando (een gebruikersvraag) bevat en commando's die op elkaar wachten, kan de terminal de tekst "inslikken" of commando's te vroeg uitvoeren, wat leidt tot fouten zoals we eerder zagen met `sudo: unable to allocate pty`.
+
+Om dit veilig en op jouw "slimme" modulaire manier te doen, moet je het als een payload behandelen.
+
+### PAYLOAD: Audit Script
+
+```text
+cat << 'EOF' > /home/mint/audit.sh
+#!/bin/bash
+# =================================================================
+# SCRIPT: FORENSISCHE AUDIT & OPSEC VALIDATIE (LIVEBOOT)
+# =================================================================
+
+# 1. OMGEVING PREPAREREN (UNLOCK & MOUNT)
+sudo cryptsetup open /dev/sda3 cryptdata
+sudo vgchange -ay
+sudo mount /dev/mapper/vgmint-root /mnt
+sudo mount /dev/sda2 /mnt/boot
+sudo mount /dev/sda1 /mnt/boot/efi
+
+# 2. VALIDATIE-LOG INITIALISEREN
+LOG="/media/mint/USB-STAAFJE/MINT_BACKUP/audit_report_$(date +%Y%m%d_%H%M%S).txt"
+mkdir -p /media/mint/USB-STAAFJE/MINT_BACKUP/
+
+{
+  echo "=== BOOT CHAIN VALIDATIE ==="
+  echo "[1] UUID Check sda3:"
+  blkid /dev/sda3
+  
+  echo -e "\n[2] Crypttab Inhoud:"
+  cat /mnt/etc/crypttab
+  
+  echo -e "\n[3] Grub Configuration (Kernel Parameters):"
+  grep "GRUB_CMDLINE_LINUX" /mnt/etc/default/grub
+  
+  echo -e "\n=== OPSEC & HARDENING CONFLICT ANALYSIS ==="
+  echo "[4] Sysctl Lockdown Check:"
+  grep -r "kernel.modules_disabled" /mnt/etc/sysctl.conf /mnt/etc/sysctl.d/
+  
+  echo -e "\n[5] Boot Partition Overhead Check:"
+  df -h /mnt/boot
+  
+  echo -e "\n[6] AppArmor Profile Status:"
+  ls -l /mnt/etc/apparmor.d/ | head -n 20
+
+  echo -e "\n=== INITRAMFS INTEGRITY INSPECTION ==="
+  echo "[7] Initrd Bestand Groottes:"
+  ls -lh /mnt/boot/initrd.img*
+  
+} | tee "$LOG"
+
+echo -e "\n--- Audit voltooid. Rapport opgeslagen in: $LOG ---"
+EOF
+
+chmod +x /home/mint/audit.sh
+/home/mint/audit.sh
+
+```
+
+### Uitvoeringinstructie:
+
+1. Kopieer het volledige bovenstaande blok (vanaf `cat` tot en met de laatste regel).
+2. Plak het in je terminal in de Liveboot.
+3. Het script maakt nu zelf het bestand `audit.sh` aan, maakt het uitvoerbaar en start de audit direct.
+
+### Waarom dit veiliger is:
+
+* **Buffer-veilig:** Door `cat << 'EOF'` te gebruiken, ziet de terminal de hele tekst als één blok data in plaats van losse commando's.
+* **Validatie:** Het rapport wordt direct naar je USB-stick geschreven, zodat je de OPSEC-regels die de kernel panic veroorzaken (zoals de `kernel.modules_disabled = 1` regel) zwart-op-wit hebt.
+
+---
+
