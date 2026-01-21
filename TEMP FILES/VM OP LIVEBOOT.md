@@ -495,7 +495,44 @@ mount: /mnt/run: mount point does not exist.
 root@mint:~# 
 ```
 
-
+```
+root@mint:~# man 1 dmseg
+No manual entry for dmseg in section 1
+root@mint:~# dmseg
+Command 'dmseg' not found, did you mean:
+  command 'dmesg' from deb util-linux (2.39.3-9ubuntu6.4)
+  command 'mmseg' from deb sunpinyin-utils (3.0.0~rc2+ds1-5)
+Try: apt install <deb name>
+root@mint:~# exit
+logout
+mint@mint:~$ man 1 dmseg
+No manual entry for dmseg in section 1
+mint@mint:~$ apt install dmseg
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package dmseg
+mint@mint:~$ sudo -i
+root@mint:~# suda apt install dmseg
+Command 'suda' not found, did you mean:
+  command 'sudo' from deb sudo (1.9.15p5-3ubuntu5.24.04.1)
+  command 'sudo' from deb sudo-ldap (1.9.15p5-3ubuntu5.24.04.1)
+  command 'sada' from deb plc-utils-extra (0.0.6+git20230504.1ba7d5a0-1)
+Try: apt install <deb name>
+root@mint:~# apt install dmseg
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+E: Unable to locate package dmseg
+root@mint:~# man 1 dmseg
+No manual entry for dmseg in section 1
+root@mint:~# dmseg | tail
+Command 'dmseg' not found, did you mean:
+  command 'mmseg' from deb sunpinyin-utils (3.0.0~rc2+ds1-5)
+  command 'dmesg' from deb util-linux (2.39.3-9ubuntu6.4)
+Try: apt install <deb name>
+root@mint:~# 
+```
 
 
 
