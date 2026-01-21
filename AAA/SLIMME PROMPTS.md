@@ -54,6 +54,16 @@ ALS ER DUS STAAT "SEE ERROR ABC" DAN KOM JIJ NIET MET "XYZ" MAAR MOET JE MIJ LET
 ```
 
 # PROMPT(6
+
+```
+https://github.com/macsog/overleaf_pro
+```
+
+```
+https://github.com/burneraccountgit/mint
+```
+
+
 ```
 KIJK NAAR DE REPO'S..
 
